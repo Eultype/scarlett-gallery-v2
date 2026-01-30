@@ -1,8 +1,11 @@
+// Import Next
 import Link from "next/link";
 import Image from "next/image";
+// Import de React Icons
 import { FaInstagram, FaFacebookF, FaTiktok, FaEtsy } from "react-icons/fa";
 import { BiSend } from "react-icons/bi";
 
+// Composant du Footer
 export default function Footer() {
     const currentYear = new Date().getFullYear();
 
@@ -10,7 +13,9 @@ export default function Footer() {
         <footer className="bg-black text-white py-16">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                    {/* Colonne 1 : Logo  / Description */}
                     <div className="space-y-6">
+                        {/* Logo */}
                         <Link href="/" className="block w-48">
                             <Image
                                 src="/images/logos/logo2(blanc).png"
@@ -20,11 +25,12 @@ export default function Footer() {
                                 className="w-full h-auto object-contain"
                             />
                         </Link>
+                        {/* Description */}
                         <p className="text-gray-400 text-sm leading-relaxed">
                             Artiste peintre basée à Bruxelles, créant des œuvres uniques qui éveillent les émotions.
                         </p>
                     </div>
-
+                    {/* Colonne 2 : Navigation */}
                     <div>
                         <h4 className="font-medium text-lg mb-6">Navigation</h4>
                         <ul className="space-y-3 text-gray-400">
@@ -35,7 +41,7 @@ export default function Footer() {
                             <li><FooterLink href="/contact" label="Contact" /></li>
                         </ul>
                     </div>
-
+                    {/* Colonne 3 : Services */}
                     <div>
                         <h4 className="font-medium text-lg mb-6">Services</h4>
                         <ul className="space-y-3 text-gray-400">
@@ -44,8 +50,9 @@ export default function Footer() {
                             <li><FooterLink href="/contact" label="Consultation artistique" /></li>
                         </ul>
                     </div>
-
+                    {/* Colonne 4 : Réseaux sociaux et newsletter */}
                     <div>
+                        {/* Réseaux sociaux */}
                         <h4 className="font-medium text-lg mb-6">Réseaux sociaux</h4>
                         <div className="flex space-x-6 mb-8">
                             <SocialLink
@@ -65,7 +72,7 @@ export default function Footer() {
                                 icon={<FaEtsy size={22} />}
                             />
                         </div>
-
+                        {/* Newsletter */}
                         <h4 className="font-medium text-lg mb-4">Newsletter</h4>
                         <form className="flex">
                             <input
@@ -83,18 +90,21 @@ export default function Footer() {
                         </form>
                     </div>
                 </div>
-
+                {/* Droits */}
                 <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
                     <p className="mb-4 md:mb-0">
                         &copy; {currentYear} DE NONI Emma - Artiste Peintre. Tous droits réservés.
                     </p>
+                    {/* Politique / Mentions */}
                     <div className="flex space-x-6">
+                        {/* Politique de confidentialités */}
                         <Link
                             href="/politique"
                             className="hover:text-white transition-colors"
                         >
                             Politique de confidentialité
                         </Link>
+                        {/* Mentions légales */}
                         <Link
                             href="/mentions"
                             className="hover:text-white transition-colors"

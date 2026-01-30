@@ -6,6 +6,7 @@ import Image from "next/image";
 // Import React
 import { useState, useEffect } from "react";
 
+// Composant de la Navbar
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
