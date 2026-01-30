@@ -29,7 +29,7 @@ export default function Navbar() {
         >
             {/* Logo (à gauche) */}
             <div className="container mx-auto px-4 flex justify-between items-center relative">
-                <Link href="/" className="relative z-50 flex-shrink-0">
+                <Link href="/public" className="relative z-50 flex-shrink-0">
                     <Image
                         src="/images/logos/logo2(blanc).png"
                         alt="Scarlett Gallery"
@@ -47,7 +47,7 @@ export default function Navbar() {
                         scrolled ? "text-black" : "text-white"
                     }`}
                 >
-                    <NavLink href="/" label="Home" />
+                    <NavLink href="/public" label="Home" />
                     <NavLink href="/about" label="About Me" />
                     <NavLink href="/gallery" label="Gallery" />
                     <NavLink href="/services" label="Services" />
@@ -98,7 +98,7 @@ export default function Navbar() {
                     }`}
                 >
                     <MobileNavLink
-                        href="/"
+                        href="/public"
                         label="Home"
                         onClick={() => setIsOpen(false)}
                     />
