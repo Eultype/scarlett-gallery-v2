@@ -4,6 +4,8 @@ import { Montserrat } from "next/font/google";
 import localFont from "next/font/local";
 // Import des styles
 import "./globals.css";
+// Import des composants
+import Navbar from "@/components/Navbar"
 
 const montserrat = Montserrat({
     subsets: ["latin"],
@@ -29,11 +31,12 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="fr">
-        <body
-            className={`${montserrat.variable} ${autumnChant.variable} antialiased font-sans`}
-        >
-        {children}
-        </body>
+            <body
+                className={`${montserrat.variable} ${autumnChant.variable} antialiased font-sans`}
+            >
+                <Navbar />
+                {children}
+            </body>
         </html>
     );
 }
