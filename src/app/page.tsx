@@ -1,16 +1,20 @@
 import HeroSection from "@/components/home/HeroSection";
 import AboutSection from "@/components/home/AboutSection";
 import GalleryPreviewSection from "@/components/home/GalleryPreviewSection";
+import ServicesPreviewSection from "@/components/home/ServicesPreviewSection";
 
 export default function Home() {
   return (
       <main>
-        {/* Section Hero*/}
+        {/* Section du Hero */}
         <HeroSection />
         {/* Section À propos */}
         <AboutSection />
-        {/* Section Galerie */}
+        {/* Section de la galerie */}
         <GalleryPreviewSection />
+        {/* Section des services */}
+        <ServicesPreviewSection />
+
 
       </main>
   );
