@@ -36,7 +36,7 @@ export default function TestimonialsSection() {
                 <div className="text-center mb-16 space-y-4">
                     {/* Titre */}
                     <h2 className="font-autumn text-5xl md:text-6xl text-gray-900">
-                        Ils ont commandes
+                        Ils m'ont fait confiance
                     </h2>
                     {/* Sous-titre */}
                     <p className="text-gray-500 italic">

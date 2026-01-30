@@ -3,6 +3,7 @@ import AboutSection from "@/components/home/AboutSection";
 import GalleryPreviewSection from "@/components/home/GalleryPreviewSection";
 import ServicesPreviewSection from "@/components/home/ServicesPreviewSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
+import ContactSection from "@/components/home/ContactSection";
 
 export default function Home() {
   return (
@@ -17,7 +18,8 @@ export default function Home() {
         <ServicesPreviewSection />
         {/* Section des testimoniales */}
         <TestimonialsSection />
-
+        {/* Section de contact */}
+        <ContactSection />
       </main>
   );
 }
