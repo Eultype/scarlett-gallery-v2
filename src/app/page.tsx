@@ -2,6 +2,7 @@ import HeroSection from "@/components/home/HeroSection";
 import AboutSection from "@/components/home/AboutSection";
 import GalleryPreviewSection from "@/components/home/GalleryPreviewSection";
 import ServicesPreviewSection from "@/components/home/ServicesPreviewSection";
+import TestimonialsSection from "@/components/home/TestimonialsSection";
 
 export default function Home() {
   return (
@@ -14,7 +15,8 @@ export default function Home() {
         <GalleryPreviewSection />
         {/* Section des services */}
         <ServicesPreviewSection />
-
+        {/* Section des testimoniales */}
+        <TestimonialsSection />
 
       </main>
   );
