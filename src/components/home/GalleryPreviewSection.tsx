@@ -31,12 +31,12 @@ export default function GalleryPreviewSection() {
     ).slice(0, 4);
 
     return (
-        <section id="gallery" className="py-20 bg-white">
-            <div className="container mx-auto px-4">
+        <section id="gallery" className="py-20 bg-[#FDFBF7]">
+            <div className="mx-auto px-8 md:px-10 xl:px-20">
 
                 {/* Titre */}
                 <div className="text-center mb-12 space-y-4">
-                    <h2 className="font-autumn text-5xl md:text-6xl text-gray-900">
+                    <h2 className="font-cormorant text-6xl md:text-7xl text-gray-900 font-light italic">
                         Gallery of Works
                     </h2>
                     <p className="text-gray-500 italic">
@@ -63,7 +63,7 @@ export default function GalleryPreviewSection() {
                 </div>
 
                 {/* Grille des œuvres */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 min-h-[400px]">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 min-h-[400px]">
                     {filteredItems.map((item) => (
                         <div
                             key={item.id}
@@ -88,7 +88,7 @@ export default function GalleryPreviewSection() {
                                 {/* Info */}
                                 <div className="p-6 flex-grow flex flex-col justify-between">
                                     <div>
-                                        <h3 className="font-autumn text-2xl text-gray-900 mb-1 group-hover:text-terra transition-colors font-normal">
+                                        <h3 className="font-cormorant text-xl text-gray-900 mb-1 group-hover:text-terra transition-colors font-bold italic">
                                             {item.title}
                                         </h3>
                                         <p className="text-sm text-gray-500 mb-3">{item.serie}</p>

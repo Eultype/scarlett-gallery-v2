@@ -29,13 +29,13 @@ export default function TestimonialsSection() {
     }, []);
 
     return (
-        <section className="py-24 md:py-32 bg-zinc-50 relative overflow-hidden w-full">
-            <div className="container mx-auto px-4 text-center relative z-10">
+        <section className="py-24 md:py-32 bg-[#FDFBF7] relative overflow-hidden w-full">
+            <div className="mx-auto px-0 xl:px-20 text-center relative z-10">
 
                 {/* Titres */}
                 <div className="text-center mb-16 space-y-4">
                     {/* Titre */}
-                    <h2 className="font-autumn text-5xl md:text-6xl text-gray-900">
+                    <h2 className="font-cormorant text-6xl md:text-7xl text-gray-900 font-light italic">
                         Ils m'ont fait confiance
                     </h2>
                     {/* Sous-titre */}
@@ -88,7 +88,7 @@ export default function TestimonialsSection() {
                                 className="relative w-full"
                             >
                                 <Quote className="absolute -top-10 left-4 md:left-10 w-10 h-10 text-terra/10 fill-current" />
-                                <h2 className="font-serif text-xl md:text-3xl leading-relaxed text-gray-800 italic font-light px-12 md:px-24">
+                                <h2 className="font-cormorant text-2xl md:text-4xl leading-relaxed text-gray-800 italic font-light px-12 md:px-24">
                                     &quot;{testimonials[currentIndex].text}&quot;
                                 </h2>
                                 <Quote className="absolute -bottom-10 right-4 md:right-10 w-10 h-10 text-terra/10 fill-current rotate-180" />

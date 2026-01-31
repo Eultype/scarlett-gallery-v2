@@ -7,12 +7,12 @@ import Image from "next/image";
 // Composant AboutSection de la page d'accueil
 export default function AboutSection() {
     return (
-        <section id="about" className="py-20 bg-zinc-50 overflow-hidden">
-            <div className="container mx-auto px-4">
+        <section id="about" className="py-20 bg-[#FDFBF7] overflow-hidden">
+            <div className="mx-auto px-8 md:px-10 xl:px-20">
                 <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
                     {/* Image de l'artiste */}
                     <div className="w-full lg:w-1/2 relative group">
-                        <div className="relative w-full max-w-md mx-auto aspect-[4/5] shadow-xl transform transition-transform duration-500 hover:scale-[1.02]">
+                        <div className="relative aspect-[4/5] shadow-xl transform transition-transform duration-500 hover:scale-[1.02]">
                             {/* Image noir et blanc */}
                             <Image
                                 src="/images/about/Scarlett_conv(noirblanc).jpg"
@@ -34,7 +34,7 @@ export default function AboutSection() {
                     {/* Titres / Description / Bouton */}
                     <div className="w-full lg:w-1/2 text-center lg:text-left space-y-6">
                         {/* Titre */}
-                        <h2 className="font-autumn text-5xl md:text-6xl text-gray-900">
+                        <h2 className="font-cormorant text-6xl md:text-7xl text-gray-900 font-light italic">
                             About Me
                         </h2>
                         {/* Sous-titre */}

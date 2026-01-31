@@ -8,13 +8,13 @@ import { Brush, GalleryVerticalEnd, Check, ArrowRight } from "lucide-react";
 // Composant ServicesPreviewSection de la page d'accueil
 export default function ServicesPreviewSection() {
     return (
-        <section id="services" className="py-20 bg-zinc-50">
-            <div className="container mx-auto px-4">
+        <section id="services" className="py-20 bg-[#FDFBF7]">
+            <div className="mx-auto px-8 md:px10 xl:px-20">
 
                 {/* Titre */}
                 <div className="text-center mb-16 space-y-4">
-                    <h2 className="font-autumn text-5xl md:text-6xl text-gray-900">
-                        My Prestations
+                    <h2 className="font-cormorant text-6xl md:text-7xl text-gray-900 font-light italic">
+                        Mes services
                     </h2>
                     <p className="text-gray-500 italic">
                         Des services adaptés à vos besoins artistiques

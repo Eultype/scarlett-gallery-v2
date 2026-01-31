@@ -8,16 +8,14 @@ import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 // Composant ContactSection de la page d'accueil
 export default function ContactSection() {
     return (
-        <section id="contact" className="py-20 bg-white">
-            <div className="container mx-auto px-4">
-                <div className="flex flex-col md:flex-row justify-center gap-16 max-w-6xl mx-auto">
-
+        <section id="contact" className="py-20 bg-[#FDFBF7]">
+            <div className="mx-auto px-8 md:px-10 xl:px-20">
+                <div className="flex flex-col xl:flex-row justify-center gap-16 mx-auto">
                     {/* Bloc Coordonnées (Gauche) */}
-                    {/* Titres */}
-                    <div className="w-full md:w-1/2 space-y-12">
+                    <div className="w-full xl:w-1/2 space-y-12">
                         <div>
                             {/* Titre */}
-                            <h2 className="font-autumn text-5xl md:text-6xl text-gray-900 mb-6">
+                            <h2 className="font-cormorant text-6xl md:text-7xl text-gray-900 mb-6 font-light italic">
                                 Entrons en contact
                             </h2>
                             {/* Sous-titre */}
@@ -27,47 +25,52 @@ export default function ContactSection() {
                                 ce formulaire ou directement par téléphone.
                             </p>
                         </div>
-                        {/* Coordonnées */}
-                        <div className="space-y-6">
-                            {/* Titre */}
-                            <h3 className="text-xl font-bold text-gray-900 border-b pb-2 inline-block">Coordonnées</h3>
-                            {/* Ville */}
-                            <div className="flex items-center gap-4 text-gray-600">
-                                <div className="w-10 h-10 bg-zinc-100 rounded-full flex items-center justify-center text-terra shrink-0">
-                                    <MapPin size={20} />
+                        {/* Conteneur Flex pour Coordonnées + Horaires */}
+                        <div className="flex flex-col md:flex-row md:justify-center md:gap-16 xl:flex-col xl:items-start xl:gap-8 space-y-6 md:space-y-0">
+                            
+                            {/* Coordonnées */}
+                            <div className="space-y-6">
+                                {/* Titre */}
+                                <h3 className="text-xl font-bold text-gray-900 border-b pb-2 inline-block">Coordonnées</h3>
+                                {/* Ville */}
+                                <div className="flex items-center gap-4 text-gray-600">
+                                    <div className="w-10 h-10 bg-zinc-100 rounded-full flex items-center justify-center text-terra shrink-0">
+                                        <MapPin size={20} />
+                                    </div>
+                                    <p>Bruxelles, Belgique</p>
                                 </div>
-                                <p>Bruxelles, Belgique</p>
-                            </div>
-                            {/* Téléphone */}
-                            <div className="flex items-center gap-4 text-gray-600">
-                                <div className="w-10 h-10 bg-zinc-100 rounded-full flex items-center justify-center text-terra shrink-0">
-                                    <Phone size={20} />
+                                {/* Téléphone */}
+                                <div className="flex items-center gap-4 text-gray-600">
+                                    <div className="w-10 h-10 bg-zinc-100 rounded-full flex items-center justify-center text-terra shrink-0">
+                                        <Phone size={20} />
+                                    </div>
+                                    <p>+33 6 78 47 87 21</p>
                                 </div>
-                                <p>+33 6 78 47 87 21</p>
-                            </div>
-                            {/* Email */}
-                            <div className="flex items-center gap-4 text-gray-600">
-                                <div className="w-10 h-10 bg-zinc-100 rounded-full flex items-center justify-center text-terra shrink-0">
-                                    <Mail size={20} />
+                                {/* Email */}
+                                <div className="flex items-center gap-4 text-gray-600">
+                                    <div className="w-10 h-10 bg-zinc-100 rounded-full flex items-center justify-center text-terra shrink-0">
+                                        <Mail size={20} />
+                                    </div>
+                                    <p>contact@scarlettgallery.com</p>
                                 </div>
-                                <p>contact@scarlettgallery.com</p>
                             </div>
-                        </div>
-                        {/* Horaires de disponibilités */}
-                        <div className="space-y-4">
-                            <h3 className="text-xl font-bold text-gray-900 border-b pb-2 inline-block">Horaires de disponibilité</h3>
-                            <div className="flex items-start gap-4 text-gray-600">
-                                <Clock className="text-terra shrink-0 mt-1" size={20} />
-                                <div>
-                                    <p>Lundi - Vendredi : Après 18h</p>
-                                    <p>Samedi / Dimanche : Sur rendez-vous</p>
+
+                            {/* Horaires de disponibilités */}
+                            <div className="space-y-4">
+                                <h3 className="text-xl font-bold text-gray-900 border-b pb-2 inline-block">Horaires de disponibilité</h3>
+                                <div className="flex items-start gap-4 text-gray-600">
+                                    <Clock className="text-terra shrink-0 mt-1" size={20} />
+                                    <div>
+                                        <p>Lundi - Vendredi : Après 18h</p>
+                                        <p>Samedi / Dimanche : Sur rendez-vous</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     {/* Bloc Formulaire (Droite) */}
-                    <div className="w-full md:w-1/2 bg-zinc-50 p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
+                    <div className="w-full xl:w-1/2 bg-zinc-50 p-8 md:p-12 rounded-3xl shadow-sm border border-gray-100">
                         <form action="https://formsubmit.co/561abe24f35506f8d73deb1c6e0906ac" method="POST" className="space-y-6">
 
                             {/* LIGNE 1 : Nom Complet et Téléphone */}
