@@ -1,9 +1,9 @@
 import { Artwork } from "./artworks";
 
 export const galleryPageItems: Artwork[] = [
-    // --- MIXTE PARFAIT DECALÉ (Rotation pour éviter l'alignement horizontal) ---
-    
-    // === COLONNE 1 (Début : SAISON) ===
+    // --- Mixte décalé pour la page galerie ---
+
+    // === COLONNE 1 ===
     // 1. Saison
     {
         id: "s1",
@@ -18,15 +18,15 @@ export const galleryPageItems: Artwork[] = [
             "/images/gallery/saisons/CP_printemps.png"
         ]
     },
-    // 2. Mini
+    // 2. Lino
     {
-        id: "m1",
-        title: "Foggy Morning",
-        category: "minis",
-        image: "/images/gallery/minis/brouillard_cadre.jpg",
-        dimensions: "Huile sur toile - 21x21cm",
-        serie: "Série \"Les Minis\" - 2024/2025",
-        availableSizes: "Disponibles : 21x21 - Cadre fourni avec"
+        id: "l7",
+        title: "Seville",
+        category: "linogravures",
+        image: "/images/gallery/linogravures/lino_seville_cadre.jpg",
+        dimensions: "Linogravure - 21x29,7 (A4)",
+        serie: "Série \"Linogravures\" - 2024/2025",
+        availableSizes: "Disponible : 21x29,7 (A4)"
     },
     // 3. Lino
     {
@@ -60,41 +60,7 @@ export const galleryPageItems: Artwork[] = [
         serie: "Série \"Les Minis\" - 2024/2025",
         availableSizes: "Disponibles : 13x18 - Cadre fourni avec"
     },
-    // 6. Lino
-    {
-        id: "l2",
-        title: "Saint Graal",
-        category: "linogravures",
-        image: "/images/gallery/linogravures/lino_stgraal_cadre.jpg",
-        dimensions: "Linogravure - 21x29,7 (A4)",
-        serie: "Série \"Linogravures\" - 2024/2025",
-        availableSizes: "Disponible : 21x29,7 (A4)",
-        moreImages: ["/images/gallery/linogravures/lino_stgraal_mur.jpg"]
-    },
-
-    // === COLONNE 2 (Début : MINI) ===
-    // 7. Mini
-    {
-        id: "m3",
-        title: "Suncatching",
-        category: "minis",
-        image: "/images/gallery/minis/suncatching_cadre.jpg",
-        dimensions: "Huile sur toile - 16x21cm",
-        serie: "Série \"Les Minis\" - 2024/2025",
-        availableSizes: "Disponibles : 16x21 - Cadre fourni avec"
-    },
-    // 8. Perso
-    {
-        id: "p2",
-        title: "Zendaya",
-        category: "personnalites",
-        image: "/images/gallery/personnalites/Zendaya_cadre.jpg",
-        dimensions: "Huile sur toile - 50x50cm",
-        serie: "Série \"Personnalités\" - 2024/2025",
-        availableSizes: "Disponibles : 50x50cm (original)",
-        moreImages: ["/images/gallery/personnalites/zendaya_zoom.jpg"]
-    },
-    // 9. Saison
+    // 6. Saison
     {
         id: "s2",
         title: "Blindsummer",
@@ -107,6 +73,38 @@ export const galleryPageItems: Artwork[] = [
             "/images/gallery/saisons/print_ete.png",
             "/images/gallery/saisons/CP_ete.png"
         ]
+    },
+    // === COLONNE 2 ===
+    // 7. Mini
+    {
+        id: "m3",
+        title: "Suncatching",
+        category: "minis",
+        image: "/images/gallery/minis/suncatching_cadre.jpg",
+        dimensions: "Huile sur toile - 16x21cm",
+        serie: "Série \"Les Minis\" - 2024/2025",
+        availableSizes: "Disponibles : 16x21 - Cadre fourni avec"
+    },
+    // 8. Mini
+    {
+        id: "m1",
+        title: "Foggy Morning",
+        category: "minis",
+        image: "/images/gallery/minis/brouillard_cadre.jpg",
+        dimensions: "Huile sur toile - 21x21cm",
+        serie: "Série \"Les Minis\" - 2024/2025",
+        availableSizes: "Disponibles : 21x21 - Cadre fourni avec"
+    },
+    // 9. Perso
+    {
+        id: "p4",
+        title: "Ave Maria",
+        category: "personnalites",
+        image: "/images/gallery/personnalites/Ave-maria_cadre.jpg",
+        dimensions: "Huile sur toile - 40x50cm",
+        serie: "Série \"Religieux\" - 2024/2025",
+        availableSizes: "Disponibles : 40x50cm (original)",
+        moreImages: ["/images/gallery/personnalites/ave_zoom.jpg"]
     },
     // 10. Lino
     {
@@ -140,41 +138,37 @@ export const galleryPageItems: Artwork[] = [
         availableSizes: "Disponible : 21x14,8 (A5)"
     },
 
-    // === COLONNE 3 (Début : PERSO) ===
-    // 13. Perso
+    // === COLONNE 3 ===
+    // 13. Lino
     {
-        id: "p3",
-        title: "Mater Dei Orans",
-        category: "personnalites",
-        image: "/images/gallery/personnalites/Mater-dei-orans_cadre.jpg",
-        dimensions: "Huile sur toile - 40x50cm",
-        serie: "Série \"Religieux\" - 2024/2025",
-        availableSizes: "Disponibles : 40x50cm (original)",
-        moreImages: ["/images/gallery/personnalites/mater_zoom.jpg"]
-    },
-    // 14. Lino
-    {
-        id: "l5",
-        title: "Provence",
+        id: "l6",
+        title: "Cyclades",
         category: "linogravures",
-        image: "/images/gallery/linogravures/lino_provence_cadre.jpg",
+        image: "/images/gallery/linogravures/lino_cyclades_cadre.jpg",
         dimensions: "Linogravure - 21x29,7 (A4)",
         serie: "Série \"Linogravures\" - 2024/2025",
         availableSizes: "Disponible : 21x29,7 (A4)"
     },
-    // 15. Saison
+    // 14. Mini
     {
-        id: "s3",
-        title: "Blindwinter",
-        category: "saisons",
-        image: "/images/gallery/saisons/automneSD_cadre.jpg",
-        dimensions: "Huile sur toile - 40x50cm",
-        serie: "Série \"Saisons\" - 2024/2025",
-        availableSizes: "Disponibles : 40x50cm (original), 40x50cm (print), 15x21cm",
-        moreImages: [
-            "/images/gallery/saisons/print_automne.png",
-            "/images/gallery/saisons/CP_automne.png"
-        ]
+        id: "m8",
+        title: "Last Ray",
+        category: "minis",
+        image: "/images/gallery/minis/sunset2_cadre.jpg",
+        dimensions: "Huile sur toile - 16x21cm",
+        serie: "Série \"Les Minis\" - 2024/2025",
+        availableSizes: "Disponibles : 16x21 - Cadre fourni avec"
+    },
+    // 15. Lino
+    {
+        id: "l2",
+        title: "Saint Graal",
+        category: "linogravures",
+        image: "/images/gallery/linogravures/lino_stgraal_cadre.jpg",
+        dimensions: "Linogravure - 21x29,7 (A4)",
+        serie: "Série \"Linogravures\" - 2024/2025",
+        availableSizes: "Disponible : 21x29,7 (A4)",
+        moreImages: ["/images/gallery/linogravures/lino_stgraal_mur.jpg"]
     },
     // 16. Mini
     {
@@ -186,15 +180,16 @@ export const galleryPageItems: Artwork[] = [
         serie: "Série \"Les Minis\" - 2024/2025",
         availableSizes: "Disponibles : 21x21 - Cadre fourni avec"
     },
-    // 17. Lino
+    // 17. Perso
     {
-        id: "l6",
-        title: "Cyclades",
-        category: "linogravures",
-        image: "/images/gallery/linogravures/lino_cyclades_cadre.jpg",
-        dimensions: "Linogravure - 21x29,7 (A4)",
-        serie: "Série \"Linogravures\" - 2024/2025",
-        availableSizes: "Disponible : 21x29,7 (A4)"
+        id: "p3",
+        title: "Mater Dei Orans",
+        category: "personnalites",
+        image: "/images/gallery/personnalites/Mater-dei-orans_cadre.jpg",
+        dimensions: "Huile sur toile - 40x50cm",
+        serie: "Série \"Religieux\" - 2024/2025",
+        availableSizes: "Disponibles : 40x50cm (original)",
+        moreImages: ["/images/gallery/personnalites/mater_zoom.jpg"]
     },
     // 18. Mini
     {
@@ -207,18 +202,8 @@ export const galleryPageItems: Artwork[] = [
         availableSizes: "Disponibles : 21x21 - Cadre fourni avec"
     },
 
-    // === COLONNE 4 (Début : LINO) ===
-    // 19. Lino
-    {
-        id: "l7",
-        title: "Seville",
-        category: "linogravures",
-        image: "/images/gallery/linogravures/lino_seville_cadre.jpg",
-        dimensions: "Linogravure - 21x29,7 (A4)",
-        serie: "Série \"Linogravures\" - 2024/2025",
-        availableSizes: "Disponible : 21x29,7 (A4)"
-    },
-    // 20. Saison
+    // === COLONNE 4 ===
+    // 19. Saison
     {
         id: "s4",
         title: "Blindfall",
@@ -232,6 +217,17 @@ export const galleryPageItems: Artwork[] = [
             "/images/gallery/saisons/CP_hiver.png"
         ]
     },
+    // 20. Perso
+    {
+        id: "p2",
+        title: "Zendaya",
+        category: "personnalites",
+        image: "/images/gallery/personnalites/Zendaya_cadre.jpg",
+        dimensions: "Huile sur toile - 50x50cm",
+        serie: "Série \"Personnalités\" - 2024/2025",
+        availableSizes: "Disponibles : 50x50cm (original)",
+        moreImages: ["/images/gallery/personnalites/zendaya_zoom.jpg"]
+    },
     // 21. Mini
     {
         id: "m7",
@@ -242,16 +238,15 @@ export const galleryPageItems: Artwork[] = [
         serie: "Série \"Les Minis\" - 2024/2025",
         availableSizes: "Disponibles : 16x21 - Cadre fourni avec"
     },
-    // 22. Perso
+    // 22. Lino
     {
-        id: "p4",
-        title: "Ave Maria",
-        category: "personnalites",
-        image: "/images/gallery/personnalites/Ave-maria_cadre.jpg",
-        dimensions: "Huile sur toile - 40x50cm",
-        serie: "Série \"Religieux\" - 2024/2025",
-        availableSizes: "Disponibles : 40x50cm (original)",
-        moreImages: ["/images/gallery/personnalites/ave_zoom.jpg"]
+        id: "l5",
+        title: "Provence",
+        category: "linogravures",
+        image: "/images/gallery/linogravures/lino_provence_cadre.jpg",
+        dimensions: "Linogravure - 21x29,7 (A4)",
+        serie: "Série \"Linogravures\" - 2024/2025",
+        availableSizes: "Disponible : 21x29,7 (A4)"
     },
     // 23. Lino
     {
@@ -263,14 +258,18 @@ export const galleryPageItems: Artwork[] = [
         serie: "Série \"Linogravures\" - 2024/2025",
         availableSizes: "Disponible : 21x29,7 (A4)"
     },
-    // 24. Mini
+    // 24. Saison
     {
-        id: "m8",
-        title: "Last Ray",
-        category: "minis",
-        image: "/images/gallery/minis/sunset2_cadre.jpg",
-        dimensions: "Huile sur toile - 16x21cm",
-        serie: "Série \"Les Minis\" - 2024/2025",
-        availableSizes: "Disponibles : 16x21 - Cadre fourni avec"
+        id: "s3",
+        title: "Blindwinter",
+        category: "saisons",
+        image: "/images/gallery/saisons/automneSD_cadre.jpg",
+        dimensions: "Huile sur toile - 40x50cm",
+        serie: "Série \"Saisons\" - 2024/2025",
+        availableSizes: "Disponibles : 40x50cm (original), 40x50cm (print), 15x21cm",
+        moreImages: [
+            "/images/gallery/saisons/print_automne.png",
+            "/images/gallery/saisons/CP_automne.png"
+        ]
     },
 ];
