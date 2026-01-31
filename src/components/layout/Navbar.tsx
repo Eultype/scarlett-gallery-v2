@@ -6,6 +6,8 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 // Import React
 import { useState, useEffect } from "react";
+// Import des datas
+import { CONTACT_INFO } from "@/data/contact";
 
 // Composant de la Navbar
 export default function Navbar() {
@@ -77,7 +79,7 @@ export default function Navbar() {
                 {/* Bouton Shop (à droite) */}
                 <div className="hidden xl:block flex-shrink-0">
                     <a
-                        href="https://www.etsy.com/shop/byscarlettgallery/"
+                        href={CONTACT_INFO.socials.etsy}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={`border px-6 py-2 text-sm uppercase tracking-widest transition-all duration-300 hover:bg-terra hover:border-terra hover:text-white ${
@@ -132,7 +134,7 @@ export default function Navbar() {
                 
                 <div className="pt-8">
                     <a
-                        href="https://www.etsy.com/shop/byscarlettgallery/"
+                        href={CONTACT_INFO.socials.etsy}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-lg font-bold border border-black px-10 py-4 uppercase tracking-widest hover:bg-terra hover:text-white hover:border-terra transition-colors"

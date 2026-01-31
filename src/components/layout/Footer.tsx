@@ -4,6 +4,8 @@ import Image from "next/image";
 // Import de React Icons
 import { FaInstagram, FaFacebookF, FaTiktok, FaEtsy } from "react-icons/fa";
 import { BiSend } from "react-icons/bi";
+// Import des datas
+import { CONTACT_INFO } from "@/data/contact";
 
 // Composant du Footer
 export default function Footer() {
@@ -32,7 +34,7 @@ export default function Footer() {
                     </div>
                     {/* Colonne 2 : Navigation */}
                     <div>
-                        <h4 className="font-medium text-lg mb-6">Navigation</h4>
+                        <h4 className="font-cormorant italic tracking-wider text-2xl font-light mb-6">Navigation</h4>
                         <ul className="space-y-3 text-gray-400">
                             <li><FooterLink href="/" label="Home" /></li>
                             <li><FooterLink href="/about" label="About Me" /></li>
@@ -43,7 +45,7 @@ export default function Footer() {
                     </div>
                     {/* Colonne 3 : Services */}
                     <div>
-                        <h4 className="font-medium text-lg mb-6">Services</h4>
+                        <h4 className="font-cormorant italic tracking-wider text-2xl font-light mb-6">Services</h4>
                         <ul className="space-y-3 text-gray-400">
                             <li><FooterLink href="/contact" label="Commandes sur mesure" /></li>
                             <li><FooterLink href="/contact" label="Expositions" /></li>
@@ -53,22 +55,22 @@ export default function Footer() {
                     {/* Colonne 4 : Réseaux sociaux et newsletter */}
                     <div>
                         {/* Réseaux sociaux */}
-                        <h4 className="font-medium text-lg mb-6">Réseaux sociaux</h4>
+                        <h4 className="font-cormorant italic tracking-wider text-2xl font-light mb-6">Réseaux sociaux</h4>
                         <div className="flex space-x-6 mb-8">
                             <SocialLink
-                                href="https://www.instagram.com/scar.lett_gallery"
+                                href={CONTACT_INFO.socials.instagram}
                                 icon={<FaInstagram size={24} />}
                             />
                             <SocialLink
-                                href="https://www.facebook.com/emma.denonii"
+                                href={CONTACT_INFO.socials.facebook}
                                 icon={<FaFacebookF size={22} />}
                             />
                             <SocialLink
-                                href="https://www.tiktok.com/@scar.lett_gallery"
+                                href={CONTACT_INFO.socials.tiktok}
                                 icon={<FaTiktok size={22} />}
                             />
                             <SocialLink
-                                href="https://www.etsy.com/shop/byscarlettgallery/"
+                                href={CONTACT_INFO.socials.etsy}
                                 icon={<FaEtsy size={22} />}
                             />
                         </div>

@@ -6,11 +6,14 @@ import Link from "next/link";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
 // Import React Icons
 import { FaInstagram, FaFacebookF, FaTiktok, FaEtsy } from "react-icons/fa";
+// Import des datas
+import { CONTACT_INFO } from "@/data/contact";
 
 // Composant ContactSection de la page d'accueil
 export default function ContactSection() {
     return (
         <section id="contact" className="py-20 bg-[#FDFBF7]">
+            {/* Section contact : Coordonnées / Formulaire */}
             <div className="mx-auto px-8 md:px-10 xl:px-20">
                 <div className="flex flex-col xl:flex-row justify-center gap-16 lg:gap-24 mx-auto">
 
@@ -48,7 +51,7 @@ export default function ContactSection() {
                                         {/* Titre */}
                                         <p className="font-medium text-gray-900">Atelier</p>
                                         {/* Ville */}
-                                        <p className="text-sm">Bruxelles, Belgique</p>
+                                        <p className="text-sm">{CONTACT_INFO.address}</p>
                                     </div>
                                 </div>
                                 {/* Icône / case : téléphone */}
@@ -62,7 +65,7 @@ export default function ContactSection() {
                                         {/* Titre */}
                                         <p className="font-medium text-gray-900">Téléphone</p>
                                         {/* Téléphone */}
-                                        <p className="text-sm">+33 6 78 47 87 21</p>
+                                        <p className="text-sm">{CONTACT_INFO.phone}</p>
                                     </div>
                                 </div>
                                 {/* Icône / case : email */}
@@ -76,7 +79,7 @@ export default function ContactSection() {
                                         {/* Titre */}
                                         <p className="font-medium text-gray-900">Email</p>
                                         {/* Case : email*/}
-                                        <p className="text-sm break-all">contact@scarlettgallery.com</p>
+                                        <p className="text-sm break-all">{CONTACT_INFO.email}</p>
                                     </div>
                                 </div>
                             </div>
@@ -91,13 +94,13 @@ export default function ContactSection() {
                             {/* Réseaux sociaux */}
                             <div className="flex gap-4 md:justify-center xl:justify-start">
                                 {/* Instagram */}
-                                <SocialBtn href="https://www.instagram.com/scar.lett_gallery" icon={<FaInstagram size={20} />} />
+                                <SocialBtn href={CONTACT_INFO.socials.instagram} icon={<FaInstagram size={20} />} />
                                 {/* Facebook */}
-                                <SocialBtn href="https://www.facebook.com/emma.denonii" icon={<FaFacebookF size={20} />} />
+                                <SocialBtn href={CONTACT_INFO.socials.facebook} icon={<FaFacebookF size={20} />} />
                                 {/* TikTok */}
-                                <SocialBtn href="https://www.tiktok.com/@scar.lett_gallery" icon={<FaTiktok size={20} />} />
+                                <SocialBtn href={CONTACT_INFO.socials.tiktok} icon={<FaTiktok size={20} />} />
                                 {/* Etsy */}
-                                <SocialBtn href="https://www.etsy.com/shop/byscarlettgallery/" icon={<FaEtsy size={20} />} />
+                                <SocialBtn href={CONTACT_INFO.socials.etsy} icon={<FaEtsy size={20} />} />
                             </div>
                         </div>
 
@@ -107,8 +110,8 @@ export default function ContactSection() {
                                 <Clock className="text-terra shrink-0 mt-1" size={20} />
                                 <div className="space-y-1">
                                     <p className="font-medium text-gray-900 mb-2">Disponibilités</p>
-                                    <p className="text-sm">Lundi - Vendredi : Après 18h</p>
-                                    <p className="text-sm">Samedi / Dimanche : Sur rendez-vous</p>
+                                    <p className="text-sm">{CONTACT_INFO.availability.week}</p>
+                                    <p className="text-sm">{CONTACT_INFO.availability.weekend}</p>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +120,7 @@ export default function ContactSection() {
 
                     {/* Colonne de droite : Formulaire de contact */}
                     <div className="w-full xl:w-7/12 bg-white p-8 md:p-12 rounded-xl shadow-2xl">
-                        <form action="https://formsubmit.co/561abe24f35506f8d73deb1c6e0906ac" method="POST" className="space-y-10">
+                        <form action={CONTACT_INFO.formAction} method="POST" className="space-y-10">
 
                             {/* Titres */}
                             <div className="mb-10 text-center xl:text-left">

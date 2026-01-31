@@ -13,6 +13,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Lightbox from "@/components/ui/Lightbox";
 // Import des datas
 import { homeGalleryItems, Artwork } from "@/data/artworks";
+import { CONTACT_INFO } from "@/data/contact";
 
 // Liste des catégories
 const tabs = [
@@ -210,7 +211,7 @@ export default function GalleryPreviewSection() {
                 {/* Boutons d'achat et Call to Action */}
                 <div className="flex flex-col md:flex-row flex-wrap justify-center items-center gap-4 mt-8">
                     <a
-                        href="https://www.etsy.com/shop/byscarlettgallery/"
+                        href={CONTACT_INFO.socials.etsy}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full md:w-auto border border-black px-8 py-4 text-sm uppercase tracking-widest hover:bg-[#F45800] hover:border-[#F45800] hover:text-white transition-all duration-300"
@@ -218,7 +219,7 @@ export default function GalleryPreviewSection() {
                         Achetez mes oeuvres (Etsy)
                     </a>
                     <a
-                        href="https://www.vinted.fr/member/11955008"
+                        href={CONTACT_INFO.socials.vinted}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full md:w-auto border border-black px-8 py-4 text-sm uppercase tracking-widest hover:bg-[#007782] hover:border-[#007782] hover:text-white transition-all duration-300"
@@ -226,7 +227,7 @@ export default function GalleryPreviewSection() {
                         Achetez mes oeuvres (Vinted)
                     </a>
                     <Link
-                        href="#contact"
+                        href="/contact"
                         className="w-full md:w-auto bg-black text-white px-8 py-4 text-sm uppercase tracking-widest hover:bg-terra transition-all duration-300"
                     >
                         Planifiez une oeuvre personnalisée
