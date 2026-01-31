@@ -4,6 +4,7 @@
   /* Déclaration des polices liées aux variables Next.js */
   --font-sans: var(--font-montserrat);
   --font-autumn: var(--font-autumn);
+  --font-cormorant: var(--font-cormorant);
 
   /* Déclaration de mes couleurs perso */
   --color-terra: #95421A;
@@ -18,4 +19,8 @@ body {
 /* Utilitaire pour les polices */
 .font-autumn {
   font-family: var(--font-autumn);
+}
+
+.font-cormorant {
+  font-family: var(--font-cormorant);
 }
