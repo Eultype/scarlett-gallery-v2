@@ -1,36 +1,43 @@
 "use client";
 
-// Import Next
 import Link from "next/link";
-// Import Lucide Icons
+import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
-// Import React Icons
 import { FaInstagram, FaFacebookF, FaTiktok, FaEtsy } from "react-icons/fa";
 
-// Composant ContactSection de la page d'accueil
-export default function ContactSection() {
+export default function ContactPage() {
     return (
-        <section id="contact" className="py-20 bg-[#FDFBF7]">
+        <main className="pt-32 pb-20 bg-[#FDFBF7] min-h-screen">
+
+            {/* Section Hero : Titre et sous-titre */}
+            <section className="mx-auto px-8 md:px-10 xl:px-20 mb-20 text-center pt-10">
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                    className="space-y-6"
+                >
+                    {/* Badge */}
+                    <span className="text-terra text-xs font-bold uppercase tracking-[0.3em]">Discussion</span>
+                    {/* Titre */}
+                    <h1 className="font-cormorant text-6xl md:text-7xl text-gray-900 font-light italic">
+                        Contact
+                    </h1>
+                    {/* Sous-titre */}
+                    <p className="text-gray-600 text-lg font-light leading-relaxed max-w-2xl mx-auto">
+                        Une question sur une œuvre, une envie de collaboration ou simplement l'envie d'échanger ?
+                        Mon atelier est ouvert à la discussion.
+                    </p>
+                </motion.div>
+            </section>
+
+            {/* Section contact : Coordonnées / Formulaire */}
             <div className="mx-auto px-8 md:px-10 xl:px-20">
                 <div className="flex flex-col xl:flex-row justify-center gap-16 lg:gap-24 mx-auto">
 
                     {/* Colonne de gauche : Infos */}
                     <div className="w-full xl:w-5/12 space-y-12">
                         
-                        {/* Titres */}
-                        <div className="text-center xl:text-left">
-                            {/* Titre */}
-                            <h2 className="font-cormorant text-6xl md:text-7xl text-gray-900 mb-6 font-light italic">
-                                Entrons en contact
-                            </h2>
-                            {/* Sous-titre */}
-                            <p className="text-gray-600 text-lg font-light leading-relaxed">
-                                Que vous souhaitiez commander une œuvre ou organiser une exposition,
-                                je serai ravie de vous répondre. N&apos;hésitez pas à me contacter via
-                                ce formulaire ou directement par téléphone.
-                            </p>
-                        </div>
-
                         {/* Coordonnées */}
                         <div className="space-y-8 md:text-center xl:text-left">
                             <h3 className="font-cormorant text-3xl text-gray-900 border-b border-terra/30 pb-2 inline-block italic">
@@ -120,7 +127,7 @@ export default function ContactSection() {
                         <form action="https://formsubmit.co/561abe24f35506f8d73deb1c6e0906ac" method="POST" className="space-y-10">
 
                             {/* Titres */}
-                            <div className="mb-10 text-center xl:text-left">
+                            <div className="mb-10">
                                 <h3 className="font-cormorant text-4xl text-gray-900 italic mb-2">Envoyer un message</h3>
                                 <p className="text-gray-500 font-light text-sm">Je vous répondrai dans les plus brefs délais.</p>
                             </div>
@@ -196,7 +203,32 @@ export default function ContactSection() {
 
                 </div>
             </div>
-        </section>
+
+            {/* Section FAQ */}
+            <section className="mx-auto px-8 md:px-10 xl:px-20 mt-32">
+                <div className="text-center mb-12">
+                    <h2 className="font-cormorant text-4xl md:text-5xl text-gray-900 italic">Questions Fréquentes</h2>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <FaqItem 
+                        question="Livrez-vous à l'international ?" 
+                        answer="Oui, je livre mes œuvres partout dans le monde. Les frais de port sont calculés en fonction de la destination et du format de l'œuvre." 
+                    />
+                    <FaqItem 
+                        question="Acceptez-vous les paiements en plusieurs fois ?" 
+                        answer="Pour les grandes toiles ou les commandes sur mesure, un échelonnement du paiement est tout à fait possible. Discutons-en." 
+                    />
+                    <FaqItem 
+                        question="Les œuvres sont-elles encadrées ?" 
+                        answer="Certaines œuvres (notamment les Minis) sont vendues avec leur cadre. Pour les grands formats, cela dépend. C'est précisé sur chaque fiche œuvre." 
+                    />
+                    <FaqItem 
+                        question="Quel est le délai pour une commande ?" 
+                        answer="Il faut compter entre 3 et 6 semaines selon la complexité et le temps de séchage de l'huile, qui est incompressible." 
+                    />
+                </div>
+            </section>
+        </main>
     );
 }
 
@@ -210,6 +242,15 @@ function SocialBtn({ href, icon }: { href: string; icon: React.ReactNode }) {
         >
             {icon}
         </a>
+    );
+}
+
+function FaqItem({ question, answer }: { question: string; answer: string }) {
+    return (
+        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+            <h4 className="font-bold text-gray-900 mb-2">{question}</h4>
+            <p className="text-sm text-gray-600 leading-relaxed">{answer}</p>
+        </div>
     );
 }
 

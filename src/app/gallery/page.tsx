@@ -41,7 +41,7 @@ export default function GalleryPage() {
 
     return (
         <main className="pt-32 pb-20 bg-[#FDFBF7] min-h-screen">
-            <div className="mx-auto px-4 md:px-10 xl:px-20">
+            <div className="mx-auto px-8 md:px-10 xl:px-20">
                 {/* Section Hero : Titre et sous-titre */}
                 <motion.div 
                     initial={{ opacity: 0, y: 20 }}

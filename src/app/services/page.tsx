@@ -14,12 +14,12 @@ export default function ServicesPage() {
         <main className="pt-32 pb-20 bg-[#FDFBF7]">
             
             {/* Section Hero : Titre et sous-titre */}
-            <section className="mx-auto px-4 md:px-10 xl:px-20 mb-24 text-center pt-10">
+            <section className="mx-auto px-8 md:px-10 xl:px-20 mb-24 text-center pt-10">
                 <motion.div 
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
-                    className="max-w-3xl mx-auto space-y-6"
+                    className="max-w-4xl mx-auto space-y-6"
                 >
                     {/* Badge */}
                     <span className="text-terra text-xs font-bold uppercase tracking-[0.3em]">Collaborations</span>
@@ -120,7 +120,7 @@ export default function ServicesPage() {
 
             {/* CTA final : Prendre rendez-vous */}
             <section className="mt-32 py-20 bg-[#FDFBF7]">
-                <div className="mx-auto px-4 md:px-10 xl:px-20 text-center space-y-8">
+                <div className="mx-auto px-8 md:px-10 xl:px-20 text-center space-y-8">
                     {/* Titre */}
                     <h2 className="font-cormorant text-5xl text-gray-900 italic">Un projet en tête ?</h2>
                     {/* Sous-titre */}
