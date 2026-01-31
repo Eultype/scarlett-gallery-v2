@@ -11,14 +11,14 @@ export default function AboutSection() {
             <div className="mx-auto px-8 md:px-10 xl:px-20">
                 <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
                     {/* Image de l'artiste */}
-                    <div className="w-full lg:w-1/2 relative group">
-                        <div className="relative aspect-[4/5] shadow-xl transform transition-transform duration-500 hover:scale-[1.02]">
+                    <div className="w-full md:w-5/12 lg:w-5/12 relative group">
+                        <div className="relative aspect-[4/5] transform transition-transform duration-500 hover:scale-[1.02]">
                             {/* Image noir et blanc */}
                             <Image
                                 src="/images/about/Scarlett_conv(noirblanc).jpg"
                                 alt="Portrait Emma N&B"
                                 fill
-                                className="object-cover transition-opacity duration-700 ease-in-out group-hover:opacity-0"
+                                className="object-cover transition-opacity duration-700 ease-in-out group-hover:opacity-0 rounded-lg overflow-hidden shadow-2xl border-[4px] border-white"
                                 sizes="(max-width: 768px) 100vw, 50vw"
                             />
                             {/* Image en couleurs */}
@@ -26,7 +26,7 @@ export default function AboutSection() {
                                 src="/images/about/Scarlett_conv2.jpeg"
                                 alt="Portrait Emma Couleur"
                                 fill
-                                className="object-cover opacity-0 transition-opacity duration-700 ease-in-out group-hover:opacity-100 absolute top-0 left-0"
+                                className="object-cover opacity-0 transition-opacity duration-700 ease-in-out group-hover:opacity-100 absolute top-0 left-0 rounded-lg overflow-hidden shadow-2xl border-[4px] border-white"
                                 sizes="(max-width: 768px) 100vw, 50vw"
                             />
                         </div>
@@ -45,7 +45,7 @@ export default function AboutSection() {
                         <div className="text-gray-600 leading-relaxed space-y-4 text-justify lg:text-left">
                             <p>
                                 Je m’appelle Emma, originaire de Tourcoing et aujourd’hui installée à Bruxelles.
-                                Ma passion pour la peinture est née très tôt, au contact de ma tante Line,
+                                Ma passion pour la peinture est née très tôt, au contact de ma tante,
                                 qui m’a transmis non seulement les techniques, mais aussi l’amour du geste,
                                 de la couleur et de la matière.
                             </p>

@@ -19,15 +19,15 @@ export default function AboutPage() {
         <main ref={containerRef} className="pt-24 bg-[#FDFBF7] overflow-x-hidden">
 
             {/* Section HERO - L'Artiste */}
-            <section className="py-20 mx-auto px-4 md:px-10 xl:px-20">
-                <div className="flex flex-col md:flex-row items-center gap-16">
+            <section className="py-20 pt-20 sm:pt-40 mx-auto px-4 md:px-10 xl:px-20">
+                <div className="flex flex-col md:flex-row items-center gap-16 justify-center">
                     {/* Image de l'artiste */}
-                    <div className="w-full md:w-1/2">
+                    <div className="w-full md:w-5/12 lg:w-5/12">
                         <motion.div
                             initial={{ opacity: 0, x: -30 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.8 }}
-                            className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl border-[4px] border-white"
+                            className="relative aspect-[3/4] rounded-lg overflow-hidden shadow-2xl border-[4px] border-white"
                         >
                             <Image
                                 src="/images/about/Scarlett_peint.jpg"
@@ -49,7 +49,7 @@ export default function AboutPage() {
                         <motion.h1
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="font-cormorant text-5xl md:text-7xl text-gray-900 leading-none"
+                            className="font-cormorant text-5xl lg:text-7xl text-gray-900 leading-none"
                         >
                             Emma De Noni
                         </motion.h1>
@@ -65,9 +65,9 @@ export default function AboutPage() {
                                 Chaque toile est une invitation à ralentir et à observer la beauté dans l&apos;imperfection.
                             </p>
                             <p>
-                                Je ne cherche pas à figer le réel, mais à en capturer l&apos;essence vibrante. 
-                                Mon travail est une exploration de l&apos;intime, un dialogue constant entre 
-                                la matière et la lumière où chaque coup de pinceau tente de traduire ces instants 
+                                Je ne cherche pas à figer le réel, mais à en capturer l&apos;essence vibrante.
+                                Mon travail est une exploration de l&apos;intime, un dialogue constant entre
+                                la matière et la lumière où chaque coup de pinceau tente de traduire ces instants
                                 fugaces qui transforment l&apos;ordinaire en poésie.
                             </p>
                         </div>
@@ -76,18 +76,18 @@ export default function AboutPage() {
             </section>
 
             {/* Section : L'héritage */}
-            <section className="relative py-20">
+            <section className="relative py-40">
                 {/* Texte de fond 'Héritage' */}
                 <motion.div
                     style={{ y: yText }}
-                    className="absolute top-5 right-60 opacity-[0.03] select-none pointer-events-none whitespace-nowrap"
+                    className="absolute top-20 md:top-20 lg:top-5 xl:top-5 right-16 md:right-35 lg:right-40 xl:right-60 opacity-[0.07] md:opacity-[0.03] select-none pointer-events-none whitespace-nowrap"
                 >
                     <span className="font-autumn text-[10vw]">Heritage</span>
                 </motion.div>
 
                 <div className="mx-auto px-4 md:px-10 xl:px-20 relative">
                     <div className="mx-auto">
-                        <div className="flex flex-col md:flex-row items-center gap-16 mb-40">
+                        <div className="flex flex-col md:flex-row items-center gap-16 mb-10">
                             <div className="md:w-3/5 space-y-8">
                                 {/* Badge */}
                                 <div className="inline-block bg-terra text-white px-4 py-1 text-[10px] font-bold uppercase tracking-[0.3em] rounded">
@@ -95,7 +95,7 @@ export default function AboutPage() {
                                 </div>
 
                                 {/* Titre */}
-                                <h2 className="font-cormorant text-7xl text-gray-900 font-light">Un héritage précieux</h2>
+                                <h2 className="font-cormorant text-5xl lg:text-7xl text-gray-900 font-light">Un héritage précieux</h2>
 
                                 {/* Sous-titre */}
                                 <p className="text-2xl text-terra italic">Le murmure de l&apos;atelier</p>
@@ -103,7 +103,7 @@ export default function AboutPage() {
                                 {/* Description */}
                                 <p className="text-xl text-gray-600 leading-relaxed text-justify">
                                     &quot;Ma passion n&apos;est pas née dans une école d&apos;art, mais dans le petit atelier
-                                    poussiéreux de ma tante Line. C&apos;est elle qui m&apos;a appris que la peinture
+                                    de ma tatie Lily. C&apos;est elle qui m&apos;a appris que la peinture
                                     ne se regarde pas avec les yeux, mais avec le cœur.&quot;
                                 </p>
                             </div>
@@ -111,13 +111,13 @@ export default function AboutPage() {
                             {/* Image de l'artiste et sa tante */}
                             <motion.div
                                 style={{ y: yImg }}
-                                className="md:w-2/5 aspect-[3/4] relative shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-700"
+                                className="md:w-2/5 aspect-[3/4] rounded-lg relative shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-700"
                             >
                                 <Image
                                     src="/images/about/emma-line.webp"
                                     alt="L'atelier"
                                     fill
-                                    className="object-cover rounded-sm border-[4px] border-white"
+                                    className="object-cover rounded-lg border-[4px] border-white"
                                 />
                             </motion.div>
                         </div>
@@ -128,11 +128,11 @@ export default function AboutPage() {
             </section>
 
             {/* Section : Le Lieu  */}
-            <section className="relative py-24">
+            <section className="relative py-20">
                 {/* Texte de fond 'Sanctuaire' */}
                 <motion.div
                     style={{ y: yText }}
-                    className="absolute top-5 right-30 opacity-[0.05] select-none pointer-events-none whitespace-nowrap"
+                    className="absolute top-20 md:top-20 lg:top-5 xl:top-10 right-6 md:right-12 lg:right-16 xl:right-24 opacity-[0.07] md:opacity-[0.05] select-none pointer-events-none whitespace-nowrap"
                 >
                     <span className="font-autumn text-[10vw] text-gray-900">Sanctuaire</span>
                 </motion.div>
@@ -145,7 +145,7 @@ export default function AboutPage() {
                             L'Atelier
                         </div>
                         {/* Titre */}
-                        <h2 className="font-cormorant text-6xl md:text-7xl text-gray-900 font-light italic">L'Âme du Lieu</h2>
+                        <h2 className="font-cormorant text-5xl lg:text-7xl text-gray-900 font-light italic">Là où tout prend vie</h2>
                         {/* Sous-titre */}
                         <p className="text-gray-500 italic mt-4">Trois temps, un seul espace.</p>
                     </div>
@@ -232,7 +232,7 @@ export default function AboutPage() {
             </section>
 
             {/* Invitation Galerie : Titre / Bouton  */}
-            <div className="mx-auto px:4 md:px-10 xl:px-20 pb-40">
+            <div className="mx-auto px-4 md:px-10 xl:px-20 pb-40">
                 <div className="mx-auto border-t border-b border-terra/20 py-16 text-center space-y-8">
                     {/* Titre */}
                     <p className="font-cormorant text-5xl text-gray-400 italic">La suite de l'histoire...</p>

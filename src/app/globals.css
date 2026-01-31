@@ -24,3 +24,14 @@ body {
 .font-cormorant {
   font-family: var(--font-cormorant);
 }
+
+/* PROTECTION IMAGES GLOBALE */
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+  -webkit-touch-callout: none; /* Empêche le menu contextuel sur iOS */
+  user-select: none;
+}

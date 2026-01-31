@@ -8,6 +8,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import SmoothScrolling from "@/components/layout/SmoothScrolling";
+import ImageProtection from "@/components/layout/ImageProtection";
 
 const montserrat = Montserrat({
     subsets: ["latin"],
@@ -45,6 +46,7 @@ export default function RootLayout({
                 className={`${montserrat.variable} ${cormorant.variable} ${autumnChant.variable} antialiased font-sans`}
             >
                 <SmoothScrolling>
+                    <ImageProtection />
                     <Navbar />
                     {children}
                     <Footer />

@@ -39,7 +39,7 @@ export default function Navbar() {
         <nav
             className={`fixed top-0 w-full z-50 transition-all duration-500 ${
                 !isTransparent
-                    ? "bg-white/95 backdrop-blur-md shadow-sm py-2" // Version compacte (scroll ou autre page)
+                    ? "bg-[#FDFBF7] backdrop-blur-md shadow-sm py-2" // Version compacte (scroll ou autre page)
                     : "bg-transparent py-6" // Version aérée (Home top)
             }`}
         >
