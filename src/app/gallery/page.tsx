@@ -42,15 +42,24 @@ export default function GalleryPage() {
     return (
         <main className="pt-32 pb-20 bg-[#FDFBF7] min-h-screen">
             <div className="mx-auto px-4 md:px-10 xl:px-20">
-                {/* En-tête */}
-                <div className="text-center mb-16 space-y-4">
-                    <h1 className="font-cormorant text-6xl md:text-7xl text-gray-900 font-light italic pt-10">
+                {/* Section Hero : Titre et sous-titre */}
+                <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                    className="text-center mb-16 space-y-4"
+                >
+                    {/* Badge */}
+                    <span className="text-terra text-xs font-bold uppercase tracking-[0.3em] block pt-10">Collection</span>
+                    {/* Titre */}
+                    <h1 className="font-cormorant text-6xl md:text-7xl text-gray-900 font-light italic">
                         La Galerie
                     </h1>
+                    {/* Sous-titre */}
                     <p className="text-gray-500 font-light tracking-wide">
                         Collection complète des œuvres originales & tirages
                     </p>
-                </div>
+                </motion.div>
 
                 {/* Filtres */}
                 <div className="flex flex-wrap justify-center gap-4 mb-16">
@@ -69,7 +78,7 @@ export default function GalleryPage() {
                     ))}
                 </div>
 
-                {/* Masonry Layout (CSS Columns) */}
+                {/* Masonry Layout */}
                 <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-8 space-y-8">
                     <AnimatePresence>
                         {filteredItems.map((item) => (
@@ -87,25 +96,23 @@ export default function GalleryPage() {
                                     onClick={() => setSelectedArtwork(item)}
                                 >
                                     <div className="relative overflow-hidden w-full">
-                                        {/* Image responsive : la hauteur est automatique */}
+                                        {/* Images */}
                                         <Image
                                             src={item.image}
                                             alt={item.title}
                                             width={800}
-                                            height={1000} // Ratio indicatif
+                                            height={1000}
                                             className="w-full h-auto object-cover transition-transform duration-700"
                                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         />
                                         
-                                        {/* Overlay Info (Apparaît au survol) */}
+                                        {/* Overlay d'infos */}
                                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white p-4 text-center backdrop-blur-[2px]">
                                             <h3 className="font-cormorant text-2xl italic mb-2">{item.title}</h3>
                                             <p className="text-xs uppercase tracking-widest opacity-80">{item.dimensions}</p>
                                             <span className="mt-4 border border-white px-4 py-1 text-[10px] uppercase tracking-widest">Voir</span>
                                         </div>
                                     </div>
-                                    
-                                    {/* Titre discret en dessous sur mobile (optionnel, ici j'ai tout mis dans l'overlay pour le style "Mur de cadres" pur) */}
                                 </div>
                             </motion.div>
                         ))}

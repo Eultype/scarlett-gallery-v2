@@ -129,7 +129,7 @@ export default function GalleryPreviewSection() {
                     <div className="min-h-[400px] overflow-hidden">
                         <AnimatePresence mode="wait" custom={direction}>
                             <motion.div
-                                key={startIndex + activeTab} // Clé unique pour déclencher l'animation
+                                key={startIndex + activeTab}
                                 custom={direction}
                                 variants={slideVariants}
                                 initial="enter"
@@ -195,7 +195,7 @@ export default function GalleryPreviewSection() {
 
                 </div>
 
-                {/* Lien élégant vers la galerie complète */}
+                {/* Lien vers la galerie complète */}
                 <div className="text-center mt-12 mb-8">
                     <Link
                         href="/gallery"

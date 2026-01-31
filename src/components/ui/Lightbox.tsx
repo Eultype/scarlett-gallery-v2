@@ -54,12 +54,12 @@ export default function Lightbox({ isOpen, onClose, imageSrc, title, sizes, more
 
             {/* Contenu */}
             <div
-                className="max-w-5xl w-full flex flex-col md:flex-row gap-8 items-center justify-center"
+                className="max-w-5xl w-full flex flex-col xl:flex-row gap-8 items-center justify-center"
                 onClick={(e) => e.stopPropagation()} // Empêche de fermer si on clique sur le contenu
             >
 
                 {/* Image Principale (Grande) */}
-                <div className="relative w-full md:w-2/3 h-[60vh] md:h-[80vh]">
+                <div className="relative w-full md:w-2/3 h-[60vh] xl:h-[80vh]">
                     {currentImage && (
                         <Image
                             src={currentImage}
