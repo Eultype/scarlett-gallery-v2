@@ -1,10 +1,14 @@
 "use client";
 
-import { useRef } from "react";
+// Import Next
 import Image from "next/image";
 import Link from "next/link";
+// Import React
+import { useRef } from "react";
+// Import Framer Motion
 import { motion, useScroll, useTransform } from "framer-motion";
 
+// Page About
 export default function AboutPage() {
     const containerRef = useRef(null);
     const { scrollYProgress } = useScroll({
@@ -49,7 +53,7 @@ export default function AboutPage() {
                         <motion.h1
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="font-cormorant text-5xl lg:text-7xl text-gray-900 leading-none"
+                            className="font-cormorant text-5xl lg:text-7xl text-gray-900 leading-none italic"
                         >
                             Emma De Noni
                         </motion.h1>
@@ -95,7 +99,7 @@ export default function AboutPage() {
                                 </div>
 
                                 {/* Titre */}
-                                <h2 className="font-cormorant text-5xl lg:text-7xl text-gray-900 font-light">Un héritage précieux</h2>
+                                <h2 className="font-cormorant text-5xl lg:text-7xl text-gray-900 font-light italic">Un héritage précieux</h2>
 
                                 {/* Sous-titre */}
                                 <p className="text-2xl text-terra italic">Le murmure de l&apos;atelier</p>

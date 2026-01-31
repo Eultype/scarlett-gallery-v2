@@ -4,7 +4,7 @@ import { Montserrat, Cormorant_Garamond } from "next/font/google";
 import localFont from "next/font/local";
 // Import des styles
 import "./globals.css";
-// Import des composants
+// Import des composants du layout
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import SmoothScrolling from "@/components/layout/SmoothScrolling";

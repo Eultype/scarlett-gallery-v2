@@ -5,6 +5,7 @@ import ServicesPreviewSection from "@/components/home/ServicesPreviewSection";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import ContactSection from "@/components/home/ContactSection";
 
+// Page d'accueil
 export default function Home() {
   return (
       <main>

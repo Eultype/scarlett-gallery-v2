@@ -139,6 +139,42 @@ export const homeGalleryItems: Artwork[] = [
     },
     {
         id: "l4",
+        title: "Antique II",
+        category: "linogravures",
+        image: "/images/gallery/linogravures/lino_antique2.jpg",
+        dimensions: "Linogravure - 21x29,7 (A4)",
+        serie: "Série \"Linogravures\" - 2024/2025",
+        availableSizes: "Disponible : 21x29,7 (A4)"
+    },
+    {
+        id: "l5",
+        title: "Provence",
+        category: "linogravures",
+        image: "/images/gallery/linogravures/lino_provence.jpg",
+        dimensions: "Linogravure - 21x29,7 (A4)",
+        serie: "Série \"Linogravures\" - 2024/2025",
+        availableSizes: "Disponible : 21x29,7 (A4)"
+    },
+    {
+        id: "l6",
+        title: "Cyclades",
+        category: "linogravures",
+        image: "/images/gallery/linogravures/lino_cyclades.jpg",
+        dimensions: "Linogravure - 21x29,7 (A4)",
+        serie: "Série \"Linogravures\" - 2024/2025",
+        availableSizes: "Disponible : 21x29,7 (A4)"
+    },
+    {
+        id: "l7",
+        title: "Seville",
+        category: "linogravures",
+        image: "/images/gallery/linogravures/lino_seville.jpg",
+        dimensions: "Linogravure - 21x29,7 (A4)",
+        serie: "Série \"Linogravures\" - 2024/2025",
+        availableSizes: "Disponible : 21x29,7 (A4)"
+    },
+    {
+        id: "l8",
         title: "Sicile",
         category: "linogravures",
         image: "/images/gallery/linogravures/lino_sicile.jpg",
@@ -152,7 +188,7 @@ export const homeGalleryItems: Artwork[] = [
         id: "m1",
         title: "Foggy Morning",
         category: "minis",
-        image: "/images/gallery/minis/brouillard.JPG",
+        image: "/images/gallery/minis/brouillard.jpg",
         dimensions: "Huile sur toile - 21x21cm",
         serie: "Série \"Les Minis\" - 2024/2025",
         availableSizes: "Disponibles : 21x21 - Cadre fourni avec"
@@ -180,6 +216,42 @@ export const homeGalleryItems: Artwork[] = [
         title: "Divine Light",
         category: "minis",
         image: "/images/gallery/minis/sunset.JPG",
+        dimensions: "Huile sur toile - 16x21cm",
+        serie: "Série \"Les Minis\" - 2024/2025",
+        availableSizes: "Disponibles : 16x21 - Cadre fourni avec"
+    },
+    {
+        id: "m5",
+        title: "Hope",
+        category: "minis",
+        image: "/images/gallery/minis/vert.jpg",
+        dimensions: "Huile sur toile - 21x21cm",
+        serie: "Série \"Les Minis\" - 2024/2025",
+        availableSizes: "Disponibles : 21x21 - Cadre fourni avec"
+    },
+    {
+        id: "m6",
+        title: "Green Life",
+        category: "minis",
+        image: "/images/gallery/minis/plante.jpg",
+        dimensions: "Huile sur toile - 21x21cm",
+        serie: "Série \"Les Minis\" - 2024/2025",
+        availableSizes: "Disponibles : 21x21 - Cadre fourni avec"
+    },
+    {
+        id: "m7",
+        title: "Sun Touching",
+        category: "minis",
+        image: "/images/gallery/minis/suntouching.jpg",
+        dimensions: "Huile sur toile - 16x21cm",
+        serie: "Série \"Les Minis\" - 2024/2025",
+        availableSizes: "Disponibles : 16x21 - Cadre fourni avec"
+    },
+    {
+        id: "m8",
+        title: "Last Ray",
+        category: "minis",
+        image: "/images/gallery/minis/sunset2.jpg",
         dimensions: "Huile sur toile - 16x21cm",
         serie: "Série \"Les Minis\" - 2024/2025",
         availableSizes: "Disponibles : 16x21 - Cadre fourni avec"

@@ -6,7 +6,9 @@ import Link from "next/link";
 // Import React
 import { useState } from "react";
 // Import Lucide Icons
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+// Import Framer Motion
+import { motion, AnimatePresence } from "framer-motion";
 // Import des composants UI
 import Lightbox from "@/components/ui/Lightbox";
 // Import des datas
@@ -20,15 +22,62 @@ const tabs = [
     { id: "minis", label: "Les Minis" },
 ];
 
+// Variants pour l'animation du slider
+const slideVariants = {
+    enter: (direction: number) => ({
+        x: direction > 0 ? 50 : -50,
+        opacity: 0,
+    }),
+    center: {
+        zIndex: 1,
+        x: 0,
+        opacity: 1,
+    },
+    exit: (direction: number) => ({
+        zIndex: 0,
+        x: direction < 0 ? 50 : -50,
+        opacity: 0,
+    }),
+};
+
 // Composant GalleryPreviewSection de la page d'accueil
 export default function GalleryPreviewSection() {
     const [activeTab, setActiveTab] = useState("saisons");
+    const [startIndex, setStartIndex] = useState(0);
+    const [direction, setDirection] = useState(0);
     const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
 
-    // Filtrer les items
-    const filteredItems = homeGalleryItems.filter(
+    // Reset pagination on tab change
+    const handleTabChange = (tabId: string) => {
+        setDirection(0); // Pas de direction spécifique au changement d'onglet
+        setActiveTab(tabId);
+        setStartIndex(0);
+    };
+
+    // Get all items for current category
+    const allItemsInTab = homeGalleryItems.filter(
         (item) => item.category === activeTab
-    ).slice(0, 4);
+    );
+
+    // Get visible items (pagination window)
+    const visibleItems = allItemsInTab.slice(startIndex, startIndex + 4);
+
+    const hasNext = startIndex + 4 < allItemsInTab.length;
+    const hasPrev = startIndex > 0;
+
+    const nextItems = () => {
+        if (hasNext) {
+            setDirection(1);
+            setStartIndex((prev) => prev + 4);
+        }
+    };
+
+    const prevItems = () => {
+        if (hasPrev) {
+            setDirection(-1);
+            setStartIndex((prev) => prev - 4);
+        }
+    };
 
     return (
         <section id="gallery" className="py-20 bg-[#FDFBF7]">
@@ -50,7 +99,7 @@ export default function GalleryPreviewSection() {
                     {tabs.map((tab) => (
                         <button
                             key={tab.id}
-                            onClick={() => setActiveTab(tab.id)}
+                            onClick={() => handleTabChange(tab.id)}
                             className={`px-6 py-2 rounded-full border transition-all duration-300 ${
                                 activeTab === tab.id
                                     ? "bg-terra border-terra text-white shadow-md"
@@ -62,45 +111,88 @@ export default function GalleryPreviewSection() {
                     ))}
                 </div>
 
-                {/* Grille des œuvres */}
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 min-h-[400px]">
-                    {filteredItems.map((item) => (
-                        <div
-                            key={item.id}
-                            className="group cursor-pointer animate-fade-in-up"
-                            onClick={() => setSelectedArtwork(item)}
+                {/* Zone Galerie avec Flèches */}
+                <div className="relative">
+                    
+                    {/* Bouton Précédent */}
+                    {hasPrev && (
+                        <button 
+                            onClick={prevItems}
+                            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-10 bg-white p-3 rounded-full shadow-lg text-gray-800 hover:text-terra hover:scale-110 transition-all"
+                            aria-label="Voir précédents"
                         >
-                            {/* Carte */}
-                            <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 h-full flex flex-col">
+                            <ChevronLeft size={24} />
+                        </button>
+                    )}
 
-                                {/* Image */}
-                                <div className="relative aspect-[4/5] overflow-hidden">
-                                    <Image
-                                        src={item.image}
-                                        alt={item.title}
-                                        fill
-                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                        sizes="(max-width: 768px) 100vw, 25vw"
-                                    />
-                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-                                </div>
+                    {/* Conteneur animé */}
+                    <div className="min-h-[400px] overflow-hidden">
+                        <AnimatePresence mode="wait" custom={direction}>
+                            <motion.div
+                                key={startIndex + activeTab} // Clé unique pour déclencher l'animation
+                                custom={direction}
+                                variants={slideVariants}
+                                initial="enter"
+                                animate="center"
+                                exit="exit"
+                                transition={{
+                                    x: { type: "spring", stiffness: 300, damping: 30 },
+                                    opacity: { duration: 0.2 }
+                                }}
+                                className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8"
+                            >
+                                {visibleItems.map((item) => (
+                                    <div
+                                        key={item.id}
+                                        className="group cursor-pointer"
+                                        onClick={() => setSelectedArtwork(item)}
+                                    >
+                                        {/* Carte */}
+                                        <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 h-full flex flex-col">
 
-                                {/* Info */}
-                                <div className="p-6 flex-grow flex flex-col justify-between">
-                                    <div>
-                                        <h3 className="font-cormorant text-xl text-gray-900 mb-1 group-hover:text-terra transition-colors font-bold italic">
-                                            {item.title}
-                                        </h3>
-                                        <p className="text-sm text-gray-500 mb-3">{item.serie}</p>
+                                            {/* Image */}
+                                            <div className="relative aspect-[4/5] overflow-hidden">
+                                                <Image
+                                                    src={item.image}
+                                                    alt={item.title}
+                                                    fill
+                                                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                                    sizes="(max-width: 768px) 100vw, 25vw"
+                                                />
+                                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                                            </div>
+
+                                            {/* Info */}
+                                            <div className="p-6 flex-grow flex flex-col justify-between">
+                                                <div>
+                                                    <h3 className="font-cormorant text-2xl text-gray-900 mb-1 group-hover:text-terra transition-colors font-bold italic">
+                                                        {item.title}
+                                                    </h3>
+                                                    <p className="text-sm text-gray-500 mb-3">{item.serie}</p>
+                                                </div>
+                                                <p className="text-xs text-gray-400 border-t pt-3 mt-auto">
+                                                    {item.dimensions}
+                                                </p>
+                                            </div>
+
+                                        </div>
                                     </div>
-                                    <p className="text-xs text-gray-400 border-t pt-3 mt-auto">
-                                        {item.dimensions}
-                                    </p>
-                                </div>
+                                ))}
+                            </motion.div>
+                        </AnimatePresence>
+                    </div>
 
-                            </div>
-                        </div>
-                    ))}
+                    {/* Bouton Suivant */}
+                    {hasNext && (
+                        <button 
+                            onClick={nextItems}
+                            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-10 bg-white p-3 rounded-full shadow-lg text-gray-800 hover:text-terra hover:scale-110 transition-all"
+                            aria-label="Voir suivants"
+                        >
+                            <ChevronRight size={24} />
+                        </button>
+                    )}
+
                 </div>
 
                 {/* Lien élégant vers la galerie complète */}
