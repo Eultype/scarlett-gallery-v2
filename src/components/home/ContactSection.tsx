@@ -3,9 +3,12 @@
 // Import Next
 import Link from "next/link";
 // Import Lucide Icons
-import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import { MapPin, Phone, Mail, Clock } from "lucide-react";
 // Import React Icons
 import { FaInstagram, FaFacebookF, FaTiktok, FaEtsy } from "react-icons/fa";
+// Import des composants UI
+import SocialBtn from "@/components/ui/SocialBtn";
+import ContactForm from "@/components/ui/ContactForm";
 // Import des datas
 import { CONTACT_INFO } from "@/data/contact";
 
@@ -119,121 +122,12 @@ export default function ContactSection() {
                     </div>
 
                     {/* Colonne de droite : Formulaire de contact */}
-                    <div className="w-full xl:w-7/12 bg-white p-8 md:p-12 rounded-xl shadow-2xl">
-                        <form action={CONTACT_INFO.formAction} method="POST" className="space-y-10">
-
-                            {/* Titres */}
-                            <div className="mb-10 text-center xl:text-left">
-                                <h3 className="font-cormorant text-4xl text-gray-900 italic mb-2">Envoyer un message</h3>
-                                <p className="text-gray-500 font-light text-sm">Je vous répondrai dans les plus brefs délais.</p>
-                            </div>
-                            {/* Nom complet / Téléphone */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                                {/* Nom complet */}
-                                <FloatingInput id="name" label="Nom complet" type="text" required />
-                                {/* Téléphone */}
-                                <FloatingInput id="phone" label="Téléphone" type="tel" />
-                            </div>
-                            {/* Email */}
-                            <FloatingInput id="email" label="Adresse Email" type="email" required />
-
-                            {/* Sujet et Date*/}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                                <div className="relative z-0 w-full group">
-                                    {/* Sujet choix */}
-                                    <select 
-                                        id="subject" 
-                                        name="subject" 
-                                        required 
-                                        defaultValue=""
-                                        className="block py-3 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-terra peer"
-                                    >
-                                        <option value="" disabled>Choisir...</option>
-                                        <option value="commande">Commande sur mesure</option>
-                                        <option value="achat">Achat d'œuvre</option>
-                                        <option value="exposition">Proposition d'exposition</option>
-                                        <option value="autre">Autre</option>
-                                    </select>
-                                    {/* Label */}
-                                    <label htmlFor="subject" className="peer-focus:font-medium absolute text-lg text-gray-500 font-cormorant italic duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-terra peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                        Sujet de la demande
-                                    </label>
-                                </div>
-                                {/* Date */}
-                                <FloatingInput id="date" label="Date souhaitée (optionnel)" type="date" />
-                            </div>
-                            {/* Message */}
-                            <div className="relative z-0 w-full group">
-                                <textarea 
-                                    id="message" 
-                                    name="message" 
-                                    rows={4} 
-                                    required 
-                                    className="block py-3 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-terra peer resize-none"
-                                    placeholder=" "
-                                ></textarea>
-                                <label htmlFor="message" className="peer-focus:font-medium absolute text-lg text-gray-500 font-cormorant italic duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-terra peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-                                    Votre message...
-                                </label>
-                            </div>
-
-                            <input type="hidden" name="_template" value="table" />
-                            <input type="hidden" name="_captcha" value="false" />
-                            {/* Checkbox : politique de confidentialité */}
-                            <div className="flex items-start gap-3 py-2">
-                                <input type="checkbox" id="accept" required className="mt-1 accent-terra w-4 h-4 cursor-pointer" />
-                                <label htmlFor="accept" className="text-xs text-gray-500 leading-relaxed cursor-pointer">
-                                    Je consens à ce que mes données soient traitées pour répondre à ma demande, conformément à la <Link href="/politique" className="underline hover:text-terra">politique de confidentialité</Link>.
-                                </label>
-                            </div>
-                            {/* Bouton envoyer le message */}
-                            <button
-                                type="submit"
-                                className="w-full bg-black text-white py-4 flex items-center justify-center gap-3 hover:bg-terra transition-all duration-500 group uppercase tracking-[0.2em] text-xs font-bold shadow-lg hover:shadow-xl"
-                            >
-                                Envoyer le message
-                                <Send size={16} className="group-hover:translate-x-2 group-hover:-translate-y-1 transition-transform duration-500" />
-                            </button>
-                        </form>
+                    <div className="w-full xl:w-7/12">
+                        <ContactForm />
                     </div>
 
                 </div>
             </div>
         </section>
-    );
-}
-
-function SocialBtn({ href, icon }: { href: string; icon: React.ReactNode }) {
-    return (
-        <a 
-            href={href} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="w-12 h-12 bg-white border border-gray-200 rounded-full flex items-center justify-center text-gray-600 hover:text-white hover:bg-terra hover:border-terra transition-all duration-300 shadow-sm"
-        >
-            {icon}
-        </a>
-    );
-}
-
-// Composant Input Floating Label réutilisable
-function FloatingInput({ id, label, type = "text", required = false }: { id: string, label: string, type?: string, required?: boolean }) {
-    return (
-        <div className="relative z-0 w-full group">
-            <input 
-                type={type} 
-                name={id} 
-                id={id} 
-                className="block py-3 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-terra peer" 
-                placeholder=" " 
-                required={required} 
-            />
-            <label 
-                htmlFor={id} 
-                className="peer-focus:font-medium absolute text-lg text-gray-500 font-cormorant italic duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-terra peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-                {label}
-            </label>
-        </div>
     );
 }
