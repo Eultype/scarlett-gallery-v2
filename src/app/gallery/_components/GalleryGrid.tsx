@@ -92,7 +92,7 @@ export default function GalleryGrid() {
                                     
                                     {/* Overlay d'infos */}
                                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white p-4 text-center backdrop-blur-[2px]">
-                                        <h3 className="font-cormorant text-2xl italic mb-2">{item.title}</h3>
+                                        <h2 className="font-cormorant text-2xl italic mb-2">{item.title}</h2>
                                         <p className="text-xs uppercase tracking-widest opacity-80">{item.dimensions}</p>
                                         <span className="mt-4 border border-white px-4 py-1 text-[10px] uppercase tracking-widest">Voir</span>
                                     </div>

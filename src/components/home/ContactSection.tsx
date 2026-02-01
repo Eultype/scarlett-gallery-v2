@@ -94,18 +94,17 @@ export default function ContactSection() {
                             <h3 className="font-cormorant text-3xl text-gray-900 border-b border-terra/30 pb-2 inline-block italic">
                                 Suivez-moi
                             </h3>
-                            {/* Réseaux sociaux */}
-                            <div className="flex gap-4 md:justify-center xl:justify-start">
-                                {/* Instagram */}
-                                <SocialBtn href={CONTACT_INFO.socials.instagram} icon={<FaInstagram size={20} />} />
-                                {/* Facebook */}
-                                <SocialBtn href={CONTACT_INFO.socials.facebook} icon={<FaFacebookF size={20} />} />
-                                {/* TikTok */}
-                                <SocialBtn href={CONTACT_INFO.socials.tiktok} icon={<FaTiktok size={20} />} />
-                                {/* Etsy */}
-                                <SocialBtn href={CONTACT_INFO.socials.etsy} icon={<FaEtsy size={20} />} />
-                            </div>
-                        </div>
+                                            {/* Réseaux sociaux */}
+                                            <div className="flex gap-4 md:justify-center xl:justify-start">
+                                                {/* Instagram */}
+                                                <SocialBtn href={CONTACT_INFO.socials.instagram} label="Instagram" icon={<FaInstagram size={20} />} />
+                                                {/* Facebook */}
+                                                <SocialBtn href={CONTACT_INFO.socials.facebook} label="Facebook" icon={<FaFacebookF size={20} />} />
+                                                {/* TikTok */}
+                                                <SocialBtn href={CONTACT_INFO.socials.tiktok} label="TikTok" icon={<FaTiktok size={20} />} />
+                                                {/* Etsy */}
+                                                <SocialBtn href={CONTACT_INFO.socials.etsy} label="Etsy" icon={<FaEtsy size={20} />} />
+                                            </div>                        </div>
 
                         {/* Horaires */}
                         <div className="p-6 bg-white shadow-sm rounded-lg border border-gray-100">

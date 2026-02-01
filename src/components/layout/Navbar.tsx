@@ -53,16 +53,18 @@ export default function Navbar() {
                 
                 {/* Logo (à gauche) */}
                 <Link href="/" className="flex-shrink-0 block">
-                    <div className={`relative transition-all duration-500 ease-in-out ${
-                        scrolled ? "w-[120px]" : "w-[160px] md:w-[220px]"
-                    }`}>
+                    <div 
+                        className={`relative transition-all duration-500 ease-in-out ${
+                            scrolled ? "w-[120px]" : "w-[160px] md:w-[220px]"
+                        }`}
+                        style={{ aspectRatio: "220 / 80" }}
+                    >
                         <Image
                             src={isTransparent ? "/images/logos/logo2(blanc).png" : "/images/logos/img.png"}
                             alt="Scarlett Gallery"
-                            width={220}
-                            height={80}
-                            className="object-contain w-full h-auto"
-                            style={{ width: "100%", height: "auto" }}
+                            fill
+                            className="object-contain"
+                            sizes="(max-width: 768px) 160px, 220px"
                             priority
                         />
                     </div>
@@ -107,6 +109,7 @@ export default function Navbar() {
                         isOpen ? "text-gray-900" : (isTransparent ? "text-white" : "text-gray-900")
                     }`}
                     onClick={() => setIsOpen(!isOpen)}
+                    aria-label={isOpen ? "Fermer le menu" : "Ouvrir le menu"}
                 >
                     <div className="space-y-1.5">
                         <span

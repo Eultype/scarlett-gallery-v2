@@ -20,13 +20,15 @@ export default function Footer() {
                     <div className="space-y-6">
                         {/* Logo */}
                         <Link href="/" className="block w-48">
-                            <Image
-                                src="/images/logos/logo2(blanc).png"
-                                alt="Scarlett Gallery"
-                                width={200}
-                                height={60}
-                                className="w-full h-auto object-contain"
-                            />
+                            <div className="relative w-full" style={{ aspectRatio: "200 / 60" }}>
+                                <Image
+                                    src="/images/logos/logo2(blanc).png"
+                                    alt="Scarlett Gallery"
+                                    fill
+                                    className="object-contain"
+                                    sizes="200px"
+                                />
+                            </div>
                         </Link>
                         {/* Description */}
                         <p className="text-gray-400 text-sm leading-relaxed">
@@ -35,7 +37,7 @@ export default function Footer() {
                     </div>
                     {/* Colonne 2 : Navigation */}
                     <div>
-                        <h4 className="font-cormorant italic tracking-wider text-2xl font-light mb-6">Navigation</h4>
+                        <h3 className="font-cormorant italic tracking-wider text-2xl font-light mb-6">Navigation</h3>
                         <ul className="space-y-3 text-gray-400">
                             {NAV_LINKS.map((link) => (
                                 <li key={link.href}>
@@ -46,7 +48,7 @@ export default function Footer() {
                     </div>
                     {/* Colonne 3 : Services */}
                     <div>
-                        <h4 className="font-cormorant italic tracking-wider text-2xl font-light mb-6">Services</h4>
+                        <h3 className="font-cormorant italic tracking-wider text-2xl font-light mb-6">Services</h3>
                         <ul className="space-y-3 text-gray-400">
                             <li><FooterLink href="/contact" label="Commandes sur mesure" /></li>
                             <li><FooterLink href="/contact" label="Expositions" /></li>
@@ -56,27 +58,31 @@ export default function Footer() {
                     {/* Colonne 4 : Réseaux sociaux et newsletter */}
                     <div>
                         {/* Réseaux sociaux */}
-                        <h4 className="font-cormorant italic tracking-wider text-2xl font-light mb-6">Réseaux sociaux</h4>
+                        <h3 className="font-cormorant italic tracking-wider text-2xl font-light mb-6">Réseaux sociaux</h3>
                         <div className="flex space-x-6 mb-8">
                             <SocialLink
                                 href={CONTACT_INFO.socials.instagram}
+                                label="Instagram"
                                 icon={<FaInstagram size={24} />}
                             />
                             <SocialLink
                                 href={CONTACT_INFO.socials.facebook}
+                                label="Facebook"
                                 icon={<FaFacebookF size={22} />}
                             />
                             <SocialLink
                                 href={CONTACT_INFO.socials.tiktok}
+                                label="TikTok"
                                 icon={<FaTiktok size={22} />}
                             />
                             <SocialLink
                                 href={CONTACT_INFO.socials.etsy}
+                                label="Etsy"
                                 icon={<FaEtsy size={22} />}
                             />
                         </div>
                         {/* Newsletter */}
-                        <h4 className="font-medium text-lg mb-4">Newsletter</h4>
+                        <h3 className="font-medium text-lg mb-4">Newsletter</h3>
                         <form className="flex">
                             <input
                                 type="email"
@@ -135,15 +141,18 @@ function FooterLink({ href, label }: { href: string; label: string }) {
 function SocialLink({
                         href,
                         icon,
+                        label,
                     }: {
     href: string;
     icon: React.ReactNode;
+    label: string;
 }) {
     return (
         <a
             href={href}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={label}
             className="text-gray-400 hover:text-white transition-colors"
         >
             {icon}

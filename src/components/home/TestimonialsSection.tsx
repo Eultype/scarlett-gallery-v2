@@ -126,6 +126,7 @@ export default function TestimonialsSection() {
                             <button
                                 key={index}
                                 onClick={() => setCurrentIndex(index)}
+                                aria-label={`Voir le témoignage de ${testimonials[index].name}`}
                                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
                                     index === currentIndex ? "bg-terra w-6" : "bg-terra/20 hover:bg-terra/40"
                                 }`}
