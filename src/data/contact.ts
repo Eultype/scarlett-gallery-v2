@@ -1,4 +1,6 @@
-export const CONTACT_INFO = {
+import { ContactInfo } from "@/types/contact";
+
+export const CONTACT_INFO: ContactInfo = {
     phone: "+33 6 78 47 87 21",
     email: "contact@scarlettgallery.com",
     address: "Bruxelles, Belgique",

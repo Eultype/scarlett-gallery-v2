@@ -6,6 +6,7 @@ import { FaInstagram, FaFacebookF, FaTiktok, FaEtsy } from "react-icons/fa";
 import { BiSend } from "react-icons/bi";
 // Import des datas
 import { CONTACT_INFO } from "@/data/contact";
+import { NAV_LINKS } from "@/data/nav";
 
 // Composant du Footer
 export default function Footer() {
@@ -36,11 +37,11 @@ export default function Footer() {
                     <div>
                         <h4 className="font-cormorant italic tracking-wider text-2xl font-light mb-6">Navigation</h4>
                         <ul className="space-y-3 text-gray-400">
-                            <li><FooterLink href="/" label="Home" /></li>
-                            <li><FooterLink href="/about" label="About Me" /></li>
-                            <li><FooterLink href="/gallery" label="Gallery" /></li>
-                            <li><FooterLink href="/services" label="Services" /></li>
-                            <li><FooterLink href="/contact" label="Contact" /></li>
+                            {NAV_LINKS.map((link) => (
+                                <li key={link.href}>
+                                    <FooterLink href={link.href} label={link.label} />
+                                </li>
+                            ))}
                         </ul>
                     </div>
                     {/* Colonne 3 : Services */}

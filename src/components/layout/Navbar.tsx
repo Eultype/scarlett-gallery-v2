@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 // Import des datas
 import { CONTACT_INFO } from "@/data/contact";
+import { NAV_LINKS } from "@/data/nav";
 
 // Composant de la Navbar
 export default function Navbar() {
@@ -70,11 +71,15 @@ export default function Navbar() {
                         isTransparent ? "text-white" : "text-gray-900"
                     }`}
                 >
-                    <NavLink href="/" label="Home" currentPath={pathname} isTransparent={isTransparent} />
-                    <NavLink href="/about" label="About Me" currentPath={pathname} isTransparent={isTransparent} />
-                    <NavLink href="/gallery" label="Gallery" currentPath={pathname} isTransparent={isTransparent} />
-                    <NavLink href="/services" label="Services" currentPath={pathname} isTransparent={isTransparent} />
-                    <NavLink href="/contact" label="Contact" currentPath={pathname} isTransparent={isTransparent} />
+                    {NAV_LINKS.map((link) => (
+                        <NavLink 
+                            key={link.href} 
+                            href={link.href} 
+                            label={link.label} 
+                            currentPath={pathname} 
+                            isTransparent={isTransparent} 
+                        />
+                    ))}
                 </div>
 
                 {/* Bouton Shop (à droite) */}
@@ -127,11 +132,14 @@ export default function Navbar() {
                 }`}
                 style={{ top: 0, height: '100vh' }} // Force full viewport height
             >
-                <MobileNavLink href="/" label="Home" onClick={() => setIsOpen(false)} />
-                <MobileNavLink href="/about" label="About Me" onClick={() => setIsOpen(false)} />
-                <MobileNavLink href="/gallery" label="Gallery" onClick={() => setIsOpen(false)} />
-                <MobileNavLink href="/services" label="Services" onClick={() => setIsOpen(false)} />
-                <MobileNavLink href="/contact" label="Contact" onClick={() => setIsOpen(false)} />
+                {NAV_LINKS.map((link) => (
+                    <MobileNavLink 
+                        key={link.href} 
+                        href={link.href} 
+                        label={link.label} 
+                        onClick={() => setIsOpen(false)} 
+                    />
+                ))}
                 
                 <div className="pt-8">
                     <a

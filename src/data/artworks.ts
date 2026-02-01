@@ -1,13 +1,4 @@
-export interface Artwork {
-    id: string;
-    title: string;
-    category: "saisons" | "personnalites" | "linogravures" | "minis";
-    image: string;
-    dimensions: string;
-    serie: string;
-    availableSizes?: string;
-    moreImages?: string[];
-}
+import { Artwork } from "@/types/artwork";
 
 export const homeGalleryItems: Artwork[] = [
     // --- SAISONS ---

@@ -2,14 +2,15 @@
 
 // Import Next
 import Image from "next/image";
+import dynamic from "next/dynamic";
 // Import React
 import { useState } from "react";
 // Import Framer Motion
 import { motion, AnimatePresence } from "framer-motion";
-// Import des composants UI
-import Lightbox from "@/components/ui/Lightbox";
+// Import des composants UI (Dynamic Import pour Lightbox)
+const Lightbox = dynamic(() => import("@/components/ui/Lightbox"), { ssr: false });
 // Import des datas
-import { Artwork } from "@/data/artworks";
+import { Artwork } from "@/types/artwork";
 import { galleryPageItems } from "@/data/gallery";
 
 // Liste de catégories

@@ -1,4 +1,4 @@
-import { Artwork } from "./artworks";
+import { Artwork } from "@/types/artwork";
 
 export const galleryPageItems: Artwork[] = [
     // --- Mixte décalé pour la page galerie ---

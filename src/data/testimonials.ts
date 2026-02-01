@@ -1,10 +1,4 @@
-export interface Testimonial {
-    id: number;
-    name: string;
-    role: string;
-    image: string;
-    text: string;
-}
+import { Testimonial } from "@/types/testimonial";
 
 export const testimonials: Testimonial[] = [
     {
