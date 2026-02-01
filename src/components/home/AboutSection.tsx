@@ -12,22 +12,25 @@ export default function AboutSection() {
                 <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
                     {/* Image de l'artiste */}
                     <div className="w-full md:w-5/12 lg:w-5/12 relative group">
-                        <div className="relative aspect-[4/5] transform transition-transform duration-500 hover:scale-[1.02]">
-                            {/* Image noir et blanc */}
-                            <Image
-                                src="/images/about/Scarlett_conv(noirblanc).webp"
-                                alt="Portrait Emma N&B"
-                                fill
-                                className="object-cover transition-opacity duration-700 ease-in-out group-hover:opacity-0 rounded-lg overflow-hidden shadow-2xl border-[4px] border-white"
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                            />
-                            {/* Image en couleurs */}
+                        <div className="relative aspect-[4/5] transform transition-transform duration-500 xl:hover:scale-[1.02]">
+                            {/* Image noir et blanc (Uniquement Desktop XL) */}
+                            <div className="hidden xl:block">
+                                <Image
+                                    src="/images/about/Scarlett_conv(noirblanc).webp"
+                                    alt="Portrait Emma N&B"
+                                    fill
+                                    className="object-cover transition-opacity duration-700 ease-in-out group-hover:opacity-0 rounded-lg overflow-hidden shadow-2xl border-[4px] border-white"
+                                    sizes="50vw"
+                                />
+                            </div>
+                            
+                            {/* Image en couleurs (Tout le temps sur mobile/tablette, survol sur desktop xl) */}
                             <Image
                                 src="/images/about/Scarlett_conv2.webp"
                                 alt="Portrait Emma Couleur"
                                 fill
-                                className="object-cover opacity-0 transition-opacity duration-700 ease-in-out group-hover:opacity-100 absolute top-0 left-0 rounded-lg overflow-hidden shadow-2xl border-[4px] border-white"
-                                sizes="(max-width: 768px) 100vw, 50vw"
+                                className={`object-cover transition-opacity duration-700 ease-in-out xl:opacity-0 xl:group-hover:opacity-100 rounded-lg overflow-hidden shadow-2xl border-[4px] border-white`}
+                                sizes="(max-width: 1280px) 100vw, 50vw"
                             />
                         </div>
                     </div>

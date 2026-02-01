@@ -15,8 +15,11 @@ export default function HeritageSection({ scrollYProgress }: HeritageSectionProp
     const yText = useTransform(scrollYProgress, [0, 1], [0, -300]);
     const yImg = useTransform(scrollYProgress, [0, 1], [0, 150]);
 
+    // On utilise un état ou une valeur fixe pour désactiver l'animation sur mobile si besoin
+    // Mais le plus simple est de gérer le style conditionnellement
+
     return (
-        <section className="relative py-40">
+        <section className="relative py-20 md:py-40">
             {/* Texte de fond 'Héritage' */}
             <motion.div
                 style={{ y: yText }}
@@ -28,7 +31,7 @@ export default function HeritageSection({ scrollYProgress }: HeritageSectionProp
             <div className="mx-auto px-4 md:px-10 xl:px-20 relative">
                 <div className="mx-auto">
                     <div className="flex flex-col md:flex-row items-center gap-16 mb-10">
-                        <div className="md:w-3/5 space-y-8">
+                        <div className="w-full md:w-3/5 space-y-8">
                             {/* Badge */}
                             <div className="inline-block bg-terra text-white px-4 py-1 text-[10px] font-bold uppercase tracking-[0.3em] rounded">
                                 L'Héritage
@@ -49,18 +52,20 @@ export default function HeritageSection({ scrollYProgress }: HeritageSectionProp
                         </div>
 
                         {/* Image de l'artiste et sa tante */}
-                        <motion.div
-                            style={{ y: yImg }}
-                            className="md:w-2/5 aspect-[3/4] rounded-lg relative shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-700"
-                        >
-                            <Image
-                                src="/images/about/emma-line.webp"
-                                alt="L'atelier"
-                                fill
-                                sizes="(max-width: 768px) 100vw, 40vw"
-                                className="object-cover rounded-lg border-[4px] border-white"
-                            />
-                        </motion.div>
+                        <div className="w-full md:w-2/5 mt-10 md:mt-0">
+                            <motion.div
+                                style={{ y: typeof window !== 'undefined' && window.innerWidth < 768 ? 0 : yImg }}
+                                className="aspect-[3/4] rounded-lg relative shadow-2xl md:rotate-3 md:hover:rotate-0 transition-transform duration-700"
+                            >
+                                <Image
+                                    src="/images/about/emma-line.webp"
+                                    alt="L'atelier"
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, 40vw"
+                                    className="object-cover rounded-lg border-[4px] border-white"
+                                />
+                            </motion.div>
+                        </div>
                     </div>
 
                     {/* Fin de la section Héritage */}

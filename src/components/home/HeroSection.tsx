@@ -38,16 +38,21 @@ export default function HeroSection() {
     };
 
     return (
-        <section className="relative h-screen w-full overflow-hidden">
+        <section className="relative h-screen w-full overflow-hidden bg-[#FDFBF7]">
             {/* Images de fond */}
             <div className="absolute inset-0 z-0">
                 {backgroundImages.map((src, index) => (
                     <div
                         key={src}
-                        className={`absolute inset-0 transition-opacity duration-[2500ms] ease-in-out ${
+                        className={`absolute inset-0 ${
                             index === currentImageIndex
                                 ? "opacity-100"
                                 : "opacity-0"
+                        } ${
+                            // La transition ne s'applique que si ce n'est PAS la première image au chargement
+                            index === 0 && currentImageIndex === 0 
+                                ? "" 
+                                : "transition-opacity duration-[2500ms] ease-in-out"
                         }`}
                     >
                         <Image
