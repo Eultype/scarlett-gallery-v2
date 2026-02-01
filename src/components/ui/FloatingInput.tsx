@@ -9,6 +9,9 @@ interface FloatingInputProps {
     required?: boolean;
     isTextArea?: boolean;
     rows?: number;
+    maxLength?: number;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    pattern?: string;
 }
 
 export default function FloatingInput({ 
@@ -17,7 +20,10 @@ export default function FloatingInput({
     type = "text", 
     required = false, 
     isTextArea = false,
-    rows = 4
+    rows = 4,
+    maxLength,
+    onChange,
+    pattern
 }: FloatingInputProps) {
     const baseClasses = "block py-3 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-terra peer";
     
@@ -29,6 +35,8 @@ export default function FloatingInput({
                     name={id} 
                     rows={rows} 
                     required={required} 
+                    maxLength={maxLength}
+                    onChange={onChange}
                     className={`${baseClasses} resize-none`}
                     placeholder=" "
                 ></textarea>
@@ -40,6 +48,9 @@ export default function FloatingInput({
                     className={baseClasses} 
                     placeholder=" " 
                     required={required} 
+                    maxLength={maxLength}
+                    onChange={onChange}
+                    pattern={pattern}
                 />
             )}
             <label 
