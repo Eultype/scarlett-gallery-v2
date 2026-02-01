@@ -15,7 +15,7 @@ export default function AboutSection() {
                         <div className="relative aspect-[4/5] transform transition-transform duration-500 hover:scale-[1.02]">
                             {/* Image noir et blanc */}
                             <Image
-                                src="/images/about/Scarlett_conv(noirblanc).jpg"
+                                src="/images/about/Scarlett_conv(noirblanc).webp"
                                 alt="Portrait Emma N&B"
                                 fill
                                 className="object-cover transition-opacity duration-700 ease-in-out group-hover:opacity-0 rounded-lg overflow-hidden shadow-2xl border-[4px] border-white"
@@ -23,7 +23,7 @@ export default function AboutSection() {
                             />
                             {/* Image en couleurs */}
                             <Image
-                                src="/images/about/Scarlett_conv2.jpeg"
+                                src="/images/about/Scarlett_conv2.webp"
                                 alt="Portrait Emma Couleur"
                                 fill
                                 className="object-cover opacity-0 transition-opacity duration-700 ease-in-out group-hover:opacity-100 absolute top-0 left-0 rounded-lg overflow-hidden shadow-2xl border-[4px] border-white"

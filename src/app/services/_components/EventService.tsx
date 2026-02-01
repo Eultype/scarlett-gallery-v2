@@ -15,7 +15,7 @@ export default function EventService() {
             {/* Image de l'exposition */}
             <div className="w-full md:w-1/2 relative aspect-[4/5] shadow-2xl">
                 <Image 
-                    src="/images/gallery/linogravures/lino_4saisons_mur.jpg" 
+                    src="/images/gallery/linogravures/lino_4saisons_mur.webp"
                     alt="Mise en situation exposition" 
                     fill 
                     className="object-cover"
