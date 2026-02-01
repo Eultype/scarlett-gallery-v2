@@ -6,13 +6,15 @@ import Link from "next/link";
 // Import React
 import { useState } from "react";
 // Import Lucide Icons
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Hand } from "lucide-react";
 // Import Framer Motion
 import { motion, AnimatePresence } from "framer-motion";
 // Import des composants UI
 import Lightbox from "@/components/ui/Lightbox";
+// Import des types
+import { Artwork } from "@/types/artwork";
 // Import des datas
-import { homeGalleryItems, Artwork } from "@/data/artworks";
+import { homeGalleryItems } from "@/data/artworks";
 import { CONTACT_INFO } from "@/data/contact";
 
 // Liste des catégories
@@ -47,12 +49,14 @@ export default function GalleryPreviewSection() {
     const [startIndex, setStartIndex] = useState(0);
     const [direction, setDirection] = useState(0);
     const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
+    const [hasInteracted, setHasInteracted] = useState(false);
 
     // Reset pagination on tab change
     const handleTabChange = (tabId: string) => {
         setDirection(0); // Pas de direction spécifique au changement d'onglet
         setActiveTab(tabId);
         setStartIndex(0);
+        setHasInteracted(false);
     };
 
     // Get all items for current category
@@ -112,88 +116,155 @@ export default function GalleryPreviewSection() {
                     ))}
                 </div>
 
-                {/* Zone Galerie avec Flèches */}
+                {/* Zone Galerie */}
                 <div className="relative">
                     
-                    {/* Bouton Précédent */}
-                    {hasPrev && (
-                        <button 
-                            onClick={prevItems}
-                            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-10 bg-white p-3 rounded-full shadow-lg text-gray-800 hover:text-terra hover:scale-110 transition-all"
-                            aria-label="Voir précédents"
-                        >
-                            <ChevronLeft size={24} />
-                        </button>
-                    )}
-
-                    {/* Conteneur animé */}
-                    <div className="min-h-[400px] overflow-hidden">
-                        <AnimatePresence mode="wait" custom={direction}>
-                            <motion.div
-                                key={startIndex + activeTab}
-                                custom={direction}
-                                variants={slideVariants}
-                                initial="enter"
-                                animate="center"
-                                exit="exit"
-                                transition={{
-                                    x: { type: "spring", stiffness: 300, damping: 30 },
-                                    opacity: { duration: 0.2 }
-                                }}
-                                className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8"
-                            >
-                                {visibleItems.map((item) => (
-                                    <div
-                                        key={item.id}
-                                        className="group cursor-pointer"
-                                        onClick={() => setSelectedArtwork(item)}
+                    {/* --- MOBILE / TABLETTE : SWIPE HORIZONTAL --- */}
+                    <div className="xl:hidden relative">
+                        {/* Indicateur de swipe (Main animée) */}
+                        <AnimatePresence>
+                            {!hasInteracted && (
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    className="absolute top-1/2 -right-4 -translate-y-1/2 z-10 pointer-events-none text-terra/80 mix-blend-multiply flex flex-col items-center gap-1"
+                                >
+                                    <motion.div
+                                        animate={{ x: [0, -20, 0] }}
+                                        transition={{ 
+                                            duration: 1.5, 
+                                            repeat: Infinity, 
+                                            ease: "easeInOut",
+                                            repeatDelay: 0.5
+                                        }}
                                     >
-                                        {/* Carte */}
-                                        <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 h-full flex flex-col">
+                                        <Hand size={32} className="rotate-90" />
+                                    </motion.div>
+                                    <span className="text-[10px] font-bold uppercase tracking-widest">Swipe</span>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
 
-                                            {/* Image */}
-                                            <div className="relative aspect-[4/5] overflow-hidden">
-                                                <Image
-                                                    src={item.image}
-                                                    alt={item.title}
-                                                    fill
-                                                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                                    sizes="(max-width: 768px) 100vw, 25vw"
-                                                />
-                                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                        <div 
+                            className="flex overflow-x-auto gap-6 pb-8 snap-x snap-mandatory scrollbar-hide -mx-8 px-8 md:-mx-10 md:px-10"
+                            onScroll={() => setHasInteracted(true)}
+                            onTouchStart={() => setHasInteracted(true)}
+                        >
+                            {allItemsInTab.map((item) => (
+                                <div 
+                                    key={item.id} 
+                                    className="min-w-[80vw] md:min-w-[40vw] snap-center"
+                                    onClick={() => setSelectedArtwork(item)}
+                                >
+                                    <div className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 h-full flex flex-col">
+                                        <div className="relative aspect-[4/5] overflow-hidden">
+                                            <Image
+                                                src={item.image}
+                                                alt={item.title}
+                                                fill
+                                                className="object-cover"
+                                                sizes="(max-width: 768px) 85vw, 45vw"
+                                            />
+                                        </div>
+                                        <div className="p-6 flex-grow flex flex-col justify-between">
+                                            <div>
+                                                <h3 className="font-cormorant text-2xl text-gray-900 mb-1 font-bold italic">
+                                                    {item.title}
+                                                </h3>
+                                                <p className="text-sm text-gray-500 mb-3">{item.serie}</p>
                                             </div>
-
-                                            {/* Info */}
-                                            <div className="p-6 flex-grow flex flex-col justify-between">
-                                                <div>
-                                                    <h3 className="font-cormorant text-2xl text-gray-900 mb-1 group-hover:text-terra transition-colors font-bold italic">
-                                                        {item.title}
-                                                    </h3>
-                                                    <p className="text-sm text-gray-500 mb-3">{item.serie}</p>
-                                                </div>
-                                                <p className="text-xs text-gray-400 border-t pt-3 mt-auto">
-                                                    {item.dimensions}
-                                                </p>
-                                            </div>
-
+                                            <p className="text-xs text-gray-400 border-t pt-3 mt-auto">
+                                                {item.dimensions}
+                                            </p>
                                         </div>
                                     </div>
-                                ))}
-                            </motion.div>
-                        </AnimatePresence>
+                                </div>
+                            ))}
+                        </div>
                     </div>
 
-                    {/* Bouton Suivant */}
-                    {hasNext && (
-                        <button 
-                            onClick={nextItems}
-                            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-10 bg-white p-3 rounded-full shadow-lg text-gray-800 hover:text-terra hover:scale-110 transition-all"
-                            aria-label="Voir suivants"
-                        >
-                            <ChevronRight size={24} />
-                        </button>
-                    )}
+                    {/* --- DESKTOP : FLÈCHES + GRILLE --- */}
+                    <div className="hidden xl:block">
+                        {/* Bouton Précédent */}
+                        {hasPrev && (
+                            <button 
+                                onClick={prevItems}
+                                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 z-10 bg-white p-3 rounded-full shadow-lg text-gray-800 hover:text-terra hover:scale-110 transition-all"
+                                aria-label="Voir précédents"
+                            >
+                                <ChevronLeft size={24} />
+                            </button>
+                        )}
 
+                        {/* Conteneur animé */}
+                        <div className="min-h-[400px] overflow-hidden">
+                            <AnimatePresence mode="wait" custom={direction}>
+                                <motion.div
+                                    key={startIndex + activeTab}
+                                    custom={direction}
+                                    variants={slideVariants}
+                                    initial="enter"
+                                    animate="center"
+                                    exit="exit"
+                                    transition={{
+                                        x: { type: "spring", stiffness: 300, damping: 30 },
+                                        opacity: { duration: 0.2 }
+                                    }}
+                                    className="grid grid-cols-4 gap-8"
+                                >
+                                    {visibleItems.map((item) => (
+                                        <div
+                                            key={item.id}
+                                            className="group cursor-pointer"
+                                            onClick={() => setSelectedArtwork(item)}
+                                        >
+                                            {/* Carte */}
+                                            <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 h-full flex flex-col">
+
+                                                {/* Image */}
+                                                <div className="relative aspect-[4/5] overflow-hidden">
+                                                    <Image
+                                                        src={item.image}
+                                                        alt={item.title}
+                                                        fill
+                                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                                        sizes="25vw"
+                                                    />
+                                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+                                                </div>
+
+                                                {/* Info */}
+                                                <div className="p-6 flex-grow flex flex-col justify-between">
+                                                    <div>
+                                                        <h3 className="font-cormorant text-2xl text-gray-900 mb-1 group-hover:text-terra transition-colors font-bold italic">
+                                                            {item.title}
+                                                        </h3>
+                                                        <p className="text-sm text-gray-500 mb-3">{item.serie}</p>
+                                                    </div>
+                                                    <p className="text-xs text-gray-400 border-t pt-3 mt-auto">
+                                                        {item.dimensions}
+                                                    </p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    ))}
+                                </motion.div>
+                            </AnimatePresence>
+                        </div>
+
+                        {/* Bouton Suivant */}
+                        {hasNext && (
+                            <button 
+                                onClick={nextItems}
+                                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 z-10 bg-white p-3 rounded-full shadow-lg text-gray-800 hover:text-terra hover:scale-110 transition-all"
+                                aria-label="Voir suivants"
+                            >
+                                <ChevronRight size={24} />
+                            </button>
+                        )}
+                    </div>
                 </div>
 
                 {/* Lien vers la galerie complète */}
