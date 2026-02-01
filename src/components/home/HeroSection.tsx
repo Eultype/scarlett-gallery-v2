@@ -9,10 +9,10 @@ import { ArrowDown } from "lucide-react";
 
 // Images de fond
 const backgroundImages = [
-    "/images/hero/automneHD.JPG",
+    "/images/hero/eteHD.webp",
+    "/images/hero/automneHD.webp",
     "/images/hero/hiverHD.webp",
     "/images/hero/printempsHD.webp",
-    "/images/hero/eteHD.webp",
 ];
 
 // Composant HeroSection de la page d'accueil
@@ -56,7 +56,6 @@ export default function HeroSection() {
                             fill
                             className="object-cover"
                             priority={index === 0}
-                            quality={90}
                         />
                         <div className="absolute inset-0 bg-black/20" />
                     </div>

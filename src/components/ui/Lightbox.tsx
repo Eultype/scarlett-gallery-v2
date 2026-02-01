@@ -5,7 +5,7 @@ import Image from "next/image";
 // Import React
 import { useEffect, useState } from "react";
 // Import Lucide Icons
-import { X } from "lucide-react";
+import { X, Loader2 } from "lucide-react";
 
 // Interface
 interface LightboxProps {
@@ -22,10 +22,14 @@ export default function Lightbox({ isOpen, onClose, imageSrc, title, sizes, more
 
     // État local pour l'image affichée (commence avec l'image principale)
     const [currentImage, setCurrentImage] = useState(imageSrc);
+    const [isLoading, setIsLoading] = useState(true);
 
     // Reset quand on ouvre une nouvelle oeuvre
     useEffect(() => {
-        if (imageSrc) setCurrentImage(imageSrc);
+        if (imageSrc) {
+            setCurrentImage(imageSrc);
+            setIsLoading(true);
+        }
     }, [imageSrc, isOpen]);
 
     // Bloquer le scroll
@@ -40,6 +44,13 @@ export default function Lightbox({ isOpen, onClose, imageSrc, title, sizes, more
     // Liste complète pour les miniatures (Main + Secondaires)
     // On filtre les valeurs vides pour éviter l'erreur "src is empty"
     const allImages = [imageSrc, ...(moreImages || [])].filter(Boolean);
+
+    const handleImageChange = (src: string) => {
+        if (src !== currentImage) {
+            setIsLoading(true);
+            setCurrentImage(src);
+        }
+    };
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-fade-in">
@@ -59,15 +70,25 @@ export default function Lightbox({ isOpen, onClose, imageSrc, title, sizes, more
             >
 
                 {/* Image Principale (Grande) */}
-                <div className="relative w-full md:w-2/3 h-[60vh] xl:h-[80vh]">
+                <div className="relative w-full md:w-2/3 h-[60vh] xl:h-[80vh] flex items-center justify-center">
+                    
+                    {/* Loader pendant le changement */}
+                    {isLoading && (
+                        <div className="absolute z-10 animate-spin text-terra">
+                            <Loader2 size={48} />
+                        </div>
+                    )}
+
                     {currentImage && (
                         <Image
+                            key={currentImage} // Force le re-mount immédiat pour éviter le ghosting
                             src={currentImage}
                             alt={title}
                             fill
-                            className="object-contain"
-                            quality={100}
+                            className={`object-contain transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 1000px"
                             priority
+                            onLoad={() => setIsLoading(false)}
                         />
                     )}
                 </div>
@@ -90,14 +111,14 @@ export default function Lightbox({ isOpen, onClose, imageSrc, title, sizes, more
                             {allImages.map((src, idx) => (
                                 <div
                                     key={idx}
-                                    onClick={() => setCurrentImage(src)} // <-- CLIC ACTIF
+                                    onClick={() => handleImageChange(src)} // <-- Utilise la nouvelle fonction
                                     className={`relative w-20 h-20 flex-shrink-0 border-2 cursor-pointer transition-all ${
                                         currentImage === src
                                             ? "border-terra opacity-100"
                                             : "border-transparent opacity-50 hover:opacity-100 hover:border-white"
                                     }`}
                                 >
-                                    <Image src={src} alt={`Vue ${idx}`} fill className="object-cover" />
+                                    <Image src={src} alt={`Vue ${idx}`} fill className="object-cover" sizes="80px" />
                                 </div>
                             ))}
 

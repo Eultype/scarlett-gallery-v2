@@ -1,5 +1,6 @@
 // Import Next
 import type { Metadata } from "next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Montserrat, Cormorant_Garamond } from "next/font/google";
 import localFont from "next/font/local";
 // Import des styles
@@ -9,6 +10,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import SmoothScrolling from "@/components/layout/SmoothScrolling";
 import ImageProtection from "@/components/layout/ImageProtection";
+import InitialLoader from "@/components/ui/InitialLoader";
 
 const montserrat = Montserrat({
     subsets: ["latin"],
@@ -47,6 +49,7 @@ export const metadata: Metadata = {
         "Achat tableau original", 
         "Galerie d'art en ligne"
     ],
+    metadataBase: new URL("https://scarlettgallery.com"),
     openGraph: {
         title: "Scarlett Gallery | Emma De Noni",
         description: "Découvrez une collection d'œuvres originales à l'huile et profitez de services sur mesure.",
@@ -54,7 +57,7 @@ export const metadata: Metadata = {
         siteName: "Scarlett Gallery",
         images: [
             {
-                url: "/images/about/Scarlett_peint.jpg",
+                url: "/images/about/Scarlett_peint.webp",
                 width: 1200,
                 height: 630,
                 alt: "L'atelier d'Emma De Noni",
@@ -62,12 +65,13 @@ export const metadata: Metadata = {
         ],
         locale: "fr_FR",
         type: "website",
+
     },
     twitter: {
         card: "summary_large_image",
         title: "Scarlett Gallery | Emma De Noni",
         description: "Artiste peintre à Bruxelles. Portraits et linogravures.",
-        images: ["/images/about/Scarlett_peint.jpg"],
+        images: ["/images/about/Scarlett_peint.webp"],
     },
     robots: {
         index: true,
@@ -86,10 +90,12 @@ export default function RootLayout({
                 className={`${montserrat.variable} ${cormorant.variable} ${autumnChant.variable} antialiased font-sans`}
             >
                 <SmoothScrolling>
+                    <InitialLoader />
                     <ImageProtection />
                     <Navbar />
                     {children}
                     <Footer />
+                    <SpeedInsights />
                 </SmoothScrolling>
             </body>
         </html>

@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 // Composant ServicesHeader : En-tête de la page services
 export default function ServicesHeader() {
     return (
-        <section className="container mx-auto px-4 mb-24 text-center pt-10">
+        <section className="mx-auto px-4 md:px-10 xl:px-20 mb-24 text-center pt-10">
             <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

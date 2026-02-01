@@ -45,7 +45,7 @@ export default function Navbar() {
                     : "bg-transparent py-6" // Version aérée (Home top)
             }`}
         >
-            <div className="mx-auto px-4 md:px-10 xl:px-20 flex justify-between items-center relative z-50">
+            <div className="mx-auto px-8 md:px-10 xl:px-20 flex justify-between items-center relative z-50">
                 
                 {/* Logo (à gauche) */}
                 <Link href="/" className="flex-shrink-0 block">
@@ -58,6 +58,7 @@ export default function Navbar() {
                             width={220}
                             height={80}
                             className="object-contain w-full h-auto"
+                            style={{ width: "100%", height: "auto" }}
                             priority
                         />
                     </div>

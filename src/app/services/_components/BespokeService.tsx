@@ -16,9 +16,10 @@ export default function BespokeService() {
             <div className="w-full md:w-1/2 relative aspect-[4/5] shadow-2xl">
                 {/* Image */}
                 <Image 
-                    src="/images/about/Scarlett_peint.jpg" 
+                    src="/images/about/Scarlett_peint.webp" 
                     alt="Commande sur mesure" 
                     fill 
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover"
                 />
                 {/* Icône */}

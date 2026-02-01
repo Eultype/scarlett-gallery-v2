@@ -19,9 +19,10 @@ export default function HeroSection() {
                         className="relative aspect-[3/4] rounded-lg overflow-hidden shadow-2xl border-[4px] border-white"
                     >
                         <Image
-                            src="/images/about/Scarlett_peint.jpg"
+                            src="/images/about/Scarlett_peint.webp"
                             alt="Emma De Noni dans son atelier"
                             fill
+                            sizes="(max-width: 768px) 100vw, 50vw"
                             className="object-cover"
                             priority
                         />

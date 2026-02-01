@@ -61,11 +61,13 @@ export default function GalleryGrid() {
             {/* Masonry Layout */}
             <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-8 space-y-8">
                 <AnimatePresence>
-                    {filteredItems.map((item, index) => (
+                    {filteredItems.map((item, index) => {
+                        const isPriority = index < 6;
+                        return (
                         <motion.div
                             key={item.id}
                             layout
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={isPriority ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.9 }}
                             transition={{ duration: 0.4 }}
@@ -84,6 +86,7 @@ export default function GalleryGrid() {
                                         height={1000}
                                         className="w-full h-auto object-cover transition-transform duration-700"
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        priority={isPriority}
                                     />
                                     
                                     {/* Overlay d'infos */}
@@ -95,7 +98,7 @@ export default function GalleryGrid() {
                                 </div>
                             </div>
                         </motion.div>
-                    ))}
+                    )})}
                 </AnimatePresence>
             </div>
 

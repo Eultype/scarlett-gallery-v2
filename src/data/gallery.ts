@@ -9,13 +9,13 @@ export const galleryPageItems: Artwork[] = [
         id: "s1",
         title: "Blindspring",
         category: "saisons",
-        image: "/images/gallery/saisons/printempsSD_cadre_2.jpg",
+        image: "/images/gallery/saisons/printempsSD_cadre_2.webp",
         dimensions: "Huile sur toile - 40x50cm",
         serie: "Série \"Saisons\" - 2024/2025",
         availableSizes: "Disponibles : 40x50cm (original), 40x50cm (print), 15x21cm",
         moreImages: [
-            "/images/gallery/saisons/print_printemps.png",
-            "/images/gallery/saisons/CP_printemps.png"
+            "/images/gallery/saisons/print_printemps.webp",
+            "/images/gallery/saisons/CP_printemps.webp"
         ]
     },
     // 2. Lino
@@ -37,18 +37,18 @@ export const galleryPageItems: Artwork[] = [
         dimensions: "Linogravure - 21x29,7 (A4)",
         serie: "Série \"Linogravures\" - 2024/2025",
         availableSizes: "Disponible : 21x29,7 (A4)",
-        moreImages: ["/images/gallery/linogravures/lino_4saisons_mur.jpg"]
+        moreImages: ["/images/gallery/linogravures/lino_4saisons_mur.webp"]
     },
     // 4. Perso
     {
         id: "p1",
         title: "Cupid Olly",
         category: "personnalites",
-        image: "/images/gallery/personnalites/Cupid-olly_cadre.jpg",
+        image: "/images/gallery/personnalites/Cupid-olly_cadre.webp",
         dimensions: "Huile sur toile - 60x60cm",
         serie: "Série \"Personnalités\" - 2024/2025",
         availableSizes: "Disponibles : 60x60cm (original)",
-        moreImages: ["/images/gallery/personnalites/olly_zoom.jpg"]
+        moreImages: ["/images/gallery/personnalites/olly_zoom.webp"]
     },
     // 5. Mini
     {
@@ -70,7 +70,7 @@ export const galleryPageItems: Artwork[] = [
         serie: "Série \"Saisons\" - 2024/2025",
         availableSizes: "Disponibles : 40x50cm (original), 40x50cm (print), 15x21cm",
         moreImages: [
-            "/images/gallery/saisons/print_ete.png",
+            "/images/gallery/saisons/print_ete.webp",
             "/images/gallery/saisons/CP_ete.png"
         ]
     },
@@ -104,7 +104,7 @@ export const galleryPageItems: Artwork[] = [
         dimensions: "Huile sur toile - 40x50cm",
         serie: "Série \"Religieux\" - 2024/2025",
         availableSizes: "Disponibles : 40x50cm (original)",
-        moreImages: ["/images/gallery/personnalites/ave_zoom.jpg"]
+        moreImages: ["/images/gallery/personnalites/ave_zoom.webp"]
     },
     // 10. Lino
     {
@@ -115,7 +115,7 @@ export const galleryPageItems: Artwork[] = [
         dimensions: "Linogravure - 21x29,7 (A4)",
         serie: "Série \"Linogravures\" - 2024/2025",
         availableSizes: "Disponible : 21x29,7 (A4)",
-        moreImages: ["/images/gallery/linogravures/lino_antique_mur.JPEG"]
+        moreImages: ["/images/gallery/linogravures/lino_antique_mur.webp"]
     },
     // 11. Mini
     {
@@ -168,7 +168,7 @@ export const galleryPageItems: Artwork[] = [
         dimensions: "Linogravure - 21x29,7 (A4)",
         serie: "Série \"Linogravures\" - 2024/2025",
         availableSizes: "Disponible : 21x29,7 (A4)",
-        moreImages: ["/images/gallery/linogravures/lino_stgraal_mur.jpg"]
+        moreImages: ["/images/gallery/linogravures/lino_stgraal_mur.webp"]
     },
     // 16. Mini
     {
@@ -189,7 +189,7 @@ export const galleryPageItems: Artwork[] = [
         dimensions: "Huile sur toile - 40x50cm",
         serie: "Série \"Religieux\" - 2024/2025",
         availableSizes: "Disponibles : 40x50cm (original)",
-        moreImages: ["/images/gallery/personnalites/mater_zoom.jpg"]
+        moreImages: ["/images/gallery/personnalites/mater_zoom.webp"]
     },
     // 18. Mini
     {
@@ -213,7 +213,7 @@ export const galleryPageItems: Artwork[] = [
         serie: "Série \"Saisons\" - 2024/2025",
         availableSizes: "Disponibles : 40x50cm (original), 40x50cm (print), 15x21cm",
         moreImages: [
-            "/images/gallery/saisons/print_hiver.png",
+            "/images/gallery/saisons/print_hiver.webp",
             "/images/gallery/saisons/CP_hiver.png"
         ]
     },
@@ -226,7 +226,7 @@ export const galleryPageItems: Artwork[] = [
         dimensions: "Huile sur toile - 50x50cm",
         serie: "Série \"Personnalités\" - 2024/2025",
         availableSizes: "Disponibles : 50x50cm (original)",
-        moreImages: ["/images/gallery/personnalites/zendaya_zoom.jpg"]
+        moreImages: ["/images/gallery/personnalites/zendaya_zoom.webp"]
     },
     // 21. Mini
     {
@@ -268,7 +268,7 @@ export const galleryPageItems: Artwork[] = [
         serie: "Série \"Saisons\" - 2024/2025",
         availableSizes: "Disponibles : 40x50cm (original), 40x50cm (print), 15x21cm",
         moreImages: [
-            "/images/gallery/saisons/print_automne.png",
+            "/images/gallery/saisons/print_automne.webp",
             "/images/gallery/saisons/CP_automne.png"
         ]
     },

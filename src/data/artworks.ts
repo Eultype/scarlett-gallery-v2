@@ -20,8 +20,8 @@ export const homeGalleryItems: Artwork[] = [
         serie: "Série \"Saisons\" - 2024/2025",
         availableSizes: "Disponibles : 40x50cm (original), 40x50cm (print), 15x21cm",
         moreImages: [
-            "/images/gallery/saisons/print_printemps.png",
-            "/images/gallery/saisons/CP_printemps.png"
+            "/images/gallery/saisons/print_printemps.webp",
+            "/images/gallery/saisons/CP_printemps.webp"
         ]
     },
     {
@@ -33,7 +33,7 @@ export const homeGalleryItems: Artwork[] = [
         serie: "Série \"Saisons\" - 2024/2025",
         availableSizes: "Disponibles : 40x50cm (original), 40x50cm (print), 15x21cm",
         moreImages: [
-            "/images/gallery/saisons/print_ete.png",
+            "/images/gallery/saisons/print_ete.webp",
             "/images/gallery/saisons/CP_ete.png"
         ]
     },
@@ -46,7 +46,7 @@ export const homeGalleryItems: Artwork[] = [
         serie: "Série \"Saisons\" - 2024/2025",
         availableSizes: "Disponibles : 40x50cm (original), 40x50cm (print), 15x21cm",
         moreImages: [
-            "/images/gallery/saisons/print_automne.png",
+            "/images/gallery/saisons/print_automne.webp",
             "/images/gallery/saisons/CP_automne.png"
         ]
     },
@@ -59,7 +59,7 @@ export const homeGalleryItems: Artwork[] = [
         serie: "Série \"Saisons\" - 2024/2025",
         availableSizes: "Disponibles : 40x50cm (original), 40x50cm (print), 15x21cm",
         moreImages: [
-            "/images/gallery/saisons/print_hiver.png",
+            "/images/gallery/saisons/print_hiver.webp",
             "/images/gallery/saisons/CP_hiver.png"
         ]
     },
@@ -69,11 +69,11 @@ export const homeGalleryItems: Artwork[] = [
         id: "p1",
         title: "Cupid Olly",
         category: "personnalites",
-        image: "/images/gallery/personnalites/Cupid-olly.JPG",
+        image: "/images/gallery/personnalites/Cupid-olly.webp",
         dimensions: "Huile sur toile - 60x60cm",
         serie: "Série \"Personnalités\" - 2024/2025",
         availableSizes: "Disponibles : 60x60cm (original)",
-        moreImages: ["/images/gallery/personnalites/olly_zoom.jpg"]
+        moreImages: ["/images/gallery/personnalites/olly_zoom.webp"]
     },
     {
         id: "p2",
@@ -83,7 +83,7 @@ export const homeGalleryItems: Artwork[] = [
         dimensions: "Huile sur toile - 50x50cm",
         serie: "Série \"Personnalités\" - 2024/2025",
         availableSizes: "Disponibles : 50x50cm (original)",
-        moreImages: ["/images/gallery/personnalites/zendaya_zoom.jpg"]
+        moreImages: ["/images/gallery/personnalites/zendaya_zoom.webp"]
     },
     {
         id: "p3",
@@ -93,7 +93,7 @@ export const homeGalleryItems: Artwork[] = [
         dimensions: "Huile sur toile - 40x50cm",
         serie: "Série \"Religieux\" - 2024/2025",
         availableSizes: "Disponibles : 40x50cm (original)",
-        moreImages: ["/images/gallery/personnalites/mater_zoom.jpg"]
+        moreImages: ["/images/gallery/personnalites/mater_zoom.webp"]
     },
     {
         id: "p4",
@@ -103,7 +103,7 @@ export const homeGalleryItems: Artwork[] = [
         dimensions: "Huile sur toile - 40x50cm",
         serie: "Série \"Religieux\" - 2024/2025",
         availableSizes: "Disponibles : 40x50cm (original)",
-        moreImages: ["/images/gallery/personnalites/ave_zoom.jpg"]
+        moreImages: ["/images/gallery/personnalites/ave_zoom.webp"]
     },
 
     // --- LINOGRAVURES ---
@@ -115,7 +115,7 @@ export const homeGalleryItems: Artwork[] = [
         dimensions: "Linogravure - 21x29,7 (A4)",
         serie: "Série \"Linogravures\" - 2024/2025",
         availableSizes: "Disponible : 21x29,7 (A4)",
-        moreImages: ["/images/gallery/linogravures/lino_4saisons_mur.jpg"]
+        moreImages: ["/images/gallery/linogravures/lino_4saisons_mur.webp"]
     },
     {
         id: "l2",
@@ -125,7 +125,7 @@ export const homeGalleryItems: Artwork[] = [
         dimensions: "Linogravure - 21x29,7 (A4)",
         serie: "Série \"Linogravures\" - 2024/2025",
         availableSizes: "Disponible : 21x29,7 (A4)",
-        moreImages: ["/images/gallery/linogravures/lino_stgraal_mur.jpg"]
+        moreImages: ["/images/gallery/linogravures/lino_stgraal_mur.webp"]
     },
     {
         id: "l3",
@@ -135,7 +135,7 @@ export const homeGalleryItems: Artwork[] = [
         dimensions: "Linogravure - 21x29,7 (A4)",
         serie: "Série \"Linogravures\" - 2024/2025",
         availableSizes: "Disponible : 21x29,7 (A4)",
-        moreImages: ["/images/gallery/linogravures/lino_antique_mur.JPEG"]
+        moreImages: ["/images/gallery/linogravures/lino_antique_mur.webp"]
     },
     {
         id: "l4",

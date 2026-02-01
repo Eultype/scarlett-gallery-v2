@@ -57,6 +57,7 @@ export default function HeritageSection({ scrollYProgress }: HeritageSectionProp
                                 src="/images/about/emma-line.webp"
                                 alt="L'atelier"
                                 fill
+                                sizes="(max-width: 768px) 100vw, 40vw"
                                 className="object-cover rounded-lg border-[4px] border-white"
                             />
                         </motion.div>

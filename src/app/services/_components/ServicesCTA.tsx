@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function ServicesCTA() {
     return (
         <section className="mt-32 py-20 bg-[#FDFBF7]">
-            <div className="container mx-auto px-4 text-center space-y-8">
+            <div className="mx-auto px-4 md:px-10 xl:px-20 text-center space-y-8">
                 {/* Titre */}
                 <h2 className="font-cormorant text-5xl text-gray-900 italic">Un projet en tête ?</h2>
                 {/* Texte */}
