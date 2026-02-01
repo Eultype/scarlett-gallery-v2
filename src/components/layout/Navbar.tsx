@@ -9,6 +9,9 @@ import { useState, useEffect } from "react";
 // Import des datas
 import { CONTACT_INFO } from "@/data/contact";
 import { NAV_LINKS } from "@/data/nav";
+// Import des composants UI
+import NavLink from "@/components/ui/NavLink";
+import MobileNavLink from "@/components/ui/MobileNavLink";
 
 // Composant de la Navbar
 export default function Navbar() {
@@ -153,45 +156,5 @@ export default function Navbar() {
                 </div>
             </div>
         </nav>
-    );
-}
-
-// Composant NavLink avec gestion de l'état actif
-function NavLink({ href, label, currentPath }: { href: string; label: string; currentPath: string; isTransparent: boolean }) {
-    const isActive = currentPath === href;
-    
-    return (
-        <Link
-            href={href}
-            className={`relative group py-2 font-medium uppercase text-xs tracking-[0.15em] transition-colors duration-300 ${
-                isActive 
-                    ? "text-terra font-bold" 
-                    : "hover:text-terra"
-            }`}
-        >
-            {label}
-            {/* Ligne de soulignement animée */}
-            <span className={`absolute bottom-0 left-0 w-0 h-px bg-terra transition-all duration-300 group-hover:w-full ${isActive ? "w-full" : ""}`}></span>
-        </Link>
-    );
-}
-
-function MobileNavLink({
-                           href,
-                           label,
-                           onClick,
-                       }: {
-    href: string;
-    label: string;
-    onClick: () => void;
-}) {
-    return (
-        <Link
-            href={href}
-            onClick={onClick}
-            className="text-4xl font-cormorant italic text-gray-900 hover:text-terra transition-colors"
-        >
-            {label}
-        </Link>
     );
 }
