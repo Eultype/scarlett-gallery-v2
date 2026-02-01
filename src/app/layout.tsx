@@ -102,11 +102,11 @@ export default function RootLayout({
                 <SmoothScrolling>
                     <InitialLoader />
                     <ImageProtection />
-                    <Navbar />
                     <div id="main-content">
+                        <Navbar />
                         {children}
+                        <Footer />
                     </div>
-                    <Footer />
                     <SpeedInsights />
                 </SmoothScrolling>
             </body>
