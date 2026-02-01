@@ -9,6 +9,9 @@ export const metadata: Metadata = {
     title: "La Collection",
     description: "Explorez la galerie complète d'Emma De Noni : portraits aux saisons, linogravures et œuvres originales à l'huile.",
     keywords: ["Galerie d'art Bruxelles", "Tableaux à l'huile", "Linogravures originales", "Collection Scarlett"],
+    alternates: {
+        canonical: "/gallery",
+    },
 };
 
 // Page galerie

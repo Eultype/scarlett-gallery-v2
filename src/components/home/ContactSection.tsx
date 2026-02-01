@@ -1,7 +1,5 @@
 "use client";
 
-// Import Next
-import Link from "next/link";
 // Import Lucide Icons
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 // Import React Icons

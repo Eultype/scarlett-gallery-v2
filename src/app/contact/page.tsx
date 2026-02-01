@@ -11,6 +11,9 @@ export const metadata: Metadata = {
     title: "Contact",
     description: "Une question, une commande ou un projet de collaboration ? Contactez Emma De Noni directement via ce formulaire.",
     keywords: ["Contact artiste peintre", "Achat tableau Bruxelles", "Commande peinture sur mesure", "Emma De Noni contact"],
+    alternates: {
+        canonical: "/contact",
+    },
 };
 
 // Page contact

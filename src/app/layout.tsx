@@ -50,9 +50,6 @@ export const metadata: Metadata = {
         "Galerie d'art en ligne"
     ],
     metadataBase: new URL("https://www.scarlettgallery.com"),
-    alternates: {
-        canonical: "/",
-    },
     openGraph: {
         title: "Scarlett Gallery | Emma De Noni",
         description: "Découvrez une collection d'œuvres originales à l'huile et profitez de services sur mesure.",

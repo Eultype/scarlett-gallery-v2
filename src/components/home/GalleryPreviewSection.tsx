@@ -4,7 +4,7 @@
 import Image from "next/image";
 import Link from "next/link";
 // Import React
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 // Import Lucide Icons
 import { ArrowRight, ChevronLeft, ChevronRight, Hand } from "lucide-react";
 // Import Framer Motion
@@ -52,13 +52,23 @@ export default function GalleryPreviewSection() {
     const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
     const [hasInteracted, setHasInteracted] = useState(false);
 
-    // Reset pagination on tab change
+    // Référence pour le conteneur de scroll horizontal (Mobile)
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+    // Reset pagination et scroll au changement d'onglet
     const handleTabChange = (tabId: string) => {
         setDirection(0); // Pas de direction spécifique au changement d'onglet
         setActiveTab(tabId);
         setStartIndex(0);
         setHasInteracted(false);
     };
+
+    // Reset du scroll horizontal mobile quand l'onglet change
+    useEffect(() => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollTo({ left: 0, behavior: 'instant' });
+        }
+    }, [activeTab]);
 
     // Get all items for current category
     const allItemsInTab = homeGalleryItems.filter(
@@ -148,6 +158,7 @@ export default function GalleryPreviewSection() {
                         </AnimatePresence>
 
                         <div 
+                            ref={scrollContainerRef}
                             className="flex overflow-x-auto gap-6 pb-8 snap-x snap-mandatory scrollbar-hide -mx-8 px-8 md:-mx-10 md:px-10"
                             onScroll={() => setHasInteracted(true)}
                             onTouchStart={() => setHasInteracted(true)}

@@ -8,9 +8,12 @@ import ServicesCTA from "./_components/ServicesCTA";
 
 // Metadata de la page services
 export const metadata: Metadata = {
-    title: "Mes Prestations",
-    description: "Commandes sur mesure, expositions et collaborations artistiques à Bruxelles. Confiez-moi vos projets les plus audacieux.",
-    keywords: ["Peinture sur mesure", "Location tableaux", "Exposition artiste Bruxelles", "Collaborations artistiques"],
+    title: "Services & Commandes",
+    description: "Portraits sur mesure, commandes personnalisées et collaborations artistiques. Donnez vie à vos projets avec Scarlett Gallery.",
+    keywords: ["Portrait sur mesure", "Peinture personnalisée", "Artiste peintre services", "Collaboration artistique"],
+    alternates: {
+        canonical: "/services",
+    },
 };
 
 // Page services
