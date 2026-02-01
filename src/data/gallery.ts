@@ -9,7 +9,7 @@ export const galleryPageItems: Artwork[] = [
         id: "s1",
         title: "Blindspring",
         category: "saisons",
-        image: "/images/gallery/saisons/printempsSD_cadre.jpg",
+        image: "/images/gallery/saisons/printempsSD_cadre_2.jpg",
         dimensions: "Huile sur toile - 40x50cm",
         serie: "Série \"Saisons\" - 2024/2025",
         availableSizes: "Disponibles : 40x50cm (original), 40x50cm (print), 15x21cm",
