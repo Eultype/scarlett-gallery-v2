@@ -11,6 +11,7 @@ import { ArrowRight, ChevronLeft, ChevronRight, Hand } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 // Import des composants UI
 import Lightbox from "@/components/ui/Lightbox";
+import SafeImage from "@/components/ui/SafeImage";
 // Import des types
 import { Artwork } from "@/types/artwork";
 // Import des datas
@@ -158,8 +159,8 @@ export default function GalleryPreviewSection() {
                                     onClick={() => setSelectedArtwork(item)}
                                 >
                                     <div className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 h-full flex flex-col">
-                                        <div className="relative aspect-[4/5] overflow-hidden">
-                                            <Image
+                                        <div className="relative aspect-[4/5] w-full">
+                                            <SafeImage
                                                 src={item.image}
                                                 alt={item.title}
                                                 fill
@@ -167,8 +168,7 @@ export default function GalleryPreviewSection() {
                                                 sizes="(max-width: 768px) 85vw, 45vw"
                                             />
                                         </div>
-                                        <div className="p-6 flex-grow flex flex-col justify-between">
-                                            <div>
+                                        <div className="p-6 flex-grow flex flex-col justify-between">                                            <div>
                                                 <h3 className="font-cormorant text-2xl text-gray-900 mb-1 font-bold italic">
                                                     {item.title}
                                                 </h3>
@@ -222,16 +222,14 @@ export default function GalleryPreviewSection() {
                                             {/* Carte */}
                                             <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 h-full flex flex-col">
 
-                                                {/* Image */}
-                                                <div className="relative aspect-[4/5] overflow-hidden">
-                                                    <Image
+                                                <div className="relative aspect-[4/5] w-full">
+                                                    <SafeImage
                                                         src={item.image}
                                                         alt={item.title}
                                                         fill
                                                         className="object-cover transition-transform duration-700 group-hover:scale-110"
                                                         sizes="25vw"
                                                     />
-                                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                                                 </div>
 
                                                 {/* Info */}

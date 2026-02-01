@@ -7,6 +7,9 @@ import { useEffect, useState } from "react";
 // Import Lucide Icons
 import { X, Loader2 } from "lucide-react";
 
+// Import des composants UI
+import SafeImage from "./SafeImage";
+
 // Interface
 interface LightboxProps {
     isOpen: boolean;
@@ -22,13 +25,11 @@ export default function Lightbox({ isOpen, onClose, imageSrc, title, sizes, more
 
     // État local pour l'image affichée (commence avec l'image principale)
     const [currentImage, setCurrentImage] = useState(imageSrc);
-    const [isLoading, setIsLoading] = useState(true);
 
     // Reset quand on ouvre une nouvelle oeuvre
     useEffect(() => {
         if (imageSrc) {
             setCurrentImage(imageSrc);
-            setIsLoading(true);
         }
     }, [imageSrc, isOpen]);
 
@@ -47,7 +48,6 @@ export default function Lightbox({ isOpen, onClose, imageSrc, title, sizes, more
 
     const handleImageChange = (src: string) => {
         if (src !== currentImage) {
-            setIsLoading(true);
             setCurrentImage(src);
         }
     };
@@ -70,25 +70,17 @@ export default function Lightbox({ isOpen, onClose, imageSrc, title, sizes, more
             >
 
                 {/* Image Principale (Grande) */}
-                <div className="relative w-full md:w-2/3 h-[60vh] xl:h-[80vh] flex items-center justify-center">
-                    
-                    {/* Loader pendant le changement */}
-                    {isLoading && (
-                        <div className="absolute z-10 animate-spin text-terra">
-                            <Loader2 size={48} />
-                        </div>
-                    )}
-
+                <div className="relative w-full md:w-2/3 h-[60vh] xl:h-[80vh]">
                     {currentImage && (
-                        <Image
-                            key={currentImage} // Force le re-mount immédiat pour éviter le ghosting
+                        <SafeImage
+                            key={currentImage}
                             src={currentImage}
                             alt={title}
                             fill
-                            className={`object-contain transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+                            className="object-contain"
                             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 1000px"
                             priority
-                            onLoad={() => setIsLoading(false)}
+                            loaderSize={48}
                         />
                     )}
                 </div>
@@ -111,14 +103,21 @@ export default function Lightbox({ isOpen, onClose, imageSrc, title, sizes, more
                             {allImages.map((src, idx) => (
                                 <div
                                     key={idx}
-                                    onClick={() => handleImageChange(src)} // <-- Utilise la nouvelle fonction
-                                    className={`relative w-20 h-20 flex-shrink-0 border-2 cursor-pointer transition-all ${
+                                    onClick={() => handleImageChange(src)}
+                                    className={`relative w-20 h-20 flex-shrink-0 border-2 cursor-pointer transition-all bg-white/5 ${
                                         currentImage === src
                                             ? "border-terra opacity-100"
                                             : "border-transparent opacity-50 hover:opacity-100 hover:border-white"
                                     }`}
                                 >
-                                    <Image src={src} alt={`Vue ${idx}`} fill className="object-cover" sizes="80px" />
+                                    <SafeImage 
+                                        src={src} 
+                                        alt={`Vue ${idx}`} 
+                                        fill 
+                                        className="object-cover" 
+                                        sizes="80px" 
+                                        loaderSize={16}
+                                    />
                                 </div>
                             ))}
 
