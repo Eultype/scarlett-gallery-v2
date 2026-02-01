@@ -1,11 +1,34 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { z } from "zod";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+// Définition du schéma de validation "blindé"
+const contactSchema = z.object({
+  name: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
+  email: z.string().email("Format d'email invalide"),
+  phone: z.string().min(8, "Numéro de téléphone invalide"),
+  subject: z.enum(["commande", "achat", "exposition", "autre"]),
+  date: z.string().optional(),
+  message: z.string().min(1, "Le message ne peut pas être vide").max(500, "Le message est limité à 500 caractères"),
+});
+
 export async function POST(req: Request) {
   try {
-    const { name, email, phone, subject, date, message } = await req.json();
+    const body = await req.json();
+    
+    // Validation des données avec Zod
+    const validation = contactSchema.safeParse(body);
+
+    if (!validation.success) {
+      return NextResponse.json({ 
+        error: "Données invalides", 
+        details: validation.error.format() 
+      }, { status: 400 });
+    }
+
+    const { name, email, phone, subject, date, message } = validation.data;
 
     const { data, error } = await resend.emails.send({
       from: "Scarlett Gallery <contact@scarlettgallery.com>", 

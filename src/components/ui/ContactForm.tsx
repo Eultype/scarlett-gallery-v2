@@ -84,6 +84,7 @@ export default function ContactForm({
                         id="phone" 
                         label="Téléphone" 
                         type="tel" 
+                        required
                         pattern="^(0|\\+33|\\+32)[1-9][0-9]{7,12}$" 
                     />
                 </div>
