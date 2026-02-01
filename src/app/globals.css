@@ -35,3 +35,13 @@ img {
   -webkit-touch-callout: none; /* Empêche le menu contextuel sur iOS */
   user-select: none;
 }
+
+/* Protection contre le flash avant le loader */
+.js-loading #main-content {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.js-loading body {
+  overflow: hidden;
+}

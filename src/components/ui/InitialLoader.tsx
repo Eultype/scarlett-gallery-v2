@@ -24,6 +24,7 @@ export default function InitialLoader() {
                 setIsLoading(false);
                 sessionStorage.setItem("hasVisitedScarlett", "true");
                 document.body.style.overflow = "auto";
+                document.documentElement.classList.remove('js-loading');
             }, 3000);
 
             return () => {
@@ -81,9 +82,9 @@ export default function InitialLoader() {
                                 opacity: 1,
                                 transition: { duration: 1, delay: 1.8 }
                             }}
-                            className="text-center"
+                            className="text-center px-4"
                         >
-                            <p className="font-autumn text-2xl md:text-3xl text-gray-800 tracking-wide">
+                            <p className="font-autumn text-2xl md:text-3xl text-gray-800 tracking-wide leading-relaxed py-2 overflow-visible">
                                 Emma De Noni
                             </p>
                             <p className="font-cormorant text-sm uppercase tracking-[0.3em] text-terra mt-2">

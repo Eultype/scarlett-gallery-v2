@@ -112,6 +112,7 @@ export default function GalleryGrid() {
 
             {/* Lightbox */}
             <Lightbox
+                key={selectedArtwork?.id}
                 isOpen={!!selectedArtwork}
                 onClose={() => setSelectedArtwork(null)}
                 imageSrc={selectedArtwork?.image || ""}

@@ -1,12 +1,9 @@
 "use client";
 
 // Import Next
-import Image from "next/image";
-// Import React
 import { useEffect, useState } from "react";
 // Import Lucide Icons
-import { X, Loader2 } from "lucide-react";
-
+import { X } from "lucide-react";
 // Import des composants UI
 import SafeImage from "./SafeImage";
 
@@ -23,15 +20,8 @@ interface LightboxProps {
 // Composant LightBox pour la section galerie
 export default function Lightbox({ isOpen, onClose, imageSrc, title, sizes, moreImages }: LightboxProps) {
 
-    // État local pour l'image affichée (commence avec l'image principale)
+    // État local pour l'image affichée
     const [currentImage, setCurrentImage] = useState(imageSrc);
-
-    // Reset quand on ouvre une nouvelle oeuvre
-    useEffect(() => {
-        if (imageSrc) {
-            setCurrentImage(imageSrc);
-        }
-    }, [imageSrc, isOpen]);
 
     // Bloquer le scroll
     useEffect(() => {
@@ -43,14 +33,7 @@ export default function Lightbox({ isOpen, onClose, imageSrc, title, sizes, more
     if (!isOpen) return null;
 
     // Liste complète pour les miniatures (Main + Secondaires)
-    // On filtre les valeurs vides pour éviter l'erreur "src is empty"
     const allImages = [imageSrc, ...(moreImages || [])].filter(Boolean);
-
-    const handleImageChange = (src: string) => {
-        if (src !== currentImage) {
-            setCurrentImage(src);
-        }
-    };
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-fade-in">
@@ -59,6 +42,7 @@ export default function Lightbox({ isOpen, onClose, imageSrc, title, sizes, more
             <button
                 onClick={onClose}
                 className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors z-50"
+                aria-label="Fermer la galerie"
             >
                 <X size={40} />
             </button>
@@ -66,7 +50,7 @@ export default function Lightbox({ isOpen, onClose, imageSrc, title, sizes, more
             {/* Contenu */}
             <div
                 className="max-w-5xl w-full flex flex-col xl:flex-row gap-8 items-center justify-center"
-                onClick={(e) => e.stopPropagation()} // Empêche de fermer si on clique sur le contenu
+                onClick={(e) => e.stopPropagation()}
             >
 
                 {/* Image Principale (Grande) */}
@@ -103,7 +87,7 @@ export default function Lightbox({ isOpen, onClose, imageSrc, title, sizes, more
                             {allImages.map((src, idx) => (
                                 <div
                                     key={idx}
-                                    onClick={() => handleImageChange(src)}
+                                    onClick={() => setCurrentImage(src)}
                                     className={`relative w-20 h-20 flex-shrink-0 border-2 cursor-pointer transition-all bg-white/5 ${
                                         currentImage === src
                                             ? "border-terra opacity-100"

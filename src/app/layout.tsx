@@ -85,15 +85,27 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="fr">
+        <html lang="fr" suppressHydrationWarning>
             <body
                 className={`${montserrat.variable} ${cormorant.variable} ${autumnChant.variable} antialiased font-sans`}
             >
+                {/* Script critique bloquant pour éviter le flash de contenu avant le loader */}
+                <script 
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                            if (!sessionStorage.getItem("hasVisitedScarlett")) {
+                                document.documentElement.classList.add('js-loading');
+                            }
+                        `
+                    }}
+                />
                 <SmoothScrolling>
                     <InitialLoader />
                     <ImageProtection />
                     <Navbar />
-                    {children}
+                    <div id="main-content">
+                        {children}
+                    </div>
                     <Footer />
                     <SpeedInsights />
                 </SmoothScrolling>

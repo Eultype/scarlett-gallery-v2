@@ -307,6 +307,7 @@ export default function GalleryPreviewSection() {
 
             {/* Lightbox */}
             <Lightbox
+                key={selectedArtwork?.id}
                 isOpen={!!selectedArtwork}
                 onClose={() => setSelectedArtwork(null)}
                 imageSrc={selectedArtwork?.image || ""}
