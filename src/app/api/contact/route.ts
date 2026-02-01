@@ -22,15 +22,14 @@ export async function POST(req: Request) {
     const validation = contactSchema.safeParse(body);
 
     if (!validation.success) {
-      return NextResponse.json({ 
-        error: "Données invalides", 
-        details: validation.error.format() 
+      return NextResponse.json({
+        error: "Données invalides"
       }, { status: 400 });
     }
 
     const { name, email, phone, subject, date, message } = validation.data;
 
-    const { data, error } = await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: "Scarlett Gallery <contact@scarlettgallery.com>", 
       to: ["contact@scarlettgallery.com"], 
       subject: `Nouveau message de ${name} : ${subject}`,
@@ -40,7 +39,7 @@ export async function POST(req: Request) {
           <h2 style="color: #95421A; border-bottom: 1px solid #eee; padding-bottom: 10px;">Nouveau message de Scarlett Gallery</h2>
           <p><strong>Nom :</strong> ${name}</p>
           <p><strong>Email :</strong> ${email}</p>
-          <p><strong>Téléphone :</strong> ${phone || "Non renseigné"}</p>
+          <p><strong>Téléphone :</strong> ${phone}</p>
           <p><strong>Sujet :</strong> ${subject}</p>
           <p><strong>Date souhaitée :</strong> ${date || "Non renseignée"}</p>
           <div style="margin-top: 20px; padding: 15px; background-color: #f9f9f9; border-left: 4px solid #95421A;">
@@ -52,7 +51,7 @@ export async function POST(req: Request) {
     });
 
     if (error) {
-      return NextResponse.json({ error }, { status: 500 });
+      return NextResponse.json({ error: "Erreur d'envoi" }, { status: 500 });
     }
 
     return NextResponse.json({ message: "Email envoyé avec succès" }, { status: 200 });
