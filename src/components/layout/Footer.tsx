@@ -100,27 +100,40 @@ export default function Footer() {
                     </div>
                 </div>
                 {/* Droits */}
-                <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
-                    <p className="mb-4 md:mb-0">
-                        &copy; {currentYear} DE NONI Emma - Artiste Peintre. Tous droits réservés.
+                <div className="border-t border-gray-800 pt-8 flex flex-col xl:flex-row justify-between items-center text-[10px] md:text-xs uppercase tracking-widest text-gray-500 gap-6">
+                    {/* Gauche : Copyright */}
+                    <p className="text-center xl:text-left">
+                        &copy; {currentYear} DE NONI Emma - Artiste Peintre.
                     </p>
-                    {/* Politique / Mentions */}
+
+                    {/* Milieu : Liens Légaux */}
                     <div className="flex space-x-6">
-                        {/* Politique de confidentialités */}
                         <Link
                             href="/politique"
                             className="hover:text-white transition-colors"
                         >
-                            Politique de confidentialité
+                            Confidentialité
                         </Link>
-                        {/* Mentions légales */}
                         <Link
                             href="/mentions"
                             className="hover:text-white transition-colors"
                         >
-                            Mentions légales
+                            Mentions Légales
                         </Link>
                     </div>
+
+                    {/* Droite : Signature Développeur */}
+                    <p className="text-center xl:text-right opacity-70">
+                        Design & Développement par{" "}
+                        <a 
+                            href="https://github.com/Eultype" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="hover:text-terra transition-colors font-bold"
+                        >
+                            Samuël Darry
+                        </a>
+                    </p>
                 </div>
             </div>
         </footer>
