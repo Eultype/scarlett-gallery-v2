@@ -39,9 +39,9 @@ export default function ContactSection() {
 
                         {/* Coordonnées */}
                         <div className="space-y-8 md:text-center xl:text-left">
-                            <h3 className="font-cormorant text-3xl text-gray-900 border-b border-terra/30 pb-2 inline-block italic">
+                            <h2 className="font-cormorant text-3xl text-gray-900 border-b border-terra/30 pb-2 inline-block italic">
                                 Coordonnées
-                            </h3>
+                            </h2>
                             <div className="space-y-6 md:space-y-0 md:grid md:grid-cols-3 md:gap-4 xl:flex xl:flex-col xl:gap-0 xl:space-y-6 text-gray-600 font-light">
                                 {/* Icône / case : adresse */}
                                 <div className="flex items-center md:flex-col md:items-center xl:flex-row xl:items-start gap-4 group">
@@ -91,9 +91,9 @@ export default function ContactSection() {
                         {/* Case : réseaux Sociaux */}
                         <div className="space-y-6 md:text-center xl:text-left">
                             {/* Titre */}
-                            <h3 className="font-cormorant text-3xl text-gray-900 border-b border-terra/30 pb-2 inline-block italic">
+                            <h2 className="font-cormorant text-3xl text-gray-900 border-b border-terra/30 pb-2 inline-block italic">
                                 Suivez-moi
-                            </h3>
+                            </h2>
                                             {/* Réseaux sociaux */}
                                             <div className="flex gap-4 md:justify-center xl:justify-start">
                                                 {/* Instagram */}

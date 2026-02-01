@@ -5,25 +5,26 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function InitialLoader() {
-    const [isLoading, setIsLoading] = useState(true);
+    // On initialise à false par défaut si on est côté serveur
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         // Vérifier si l'utilisateur a déjà vu l'intro dans cette session
         const hasVisited = sessionStorage.getItem("hasVisitedScarlett");
 
-        if (hasVisited) {
-            setIsLoading(false);
-        } else {
-            // Si c'est la première fois, on joue l'animation
+        if (!hasVisited) {
+            // On n'active le chargement que si on ne l'a pas déjà vu
+            setIsLoading(true);
+            
             // Bloquer le scroll
             document.body.style.overflow = "hidden";
 
-            // Durée de l'animation (ex: 2.5 secondes)
+            // Durée de l'animation (ex: 2 secondes)
             const timer = setTimeout(() => {
                 setIsLoading(false);
                 sessionStorage.setItem("hasVisitedScarlett", "true");
                 document.body.style.overflow = "auto";
-            }, 3500);
+            }, 3000);
 
             return () => {
                 clearTimeout(timer);

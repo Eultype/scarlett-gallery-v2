@@ -18,6 +18,7 @@ export default function EventService() {
                     src="/images/gallery/linogravures/lino_4saisons_mur.webp"
                     alt="Mise en situation exposition" 
                     fill 
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover"
                 />
                 {/* Icône */}

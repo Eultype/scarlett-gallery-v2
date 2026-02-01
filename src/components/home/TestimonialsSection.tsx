@@ -78,8 +78,8 @@ export default function TestimonialsSection() {
                     </button>
 
                     {/* Texte animé */}
-                    <div className="w-full min-h-[150px] flex items-center justify-center">
-                        <AnimatePresence mode="wait">
+                    <div className="w-full min-h-[250px] md:min-h-[200px] flex items-center justify-center">
+                        <AnimatePresence mode="popLayout">
                             <motion.div
                                 key={currentIndex}
                                 initial={{ opacity: 0, y: 10 }}
