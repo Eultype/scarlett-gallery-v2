@@ -63,12 +63,12 @@ export default function GalleryGrid() {
             <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-8 space-y-8">
                 <AnimatePresence>
                     {filteredItems.map((item, index) => {
-                        const isPriority = index < 6;
+                        const isPriority = index < 2;
                         return (
                         <motion.div
                             key={item.id}
                             layout
-                            initial={isPriority ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.9 }}
                             transition={{ duration: 0.4 }}
