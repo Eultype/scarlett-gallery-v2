@@ -4,7 +4,7 @@
 import Link from "next/link";
 import Image from "next/image";
 // Import Lucide Icons
-import { Brush, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 // Import des composants UI
 import ListItem from "@/components/ui/ListItem";
 
@@ -12,20 +12,16 @@ import ListItem from "@/components/ui/ListItem";
 export default function BespokeService() {
     return (
         <section className="flex flex-col md:flex-row items-center gap-16">
-            {/* Image / Icône */}
-            <div className="w-full md:w-1/2 relative aspect-[4/5] shadow-2xl">
+            {/* Image */}
+            <div className="w-full md:w-1/2 relative aspect-[4/5] shadow-2xl rounded-lg border-[4px] border-white">
                 {/* Image */}
                 <Image 
-                    src="/images/about/Scarlett_peint.webp" 
+                    src="/images/about/services-1.webp"
                     alt="Commande sur mesure" 
                     fill 
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover"
                 />
-                {/* Icône */}
-                <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-white flex items-center justify-center shadow-lg">
-                    <Brush className="text-terra w-10 h-10" />
-                </div>
             </div>
             {/* Titre / texte / liste / bouton */}
             <div className="w-full md:w-1/2 space-y-8">
@@ -39,8 +35,8 @@ export default function BespokeService() {
                 </p>
                 {/* Liste des services */}
                 <ul className="space-y-4">
-                    <ListItem text="Consultation initiale (visio ou café)" />
-                    <ListItem text="Propositions de croquis et palettes" />
+                    <ListItem text="Consultation initiale (Mail, appel, visio ou café)" />
+                    <ListItem text="Propositions de croquis et Moodboard" />
                     <ListItem text="Suivi photo de l'avancement" />
                     <ListItem text="Livraison et conseils d'accrochage" />
                 </ul>

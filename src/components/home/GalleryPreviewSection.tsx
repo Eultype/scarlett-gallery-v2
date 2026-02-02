@@ -293,7 +293,7 @@ export default function GalleryPreviewSection() {
                         href={CONTACT_INFO.socials.etsy}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full md:w-auto border border-black px-8 py-4 text-sm uppercase tracking-widest hover:bg-[#F45800] hover:border-[#F45800] hover:text-white transition-all duration-300"
+                        className="w-full md:w-auto border border-black px-8 py-4 text-sm uppercase tracking-widest hover:bg-[#F45800] hover:border-[#F45800] hover:text-white transition-all duration-300 text-center"
                     >
                         Achetez mes oeuvres (Etsy)
                     </a>
@@ -301,13 +301,13 @@ export default function GalleryPreviewSection() {
                         href={CONTACT_INFO.socials.vinted}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full md:w-auto border border-black px-8 py-4 text-sm uppercase tracking-widest hover:bg-[#007782] hover:border-[#007782] hover:text-white transition-all duration-300"
+                        className="w-full md:w-auto border border-black px-8 py-4 text-sm uppercase tracking-widest hover:bg-[#007782] hover:border-[#007782] hover:text-white transition-all duration-300 text-center"
                     >
                         Achetez mes oeuvres (Vinted)
                     </a>
                     <Link
                         href="/contact"
-                        className="w-full md:w-auto bg-black text-white px-8 py-4 text-sm uppercase tracking-widest hover:bg-terra transition-all duration-300"
+                        className="w-full md:w-auto bg-black text-white px-8 py-4 text-sm uppercase tracking-widest hover:bg-terra transition-all duration-300 text-center"
                     >
                         Planifiez une oeuvre personnalisée
                     </Link>

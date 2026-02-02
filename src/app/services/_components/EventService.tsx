@@ -4,7 +4,7 @@
 import Link from "next/link";
 import Image from "next/image";
 // Import Lucide Icons
-import { GalleryVerticalEnd, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 // Import des composants UI
 import ListItem from "@/components/ui/ListItem";
 
@@ -13,7 +13,7 @@ export default function EventService() {
     return (
         <section className="flex flex-col md:flex-row-reverse items-center gap-16">
             {/* Image de l'exposition */}
-            <div className="w-full md:w-1/2 relative aspect-[4/5] shadow-2xl">
+            <div className="w-full md:w-1/2 relative aspect-[4/5] shadow-2xl rounded-lg border-[4px] border-white">
                 <Image 
                     src="/images/gallery/linogravures/lino_4saisons_mur.webp"
                     alt="Mise en situation exposition" 
@@ -21,10 +21,6 @@ export default function EventService() {
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover"
                 />
-                {/* Icône */}
-                <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-white flex items-center justify-center shadow-lg">
-                    <GalleryVerticalEnd className="text-terra w-10 h-10" />
-                </div>
             </div>
             {/* Titre / texte / liste / bouton */}
             <div className="w-full md:w-1/2 space-y-8 text-right md:text-left">
@@ -34,16 +30,15 @@ export default function EventService() {
                 </div>
                 {/* Texte */}
                 <p className="text-gray-600 leading-relaxed text-justify md:text-right">
-                    J'organise et participe à des expositions temporaires. Je propose également mes œuvres
+                    Je suis disponible pour participer à des expositions temporaires. Je propose également mes œuvres
                     à la location pour des événements d'entreprise, des shootings photo ou du Home Staging.
                     Apportez une touche d'âme et d'élégance à vos espaces professionnels.
                 </p>
                 {/* Liste des services */}
                 <ul className="space-y-4 flex flex-col items-end">
                     <ListItem text="Location courte ou longue durée" align="right" />
-                    <ListItem text="Scénographie et installation" align="right" />
-                    <ListItem text="Vernissages privés" align="right" />
-                    <ListItem text="Ateliers Team Building (sur devis)" align="right" />
+                    <ListItem text="Vernissages" align="right" />
+                    <ListItem text="Marché de créateur" align="right" />
                 </ul>
                 {/* Bouton de contact */}
                 <div className="pt-4 flex justify-end">
