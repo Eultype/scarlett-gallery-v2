@@ -75,6 +75,7 @@ export default function Navbar() {
                     className={`hidden xl:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 space-x-10 items-center transition-colors duration-300 ${
                         isTransparent ? "text-white" : "text-gray-900"
                     }`}
+                    style={{ minWidth: "600px", justifyContent: "center" }}
                 >
                     {NAV_LINKS.map((link) => (
                         <NavLink 

@@ -19,7 +19,7 @@ export default function ContactSection() {
                 <div className="flex flex-col xl:flex-row justify-center gap-16 lg:gap-24 mx-auto">
 
                     {/* Colonne de gauche : Infos */}
-                    <div className="w-full xl:w-5/12 space-y-12">
+                    <div className="w-full xl:w-5/12 space-y-12 min-h-[600px]">
                         
                         {/* Titres */}
                         <div className="text-center xl:text-left">
@@ -119,7 +119,7 @@ export default function ContactSection() {
                     </div>
 
                     {/* Colonne de droite : Formulaire de contact */}
-                    <div className="w-full xl:w-7/12">
+                    <div className="w-full xl:w-7/12 min-h-[600px]">
                         <ContactForm />
                     </div>
 
