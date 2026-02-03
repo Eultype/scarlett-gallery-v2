@@ -38,7 +38,10 @@ export default function HeroSection() {
     };
 
     return (
-        <section className="relative h-screen w-full overflow-hidden bg-[#FDFBF7]">
+        <section 
+            className="relative h-screen w-full overflow-hidden bg-[#FDFBF7] bg-cover bg-center"
+            style={{ backgroundImage: "url('/images/hero/eteHD.webp')" }}
+        >
             {/* Images de fond */}
             <div className="absolute inset-0 z-0">
                 {backgroundImages.map((src, index) => (
