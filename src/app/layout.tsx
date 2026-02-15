@@ -11,6 +11,7 @@ import Footer from "@/components/layout/Footer";
 import SmoothScrolling from "@/components/layout/SmoothScrolling";
 import ImageProtection from "@/components/layout/ImageProtection";
 import InitialLoader from "@/components/ui/InitialLoader";
+import JsonLd from "@/components/seo/JsonLd";
 
 const montserrat = Montserrat({
     subsets: ["latin"],
@@ -89,6 +90,7 @@ export default function RootLayout({
             <body
                 className={`${montserrat.variable} ${cormorant.variable} ${autumnChant.variable} antialiased font-sans`}
             >
+                <JsonLd />
                 {/* Script critique bloquant pour éviter le flash de contenu avant le loader */}
                 <script 
                     dangerouslySetInnerHTML={{
