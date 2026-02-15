@@ -1,6 +1,7 @@
 // Import Next
 import type { Metadata } from "next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 import { Montserrat, Cormorant_Garamond } from "next/font/google";
 import localFont from "next/font/local";
 // Import des styles
@@ -110,6 +111,7 @@ export default function RootLayout({
                         <Footer />
                     </div>
                     <SpeedInsights />
+                    <Analytics />
                 </SmoothScrolling>
             </body>
         </html>
