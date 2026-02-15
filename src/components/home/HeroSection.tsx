@@ -6,6 +6,8 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 // Import Lucide Icons
 import { ArrowDown } from "lucide-react";
+// Import Lenis Hook
+import { useLenis } from "@studio-freight/react-lenis";
 
 // Images de fond
 const backgroundImages = [
@@ -18,6 +20,7 @@ const backgroundImages = [
 // Composant HeroSection de la page d'accueil
 export default function HeroSection() {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const lenis = useLenis();
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -30,11 +33,7 @@ export default function HeroSection() {
     }, []);
 
     const scrollToAbout = () => {
-        const aboutSection = document.getElementById("about");
-
-        if (aboutSection) {
-            aboutSection.scrollIntoView({ behavior: "smooth" });
-        }
+        lenis?.scrollTo("#about");
     };
 
     return (
