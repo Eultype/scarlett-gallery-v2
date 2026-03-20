@@ -10,7 +10,7 @@ export default function AboutSection() {
         <section id="about" className="py-20 bg-[#FDFBF7] overflow-hidden">
             <div className="mx-auto px-8 md:px-10 xl:px-20">
                 <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-                    {/* Image de l'artiste */}
+                    {/* Image de l&apos;artiste */}
                     <div className="w-full md:w-5/12 lg:w-5/12 relative group">
                         <div className="relative aspect-[4/5] transform transition-transform duration-500 xl:hover:scale-[1.02]">
                             {/* Image noir et blanc (Uniquement Desktop XL) */}
@@ -38,7 +38,7 @@ export default function AboutSection() {
                     <div className="w-full lg:w-1/2 text-center lg:text-left space-y-6">
                         {/* Titre */}
                         <h2 className="font-cormorant text-6xl md:text-7xl text-gray-900 font-light italic">
-                            L'Artiste
+                            L&apos;Artiste
                         </h2>
                         {/* Sous-titre */}
                         <p className="text-xl text-terra italic font-medium">
@@ -48,7 +48,7 @@ export default function AboutSection() {
                         <div className="text-gray-600 leading-relaxed space-y-4 text-justify lg:text-left">
                             <p>
                                 Je m’appelle Emma, artiste peintre originaire de Tourcoing et aujourd’hui installée à <strong>Bruxelles</strong>.
-                                Ma passion pour la <strong>peinture à l'huile</strong> est née très tôt, au contact de ma tante,
+                                Ma passion pour la <strong>peinture à l&apos;huile</strong> est née très tôt, au contact de ma tante,
                                 qui m’a transmis non seulement les techniques classiques, mais aussi l’amour du geste et de la matière.
                             </p>
                             <p>
@@ -59,7 +59,7 @@ export default function AboutSection() {
                             <p className="hidden md:block">
                                 Mon univers artistique s’inspire de mes rencontres et de la richesse culturelle bruxelloise.
                                 J’aime explorer les nuances, expérimenter le clair-obscur et laisser une
-                                place à l'intuition pour créer des <strong>œuvres authentiques</strong> et vibrantes.
+                                place à l&apos;intuition pour créer des <strong>œuvres authentiques</strong> et vibrantes.
                             </p>
                             <p>
                                 Aujourd’hui, je continue de peindre avec la même ferveur, animée par le
@@ -73,7 +73,7 @@ export default function AboutSection() {
                                 href="/about"
                                 className="inline-block border border-black px-8 py-3 text-sm uppercase tracking-widest hover:bg-terra hover:text-white hover:border-terra transition-all duration-300"
                             >
-                                Découvrir mon parcours d'artiste peintre
+                                Découvrir mon parcours d&apos;artiste peintre
                             </Link>
                         </div>
                     </div>

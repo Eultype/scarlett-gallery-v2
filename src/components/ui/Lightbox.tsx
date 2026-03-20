@@ -20,7 +20,7 @@ interface LightboxProps {
 // Composant LightBox pour la section galerie
 export default function Lightbox({ isOpen, onClose, imageSrc, title, sizes, moreImages }: LightboxProps) {
 
-    // État local pour l'image affichée
+    // État local pour l&apos;image affichée
     const [currentImage, setCurrentImage] = useState(imageSrc);
 
     // Bloquer le scroll

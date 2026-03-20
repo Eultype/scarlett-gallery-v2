@@ -21,7 +21,7 @@ export default function SafeImage({
 
     return (
         <div className={`relative overflow-hidden w-full h-full ${containerClassName}`}>
-            {/* Spinner de chargement - Visible tant que l'image n'est pas chargée */}
+            {/* Spinner de chargement - Visible tant que l&apos;image n&apos;est pas chargée */}
             {!isLoaded && (
                 <div className="absolute inset-0 z-10 flex items-center justify-center">
                     <Loader2 

@@ -30,7 +30,7 @@ export default function JsonLd() {
         "@id": "https://www.scarlettgallery.com/#website",
         "url": "https://www.scarlettgallery.com",
         "name": "Scarlett Gallery",
-        "description": "Artiste peintre à Bruxelles. Portraits à l'huile, linogravures et œuvres originales.",
+        "description": "Artiste peintre à Bruxelles. Portraits à l&apos;huile, linogravures et œuvres originales.",
         "publisher": {
           "@id": "https://www.scarlettgallery.com/#person"
         },
@@ -41,7 +41,7 @@ export default function JsonLd() {
         "@id": "https://www.scarlettgallery.com/#gallery",
         "name": "Scarlett Gallery",
         "image": "https://www.scarlettgallery.com/images/about/Scarlett_peint.webp",
-        "description": "Atelier et galerie d'art d'Emma De Noni, artiste peintre à Bruxelles. Spécialisée en peinture à l'huile, portraits sur mesure et linogravures.",
+        "description": "Atelier et galerie d&apos;art d&apos;Emma De Noni, artiste peintre à Bruxelles. Spécialisée en peinture à l&apos;huile, portraits sur mesure et linogravures.",
         "url": "https://www.scarlettgallery.com",
         "address": {
           "@type": "PostalAddress",

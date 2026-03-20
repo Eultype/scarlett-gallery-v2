@@ -43,7 +43,7 @@ export default function NewsletterForm() {
         setStatus("error");
         setMessage(data.error || "Une erreur est survenue");
       }
-    } catch (error) {
+    } catch {
       setStatus("error");
       setMessage("Erreur de connexion. Veuillez réessayer.");
     }

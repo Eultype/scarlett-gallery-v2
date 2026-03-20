@@ -10,7 +10,7 @@ export default function HeroSection() {
     return (
         <section className="py-20 pt-20 sm:pt-40 mx-auto px-4 md:px-10 xl:px-20">
             <div className="flex flex-col md:flex-row items-center gap-16 justify-center">
-                {/* Image de l'artiste */}
+                {/* Image de l&apos;artiste */}
                 <div className="w-full md:w-5/12 lg:w-5/12">
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}

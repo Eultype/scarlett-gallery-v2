@@ -21,7 +21,7 @@ export default function ContactHeader() {
                 </h1>
                 {/* Sous-titre */}
                 <p className="text-gray-600 text-lg font-light leading-relaxed max-w-2xl mx-auto">
-                    Une question sur une œuvre, une envie de collaboration ou simplement l'envie d'échanger ?
+                    Une question sur une œuvre, une envie de collaboration ou simplement l&apos;envie d&apos;échanger ?
                     Mon atelier est ouvert à la discussion.
                 </p>
             </motion.div>

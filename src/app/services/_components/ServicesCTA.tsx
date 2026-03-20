@@ -12,7 +12,7 @@ export default function ServicesCTA() {
                 <h2 className="font-cormorant text-5xl text-gray-900 italic">Un projet en tête ?</h2>
                 {/* Texte */}
                 <p className="text-gray-500 max-w-xl mx-auto">
-                    Chaque collaboration commence par une discussion simple. N'hésitez pas à m'écrire,
+                    Chaque collaboration commence par une discussion simple. N&apos;hésitez pas à m&apos;écrire,
                     même si votre idée est encore floue.
                 </p>
                 {/* Bouton prendre rendez-vous */}

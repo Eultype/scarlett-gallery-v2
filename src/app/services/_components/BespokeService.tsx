@@ -17,7 +17,7 @@ export default function BespokeService() {
                 {/* Image */}
                 <Image
                     src="/images/about/services-1.webp"
-                    alt="Réalisation d'un portrait sur mesure à l'huile - Artiste Peintre Bruxelles"
+                    alt="Réalisation d&apos;un portrait sur mesure à l&apos;huile - Artiste Peintre Bruxelles"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover"
@@ -31,7 +31,7 @@ export default function BespokeService() {
                 <p className="text-gray-600 leading-relaxed text-justify">
                     Vous avez une vision, une couleur, une émotion que vous souhaitez figer sur toile ?
                     Je réalise des œuvres personnalisées en dialogue avec votre intérieur et vos envies.
-                    Nous définissons ensemble le format, la palette et l'ambiance.
+                    Nous définissons ensemble le format, la palette et l&apos;ambiance.
                 </p>
                 {/* Liste des services */}
                 <ul className="space-y-4">

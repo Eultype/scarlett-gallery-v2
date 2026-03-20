@@ -9,7 +9,7 @@ export default function GalleryInvitation() {
         <div className="mx-auto px-4 md:px-10 xl:px-20 pb-40">
             <div className="mx-auto border-t border-b border-terra/20 py-16 text-center space-y-8">
                 {/* Titre */}
-                <p className="font-cormorant text-5xl text-gray-400 italic">La suite de l'histoire...</p>
+                <p className="font-cormorant text-5xl text-gray-400 italic">La suite de l&apos;histoire...</p>
                 {/* Bouton */}
                 <Link
                     href="/gallery"

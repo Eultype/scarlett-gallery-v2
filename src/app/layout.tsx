@@ -39,22 +39,22 @@ export const metadata: Metadata = {
         default: "Scarlett Gallery | Artiste Peintre à Bruxelles",
         template: "%s | Scarlett Gallery",
     },
-    description: "Explorez l'univers d'Emma De Noni, artiste peintre à Bruxelles. Portraits à l'huile, linogravures et œuvres originales empreintes de lumière et d'émotions.",
+    description: "Explorez l&apos;univers d&apos;Emma De Noni, artiste peintre à Bruxelles. Portraits à l&apos;huile, linogravures et œuvres originales empreintes de lumière et d'émotions.",
     keywords: [
         "Emma De Noni", 
         "Scarlett Gallery", 
         "Artiste peintre Bruxelles", 
-        "Peinture à l'huile Belgique", 
+        "Peinture à l&apos;huile Belgique", 
         "Portraits sur mesure", 
         "Linogravure originale", 
         "Art contemporain Bruxelles", 
         "Achat tableau original", 
-        "Galerie d'art en ligne"
+        "Galerie d&apos;art en ligne"
     ],
     metadataBase: new URL("https://www.scarlettgallery.com"),
     openGraph: {
         title: "Scarlett Gallery | Emma De Noni",
-        description: "Découvrez une collection d'œuvres originales à l'huile et profitez de services sur mesure.",
+        description: "Découvrez une collection d&apos;œuvres originales à l&apos;huile et profitez de services sur mesure.",
         url: "https://scarlettgallery.com",
         siteName: "Scarlett Gallery",
         images: [
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
                 url: "/images/about/Scarlett_peint.webp",
                 width: 1200,
                 height: 630,
-                alt: "L'atelier d'Emma De Noni",
+                alt: "L'atelier d&apos;Emma De Noni",
             },
         ],
         locale: "fr_FR",

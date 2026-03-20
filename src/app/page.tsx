@@ -10,8 +10,8 @@ import ContactSection from "@/components/home/ContactSection";
 
 export const metadata: Metadata = {
     title: "Scarlett Gallery | Artiste Peintre à Bruxelles",
-    description: "Bienvenue sur le portfolio officiel d'Emma De Noni. Découvrez une collection unique de peintures à l'huile, linogravures et portraits vibrants à Bruxelles.",
-    keywords: ["Emma De Noni", "Scarlett Gallery", "Artiste peintre Bruxelles", "Peinture à l'huile Belgique", "Portraits sur mesure", "Linogravure originale", "Art contemporain Bruxelles", "Achat tableau original"],
+    description: "Bienvenue sur le portfolio officiel d&apos;Emma De Noni. Découvrez une collection unique de peintures à l&apos;huile, linogravures et portraits vibrants à Bruxelles.",
+    keywords: ["Emma De Noni", "Scarlett Gallery", "Artiste peintre Bruxelles", "Peinture à l&apos;huile Belgique", "Portraits sur mesure", "Linogravure originale", "Art contemporain Bruxelles", "Achat tableau original"],
     alternates: {
         canonical: "/",
     },

@@ -13,11 +13,12 @@ export default function InitialLoader() {
         const hasVisited = sessionStorage.getItem("hasVisitedScarlett");
 
         if (!hasVisited) {
-            // On n'active le chargement que si on ne l'a pas déjà vu
-            setIsLoading(true);
-            
-            // Bloquer le scroll
-            document.body.style.overflow = "hidden";
+            // On utilise setTimeout pour éviter l'avertissement de setState synchrone
+            const initTimer = setTimeout(() => {
+                setIsLoading(true);
+                // Bloquer le scroll
+                document.body.style.overflow = "hidden";
+            }, 0);
 
             // Durée de l'animation (ex: 2 secondes)
             const timer = setTimeout(() => {
@@ -28,6 +29,7 @@ export default function InitialLoader() {
             }, 3000);
 
             return () => {
+                clearTimeout(initTimer);
                 clearTimeout(timer);
                 document.body.style.overflow = "auto";
             };
@@ -75,7 +77,7 @@ export default function InitialLoader() {
                             className="h-[1px] bg-terra/50"
                         />
 
-                        {/* Signature / Nom de l'artiste */}
+                        {/* Signature / Nom de l&apos;artiste */}
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ 

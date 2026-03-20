@@ -5,7 +5,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { Send } from "lucide-react";
 import FloatingInput from "./FloatingInput";
-import { CONTACT_INFO } from "@/data/contact";
 
 interface ContactFormProps {
     title?: string;
@@ -42,7 +41,7 @@ export default function ContactForm({
             } else {
                 setStatus("error");
             }
-        } catch (error) {
+        } catch {
             setStatus("error");
         }
     };
@@ -104,8 +103,8 @@ export default function ContactForm({
                         >
                             <option value="" disabled>Choisir...</option>
                             <option value="commande">Commande sur mesure</option>
-                            <option value="achat">Achat d'œuvre</option>
-                            <option value="exposition">Proposition d'exposition</option>
+                            <option value="achat">Achat d&apos;œuvre</option>
+                            <option value="exposition">Proposition d&apos;exposition</option>
                             <option value="autre">Autre</option>
                         </select>
                         <label htmlFor="subject" className="peer-focus:font-medium absolute text-lg text-gray-500 font-cormorant italic duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-terra peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
@@ -138,10 +137,10 @@ export default function ContactForm({
                     </label>
                 </div>
 
-                {/* État d'erreur */}
+                {/* État d&apos;erreur */}
                 {status === "error" && (
                     <div className="text-red-500 text-sm text-center">
-                        Une erreur est survenue lors de l'envoi. Veuillez réessayer.
+                        Une erreur est survenue lors de l&apos;envoi. Veuillez réessayer.
                     </div>
                 )}
 

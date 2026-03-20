@@ -51,7 +51,7 @@ export default function HeroSection() {
                                 ? "opacity-100"
                                 : "opacity-0"
                         } ${
-                            // La transition ne s'applique que si ce n'est PAS la première image au chargement
+                            // La transition ne s'applique que si ce n&apos;est PAS la première image au chargement
                             index === 0 && currentImageIndex === 0 
                                 ? "" 
                                 : "transition-opacity duration-[2500ms] ease-in-out"
@@ -59,7 +59,7 @@ export default function HeroSection() {
                     >
                         <Image
                             src={src}
-                            alt={`Tableau à l'huile original - Saison ${index + 1} - Scarlett Gallery, Artiste Peintre Bruxelles`}
+                            alt={`Tableau à l&apos;huile original - Saison ${index + 1} - Scarlett Gallery, Artiste Peintre Bruxelles`}
                             fill
                             className="object-cover"
                             priority={index === 0}

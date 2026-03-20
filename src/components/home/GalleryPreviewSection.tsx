@@ -287,7 +287,7 @@ export default function GalleryPreviewSection() {
                     </Link>
                 </div>
 
-                {/* Boutons d'achat et Call to Action */}
+                {/* Boutons d&apos;achat et Call to Action */}
                 <div className="flex flex-col md:flex-row flex-wrap justify-center items-center gap-4 mt-8">
                     <a
                         href={CONTACT_INFO.socials.etsy}

@@ -7,8 +7,8 @@ import GalleryGrid from "./_components/GalleryGrid";
 // Metadata de la page Galerie
 export const metadata: Metadata = {
     title: "Galerie d'Art en Ligne : Peintures et Linogravures",
-    description: "Explorez la galerie complète d'Emma De Noni : portraits aux saisons, linogravures et œuvres originales à l'huile.",
-    keywords: ["Galerie d'art Bruxelles", "Tableaux à l'huile", "Linogravures originales", "Collection Scarlett"],
+    description: "Explorez la galerie complète d&apos;Emma De Noni : portraits aux saisons, linogravures et œuvres originales à l&apos;huile.",
+    keywords: ["Galerie d&apos;art Bruxelles", "Tableaux à l&apos;huile", "Linogravures originales", "Collection Scarlett"],
     alternates: {
         canonical: "/gallery",
     },

@@ -5,8 +5,8 @@ import AboutContent from "./_components/AboutContent";
 
 // Metadata de la page About
 export const metadata: Metadata = {
-    title: "Emma De Noni : L'Artiste Peintre à Bruxelles",
-    description: "Découvrez le parcours d'Emma De Noni, son héritage artistique et l'intimité de son atelier à Bruxelles.",
+    title: "Emma De Noni : L&apos;Artiste Peintre à Bruxelles",
+    description: "Découvrez le parcours d&apos;Emma De Noni, son héritage artistique et l&apos;intimité de son atelier à Bruxelles.",
     keywords: ["Emma De Noni", "Artiste peintre Bruxelles", "Héritage artistique", "Atelier de peinture"],
     alternates: {
         canonical: "/about",

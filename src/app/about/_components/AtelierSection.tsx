@@ -29,7 +29,7 @@ export default function AtelierSection({ scrollYProgress }: AtelierSectionProps)
                 <div className="text-center mb-16 flex flex-col items-center">
                     {/* Badge */}
                     <div className="inline-block bg-terra text-white px-4 py-1 text-[10px] font-bold uppercase tracking-[0.3em] rounded mb-8">
-                        L'Atelier à Bruxelles
+                        L&apos;Atelier à Bruxelles
                     </div>
                     {/* Titre */}
                     <h2 className="font-cormorant text-5xl lg:text-7xl text-gray-900 font-light italic">Là où tout prend vie</h2>
@@ -60,7 +60,7 @@ export default function AtelierSection({ scrollYProgress }: AtelierSectionProps)
                             <h3 className="font-cormorant text-4xl text-gray-900 mb-2 font-medium italic">Le Refuge</h3>
                             {/* Description */}
                             <p className="text-sm text-gray-600 font-light leading-relaxed">
-                                Un espace volé au temps où le silence permet l'introspection.
+                                Un espace volé au temps où le silence permet l&apos;introspection.
                             </p>
                         </div>
                     </div>
@@ -81,10 +81,10 @@ export default function AtelierSection({ scrollYProgress }: AtelierSectionProps)
                             {/* Numéro */}
                             <span className="text-[10px] font-bold uppercase tracking-widest text-terra">02</span>
                             {/* Titre */}
-                            <h3 className="font-cormorant text-4xl text-gray-900 mb-2 font-medium italic">L'Effervescence</h3>
+                            <h3 className="font-cormorant text-4xl text-gray-900 mb-2 font-medium italic">L&apos;Effervescence</h3>
                             {/* Description */}
                             <p className="text-sm text-gray-600 font-light leading-relaxed">
-                                Le chaos fertile de l'huile, des tubes et de la création brute.
+                                Le chaos fertile de l&apos;huile, des tubes et de la création brute.
                             </p>
                         </div>
                     </div>
@@ -106,7 +106,7 @@ export default function AtelierSection({ scrollYProgress }: AtelierSectionProps)
                             {/* Numéro */}
                             <span className="text-[10px] font-bold uppercase tracking-widest text-terra">03</span>
                             {/* Titre */}
-                            <h3 className="font-cormorant text-4xl text-gray-900 mb-2 font-medium italic">L'Ouverture</h3>
+                            <h3 className="font-cormorant text-4xl text-gray-900 mb-2 font-medium italic">L&apos;Ouverture</h3>
                             {/* Description */}
                             <p className="text-sm text-gray-600 font-light leading-relaxed">
                                 Laisser entrer la lumière qui nourrit et révèle la toile.

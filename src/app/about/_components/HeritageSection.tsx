@@ -34,7 +34,7 @@ export default function HeritageSection({ scrollYProgress }: HeritageSectionProp
                         <div className="w-full md:w-3/5 space-y-8">
                             {/* Badge */}
                             <div className="inline-block bg-terra text-white px-4 py-1 text-[10px] font-bold uppercase tracking-[0.3em] rounded">
-                                L'Héritage
+                                L&apos;Héritage
                             </div>
 
                             {/* Titre */}
@@ -51,7 +51,7 @@ export default function HeritageSection({ scrollYProgress }: HeritageSectionProp
                             </p>
                         </div>
 
-                        {/* Image de l'artiste et sa tante */}
+                        {/* Image de l&apos;artiste et sa tante */}
                         <div className="w-full md:w-2/5 mt-10 md:mt-0">
                             <motion.div
                                 style={{ y: typeof window !== 'undefined' && window.innerWidth < 768 ? 0 : yImg }}

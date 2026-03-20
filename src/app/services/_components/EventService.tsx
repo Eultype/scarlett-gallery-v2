@@ -12,11 +12,11 @@ import ListItem from "@/components/ui/ListItem";
 export default function EventService() {
     return (
         <section className="flex flex-col md:flex-row-reverse items-center gap-16">
-            {/* Image de l'exposition */}
+            {/* Image de l&apos;exposition */}
             <div className="w-full md:w-1/2 relative aspect-[4/5] shadow-2xl rounded-lg border-[4px] border-white">
                 <Image
                     src="/images/gallery/linogravures/lino_4saisons_mur.webp"
-                    alt="Exposition d'art et linogravures originales par Scarlett Gallery"
+                    alt="Exposition d&apos;art et linogravures originales par Scarlett Gallery"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover"
@@ -31,8 +31,8 @@ export default function EventService() {
                 {/* Texte */}
                 <p className="text-gray-600 leading-relaxed text-justify md:text-right">
                     Je suis disponible pour participer à des expositions temporaires. Je propose également mes œuvres
-                    à la location pour des événements d'entreprise, des shootings photo ou du Home Staging.
-                    Apportez une touche d'âme et d'élégance à vos espaces professionnels.
+                    à la location pour des événements d&apos;entreprise, des shootings photo ou du Home Staging.
+                    Apportez une touche d&apos;âme et d&apos;élégance à vos espaces professionnels.
                 </p>
                 {/* Liste des services */}
                 <ul className="space-y-4 flex flex-col items-end">

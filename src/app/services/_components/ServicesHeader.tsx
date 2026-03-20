@@ -22,7 +22,7 @@ export default function ServicesHeader() {
                 {/* Sous-titre */}
                 <p className="text-gray-600 text-lg font-light leading-relaxed">
                     Au-delà de ma collection personnelle, je mets mon savoir-faire au service de vos projets.
-                    Que ce soit pour une œuvre unique ou un événement artistique, créons ensemble quelque chose d'exceptionnel.
+                    Que ce soit pour une œuvre unique ou un événement artistique, créons ensemble quelque chose d&apos;exceptionnel.
                 </p>
             </motion.div>
         </section>
