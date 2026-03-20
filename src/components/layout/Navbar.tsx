@@ -61,7 +61,7 @@ export default function Navbar() {
                     >
                         <Image
                             src={isTransparent ? "/images/logos/logo2(blanc).png" : "/images/logos/img.png"}
-                            alt="Scarlett Gallery"
+                            alt="Logo Scarlett Gallery - Emma De Noni, Artiste Peintre Bruxelles"
                             fill
                             className="object-contain"
                             sizes="(max-width: 768px) 160px, 220px"

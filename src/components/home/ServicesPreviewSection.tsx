@@ -53,7 +53,7 @@ export default function ServicesPreviewSection() {
                                 href="/contact"
                                 className="inline-flex items-center font-medium text-gray-900 hover:text-terra transition-colors group"
                             >
-                                En savoir plus
+                                Découvrir les commandes sur mesure
                                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
                             </Link>
                         </div>
@@ -87,7 +87,7 @@ export default function ServicesPreviewSection() {
                                 href="/contact"
                                 className="inline-flex items-center font-medium text-gray-900 hover:text-terra transition-colors group"
                             >
-                                En savoir plus
+                                Découvrir les commandes sur mesure
                                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
                             </Link>
                         </div>

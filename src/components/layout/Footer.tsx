@@ -23,7 +23,7 @@ export default function Footer() {
                             <div className="relative w-full" style={{ aspectRatio: "200 / 60" }}>
                                 <Image
                                     src="/images/logos/logo2(blanc).png"
-                                    alt="Scarlett Gallery"
+                                    alt="Logo Scarlett Gallery - Emma De Noni, Artiste Peintre Bruxelles"
                                     fill
                                     className="object-contain"
                                     sizes="200px"

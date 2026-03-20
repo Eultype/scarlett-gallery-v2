@@ -13,12 +13,12 @@ export default function BespokeService() {
     return (
         <section className="flex flex-col md:flex-row items-center gap-16">
             {/* Image */}
-            <div className="w-full md:w-1/2 relative aspect-[4/5] shadow-2xl rounded-lg border-[4px] border-white">
+            <div className="w-full md:w-1/2 relative aspect-4/5 shadow-2xl rounded-lg border-4 border-white">
                 {/* Image */}
-                <Image 
+                <Image
                     src="/images/about/services-1.webp"
-                    alt="Commande sur mesure" 
-                    fill 
+                    alt="Réalisation d'un portrait sur mesure à l'huile - Artiste Peintre Bruxelles"
+                    fill
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover"
                 />

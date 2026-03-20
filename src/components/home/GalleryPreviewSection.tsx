@@ -172,7 +172,7 @@ export default function GalleryPreviewSection() {
                                         <div className="relative aspect-[4/5] w-full">
                                             <SafeImage
                                                 src={item.image}
-                                                alt={item.title}
+                                                alt={`Peinture ${item.title} - Œuvre originale par Scarlett Gallery, Artiste Peintre Bruxelles`}
                                                 fill
                                                 className="object-cover"
                                                 sizes="(max-width: 768px) 85vw, 45vw"
@@ -235,7 +235,7 @@ export default function GalleryPreviewSection() {
                                                 <div className="relative aspect-[4/5] w-full">
                                                     <SafeImage
                                                         src={item.image}
-                                                        alt={item.title}
+                                                        alt={`Peinture ${item.title} - Œuvre originale par Scarlett Gallery, Artiste Peintre Bruxelles`}
                                                         fill
                                                         className="object-cover transition-transform duration-700 group-hover:scale-110"
                                                         sizes="25vw"
@@ -281,7 +281,7 @@ export default function GalleryPreviewSection() {
                         href="/gallery"
                         className="group inline-flex items-center gap-3 text-gray-900 font-bold uppercase tracking-widest text-xs hover:text-terra transition-colors"
                     >
-                        <span>Explorer la galerie complète</span>
+                        <span>Voir toutes les peintures et linogravures</span>
                         <div className="w-8 h-[1px] bg-gray-300 group-hover:bg-terra group-hover:w-12 transition-all duration-500"></div>
                         <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" />
                     </Link>

@@ -14,7 +14,7 @@ export default function ServicesHeader() {
                 className="max-w-3xl mx-auto space-y-6"
             >
                 {/* Badge */}
-                <span className="text-terra text-xs font-bold uppercase tracking-[0.3em]">Collaborations</span>
+                <span className="text-terra text-xs font-bold uppercase tracking-[0.3em]">Services Artistiques</span>
                 {/* Titre */}
                 <h1 className="font-cormorant text-6xl md:text-7xl text-gray-900 font-light italic">
                     Mes Prestations

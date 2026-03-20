@@ -73,7 +73,7 @@ export default function AboutSection() {
                                 href="/about"
                                 className="inline-block border border-black px-8 py-3 text-sm uppercase tracking-widest hover:bg-terra hover:text-white hover:border-terra transition-all duration-300"
                             >
-                                Découvrir mon parcours
+                                Découvrir mon parcours d'artiste peintre
                             </Link>
                         </div>
                     </div>

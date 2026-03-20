@@ -13,7 +13,7 @@ export default function GalleryHeader() {
             className="text-center mb-16 space-y-4"
         >
             {/* Badge */}
-            <span className="text-terra text-xs font-bold uppercase tracking-[0.3em] block pt-10">Collection</span>
+            <span className="text-terra text-xs font-bold uppercase tracking-[0.3em] block pt-10">Peintures & Linogravures</span>
             {/* Titre */}
             <h1 className="font-cormorant text-6xl md:text-7xl text-gray-900 font-light italic">
                 La Galerie

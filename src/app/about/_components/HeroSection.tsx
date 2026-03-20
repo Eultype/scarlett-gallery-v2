@@ -32,7 +32,7 @@ export default function HeroSection() {
                 <div className="w-full md:w-1/2 space-y-6">
                     {/* Badge */}
                     <div className="inline-block bg-terra text-white px-2 py-1 text-[10px] font-bold uppercase tracking-[0.3em] rounded">
-                        L&apos;Artiste
+                        L&apos;Artiste Peintre
                     </div>
 
                     {/* Titre */}
@@ -51,7 +51,7 @@ export default function HeroSection() {
                     <div className="text-gray-600 leading-relaxed text-lg space-y-6">
                         <p>
                             Originaire du Nord de la France et désormais établie au cœur de Bruxelles,
-                            mon parcours artistique est une quête perpétuelle de lumière et de sensations.
+                            mon parcours d&apos;<strong>artiste peintre</strong> est une quête perpétuelle de lumière et de sensations.
                             Chaque toile est une invitation à ralentir et à observer la beauté dans l&apos;imperfection.
                         </p>
                         <p>

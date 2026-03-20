@@ -14,10 +14,10 @@ export default function EventService() {
         <section className="flex flex-col md:flex-row-reverse items-center gap-16">
             {/* Image de l'exposition */}
             <div className="w-full md:w-1/2 relative aspect-[4/5] shadow-2xl rounded-lg border-[4px] border-white">
-                <Image 
+                <Image
                     src="/images/gallery/linogravures/lino_4saisons_mur.webp"
-                    alt="Mise en situation exposition" 
-                    fill 
+                    alt="Exposition d'art et linogravures originales par Scarlett Gallery"
+                    fill
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover"
                 />

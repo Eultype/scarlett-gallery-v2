@@ -45,7 +45,9 @@ export default function ContactInfo() {
                             {/* Titre */}
                             <p className="font-medium text-gray-900">Téléphone</p>
                             {/* Téléphone */}
-                            <p className="text-sm">{CONTACT_INFO.phone}</p>
+                            <a href={`https://wa.me/${CONTACT_INFO.phone.replace(/\s+/g, '').replace('+', '')}`} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-terra transition-colors block">
+                                {CONTACT_INFO.phone}
+                            </a>
                         </div>
                     </div>
                     {/* Icône / case : email */}
@@ -59,7 +61,9 @@ export default function ContactInfo() {
                             {/* Titre */}
                             <p className="font-medium text-gray-900">Email</p>
                             {/* Case : email*/}
-                            <p className="text-sm break-all">{CONTACT_INFO.email}</p>
+                            <a href={`mailto:${CONTACT_INFO.email}`} className="text-sm break-all hover:text-terra transition-colors block">
+                                {CONTACT_INFO.email}
+                            </a>
                         </div>
                     </div>
                 </div>

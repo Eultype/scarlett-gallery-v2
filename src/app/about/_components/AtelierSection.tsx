@@ -19,7 +19,7 @@ export default function AtelierSection({ scrollYProgress }: AtelierSectionProps)
             {/* Texte de fond 'Sanctuaire' */}
             <motion.div
                 style={{ y: yText }}
-                className="absolute top-20 md:top-20 lg:top-5 xl:top-10 right-6 md:right-12 lg:right-16 xl:right-24 opacity-[0.07] md:opacity-[0.05] select-none pointer-events-none whitespace-nowrap"
+                className="absolute top-40 md:top-20 lg:top-5 xl:top-10 right-6 md:right-12 lg:right-16 xl:right-24 opacity-[0.07] md:opacity-[0.05] select-none pointer-events-none whitespace-nowrap"
             >
                 <span className="font-autumn text-[10vw] text-gray-900">Sanctuaire</span>
             </motion.div>
@@ -29,7 +29,7 @@ export default function AtelierSection({ scrollYProgress }: AtelierSectionProps)
                 <div className="text-center mb-16 flex flex-col items-center">
                     {/* Badge */}
                     <div className="inline-block bg-terra text-white px-4 py-1 text-[10px] font-bold uppercase tracking-[0.3em] rounded mb-8">
-                        L'Atelier
+                        L'Atelier à Bruxelles
                     </div>
                     {/* Titre */}
                     <h2 className="font-cormorant text-5xl lg:text-7xl text-gray-900 font-light italic">Là où tout prend vie</h2>

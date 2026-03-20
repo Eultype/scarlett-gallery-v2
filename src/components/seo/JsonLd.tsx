@@ -35,6 +35,30 @@ export default function JsonLd() {
           "@id": "https://www.scarlettgallery.com/#person"
         },
         "inLanguage": "fr-FR"
+      },
+      {
+        "@type": "ArtGallery",
+        "@id": "https://www.scarlettgallery.com/#gallery",
+        "name": "Scarlett Gallery",
+        "image": "https://www.scarlettgallery.com/images/about/Scarlett_peint.webp",
+        "description": "Atelier et galerie d'art d'Emma De Noni, artiste peintre à Bruxelles. Spécialisée en peinture à l'huile, portraits sur mesure et linogravures.",
+        "url": "https://www.scarlettgallery.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Avenue des Cerisiers 10",
+          "postalCode": "1030",
+          "addressLocality": "Schaerbeek",
+          "addressRegion": "Bruxelles-Capitale",
+          "addressCountry": "BE"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "50.8489",
+          "longitude": "4.4039"
+        },
+        "founder": {
+          "@id": "https://www.scarlettgallery.com/#person"
+        }
       }
     ]
   };

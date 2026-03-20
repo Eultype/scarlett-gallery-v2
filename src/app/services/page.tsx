@@ -8,7 +8,7 @@ import ServicesCTA from "./_components/ServicesCTA";
 
 // Metadata de la page services
 export const metadata: Metadata = {
-    title: "Services & Commandes",
+    title: "Portraits sur Mesure et Commandes Artistiques",
     description: "Portraits sur mesure, commandes personnalisées et collaborations artistiques. Donnez vie à vos projets avec Scarlett Gallery.",
     keywords: ["Portrait sur mesure", "Peinture personnalisée", "Artiste peintre services", "Collaboration artistique"],
     alternates: {

@@ -59,7 +59,7 @@ export default function HeroSection() {
                     >
                         <Image
                             src={src}
-                            alt={`Scarlett Gallery Background ${index + 1}`}
+                            alt={`Tableau à l'huile original - Saison ${index + 1} - Scarlett Gallery, Artiste Peintre Bruxelles`}
                             fill
                             className="object-cover"
                             priority={index === 0}
@@ -70,9 +70,12 @@ export default function HeroSection() {
             </div>
             {/* Titre et indicateur de scroll (bouton) */}
             <div className="relative z-10 h-full flex flex-col justify-center items-center text-center text-white px-4">
-                {/* Titre */}
-                <h1 className="font-autumn text-6xl md:text-8xl lg:text-9xl mb-4 drop-shadow-lg">
-                    Scarlett Gallery
+                {/* Titre SEO Optimisé */}
+                <h1 className="flex flex-col items-center drop-shadow-lg mb-4">
+                    <span className="font-autumn text-6xl md:text-8xl lg:text-9xl">Scarlett Gallery</span>
+                    <span className="text-lg md:text-xl lg:text-2xl font-montserrat font-light mt-4 tracking-[0.2em] uppercase text-white/90">
+                        Artiste Peintre à Bruxelles
+                    </span>
                 </h1>
                 {/* Indicateur de scroll (bouton) */}
                 <button
