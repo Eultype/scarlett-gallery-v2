@@ -45,16 +45,9 @@ export default function JsonLd() {
         "url": "https://www.scarlettgallery.com",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "Avenue des Cerisiers 10",
-          "postalCode": "1030",
-          "addressLocality": "Schaerbeek",
+          "addressLocality": "Bruxelles",
           "addressRegion": "Bruxelles-Capitale",
           "addressCountry": "BE"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": "50.8489",
-          "longitude": "4.4039"
         },
         "founder": {
           "@id": "https://www.scarlettgallery.com/#person"
