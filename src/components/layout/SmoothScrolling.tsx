@@ -19,7 +19,8 @@ export default function SmoothScrolling({ children }: { children: React.ReactNod
   return (
     <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
       <ScrollToTop />
-      {children as React.ReactElement}
+      {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+      {children as any}
     </ReactLenis>
   );
 }
