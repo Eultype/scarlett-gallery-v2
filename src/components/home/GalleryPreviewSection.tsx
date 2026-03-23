@@ -16,6 +16,8 @@ import { Artwork } from "@/types/artwork";
 // Import des datas
 import { homeGalleryItems } from "@/data/artworks";
 import { CONTACT_INFO } from "@/data/contact";
+// Import Sanity
+import { getArtworks } from "@/sanity/lib/queries";
 
 // Liste des catégories
 const tabs = [
@@ -50,6 +52,28 @@ export default function GalleryPreviewSection() {
     const [direction, setDirection] = useState(0);
     const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
     const [hasInteracted, setHasInteracted] = useState(false);
+    const [allArtworks, setAllArtworks] = useState<Artwork[]>(homeGalleryItems);
+
+    // Charger les œuvres depuis Sanity au montage du composant
+    useEffect(() => {
+        async function fetchArtworks() {
+            try {
+                const sanityArtworks = await getArtworks();
+                if (sanityArtworks && sanityArtworks.length > 0) {
+                    // On fusionne les œuvres locales et Sanity, en évitant les doublons
+                    // et en mettant les nouvelles œuvres de Sanity en premier.
+                    const merged = [...sanityArtworks, ...homeGalleryItems].filter(
+                        (art, index, self) => 
+                            index === self.findIndex((t) => t.title === art.title)
+                    );
+                    setAllArtworks(merged);
+                }
+            } catch (error) {
+                console.error("Erreur lors du chargement des œuvres Sanity:", error);
+            }
+        }
+        fetchArtworks();
+    }, []);
 
     // Référence pour le conteneur de scroll horizontal (Mobile)
     const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -70,7 +94,7 @@ export default function GalleryPreviewSection() {
     }, [activeTab]);
 
     // Get all items for current category
-    const allItemsInTab = homeGalleryItems.filter(
+    const allItemsInTab = allArtworks.filter(
         (item) => item.category === activeTab
     );
 
