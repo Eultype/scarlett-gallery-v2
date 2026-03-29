@@ -11,6 +11,7 @@ export async function getArtworks(): Promise<Artwork[]> {
     dimensions,
     serie,
     availableSizes,
+    status,
     "moreImages": moreImages[]
   }`
 

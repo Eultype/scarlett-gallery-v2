@@ -29,11 +29,25 @@ export const artworkType = defineType({
         list: [
           { title: 'Saisons', value: 'saisons' },
           { title: 'Personnalités', value: 'personnalites' },
+          { title: 'Religieux', value: 'religieux' },
           { title: 'Linogravures', value: 'linogravures' },
           { title: 'Minis', value: 'minis' },
         ],
       },
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'status',
+      title: 'Statut',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Disponible', value: 'Disponible' },
+          { title: 'Vendu', value: 'Vendu' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'Disponible',
     }),
     defineField({
       name: 'mainImage',

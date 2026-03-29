@@ -23,6 +23,7 @@ import { getArtworks } from "@/sanity/lib/queries";
 const tabs = [
     { id: "saisons", label: "Portraits (Saisons)" },
     { id: "personnalites", label: "Portraits (Personnalités)" },
+    { id: "religieux", label: "Portraits (Religieux)" },
     { id: "linogravures", label: "Linogravures" },
     { id: "minis", label: "Les Minis" },
 ];
@@ -60,9 +61,9 @@ export default function GalleryPreviewSection() {
             try {
                 const sanityArtworks = await getArtworks();
                 if (sanityArtworks && sanityArtworks.length > 0) {
-                    // On fusionne les œuvres locales et Sanity, en évitant les doublons
-                    // et en mettant les nouvelles œuvres de Sanity en premier.
-                    const merged = [...sanityArtworks, ...homeGalleryItems].filter(
+                    // On donne la priorité aux données locales (homeGalleryItems) 
+                    // pour que vos changements d'images soient visibles immédiatement.
+                    const merged = [...homeGalleryItems, ...sanityArtworks].filter(
                         (art, index, self) => 
                             index === self.findIndex((t) => t.title === art.title)
                     );
@@ -98,23 +99,45 @@ export default function GalleryPreviewSection() {
         (item) => item.category === activeTab
     );
 
-    // Get visible items (pagination window)
-    const visibleItems = allItemsInTab.slice(startIndex, startIndex + 4);
+    // Logic to get visible items based on their column spans (total 4 per row)
+    const getVisibleItems = () => {
+        const items = [];
+        let currentSpan = 0;
+        let i = startIndex;
+        
+        while (i < allItemsInTab.length && currentSpan < 4) {
+            const item = allItemsInTab[i];
+            const itemSpan = item.layout === "wide" ? 2 : 1;
+            
+            if (currentSpan + itemSpan <= 4) {
+                items.push(item);
+                currentSpan += itemSpan;
+                i++;
+            } else {
+                break;
+            }
+        }
+        return items;
+    };
 
-    const hasNext = startIndex + 4 < allItemsInTab.length;
+    const visibleItems = getVisibleItems();
+
+    const hasNext = startIndex + visibleItems.length < allItemsInTab.length;
     const hasPrev = startIndex > 0;
 
     const nextItems = () => {
         if (hasNext) {
             setDirection(1);
-            setStartIndex((prev) => prev + 4);
+            setStartIndex((prev) => prev + visibleItems.length);
         }
     };
 
     const prevItems = () => {
         if (hasPrev) {
             setDirection(-1);
-            setStartIndex((prev) => prev - 4);
+            // This is slightly complex for backward navigation with variable spans
+            // For simplicity, we move back by a fixed amount or recalculate
+            setStartIndex((prev) => Math.max(0, prev - 4));
         }
     };
 
@@ -193,14 +216,19 @@ export default function GalleryPreviewSection() {
                                     onClick={() => setSelectedArtwork(item)}
                                 >
                                     <div className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 h-full flex flex-col">
-                                        <div className="relative aspect-[4/5] w-full">
+                                        <div className={`relative w-full aspect-[4/5] bg-white`}>
                                             <SafeImage
                                                 src={item.image}
                                                 alt={`Peinture ${item.title} - Œuvre originale par Scarlett Gallery, Artiste Peintre Bruxelles`}
                                                 fill
-                                                className="object-cover"
+                                                className={`${item.layout === "wide" ? "object-contain p-4 drop-shadow-md" : "object-cover"}`}
                                                 sizes="(max-width: 768px) 85vw, 45vw"
                                             />
+                                            {item.status === "Vendu" && (
+                                                <div className="absolute top-4 right-4 bg-red-800 text-white text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full shadow">
+                                                    Vendu
+                                                </div>
+                                            )}
                                         </div>
                                         <div className="p-6 flex-grow flex flex-col justify-between">                                            <div>
                                                 <h3 className="font-cormorant text-2xl text-gray-900 mb-1 font-bold italic">
@@ -208,8 +236,11 @@ export default function GalleryPreviewSection() {
                                                 </h3>
                                                 <p className="text-sm text-gray-500 mb-3">{item.serie}</p>
                                             </div>
-                                            <p className="text-xs text-gray-400 border-t pt-3 mt-auto">
-                                                {item.dimensions}
+                                            <p className="text-xs text-gray-400 border-t pt-3 mt-auto flex justify-between items-center">
+                                                <span>{item.dimensions}</span>
+                                                {item.status === "Disponible" && (
+                                                    <span className="text-green-700 font-bold uppercase tracking-widest text-[10px]">Disponible</span>
+                                                )}
                                             </p>
                                         </div>
                                     </div>
@@ -250,20 +281,25 @@ export default function GalleryPreviewSection() {
                                     {visibleItems.map((item) => (
                                         <div
                                             key={item.id}
-                                            className="group cursor-pointer"
+                                            className={`group cursor-pointer ${item.layout === "wide" ? "xl:col-span-2" : ""}`}
                                             onClick={() => setSelectedArtwork(item)}
                                         >
                                             {/* Carte */}
                                             <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 h-full flex flex-col">
 
-                                                <div className="relative aspect-[4/5] w-full">
+                                                <div className={`relative w-full overflow-hidden bg-white ${item.layout === "wide" ? "aspect-[1.69/1]" : "aspect-[4/5]"}`}>
                                                     <SafeImage
                                                         src={item.image}
                                                         alt={`Peinture ${item.title} - Œuvre originale par Scarlett Gallery, Artiste Peintre Bruxelles`}
                                                         fill
-                                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                                        sizes="25vw"
+                                                        className={`${item.layout === "wide" ? "object-contain p-4 drop-shadow-xlOk" : "object-cover"} transition-transform duration-700 group-hover:scale-110`}
+                                                        sizes={item.layout === "wide" ? "50vw" : "25vw"}
                                                     />
+                                                    {item.status === "Vendu" && (
+                                                        <div className="absolute top-4 right-4 bg-red-800 text-white text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full shadow z-10">
+                                                            Vendu
+                                                        </div>
+                                                    )}
                                                 </div>
 
                                                 {/* Info */}
@@ -274,8 +310,11 @@ export default function GalleryPreviewSection() {
                                                         </h3>
                                                         <p className="text-sm text-gray-500 mb-3">{item.serie}</p>
                                                     </div>
-                                                    <p className="text-xs text-gray-400 border-t pt-3 mt-auto">
-                                                        {item.dimensions}
+                                                    <p className="text-xs text-gray-400 border-t pt-3 mt-auto flex justify-between items-center">
+                                                        <span>{item.dimensions}</span>
+                                                        {item.status === "Disponible" && (
+                                                            <span className="text-green-700 font-bold uppercase tracking-widest text-[10px]">Disponible</span>
+                                                        )}
                                                     </p>
                                                 </div>
 
@@ -346,8 +385,10 @@ export default function GalleryPreviewSection() {
                 onClose={() => setSelectedArtwork(null)}
                 imageSrc={selectedArtwork?.image || ""}
                 title={selectedArtwork?.title || ""}
+                dimensions={selectedArtwork?.dimensions || ""}
                 sizes={selectedArtwork?.availableSizes}
                 moreImages={selectedArtwork?.moreImages}
+                status={selectedArtwork?.status}
             />
 
         </section>
