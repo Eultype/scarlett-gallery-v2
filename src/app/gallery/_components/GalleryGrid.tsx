@@ -4,7 +4,7 @@
 import Image from "next/image";
 import dynamic from "next/dynamic";
 // Import React
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // Import Framer Motion
 import { motion, AnimatePresence } from "framer-motion";
 // Import des composants UI (Dynamic Import pour Lightbox)
@@ -27,6 +27,11 @@ const categories = [
 export default function GalleryGrid() {
     const [filter, setFilter] = useState("all");
     const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
+    const [isSafari, setIsSafari] = useState(false);
+
+    useEffect(() => {
+        setIsSafari(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
+    }, []);
 
     const filteredItems = filter === "all" 
         ? galleryPageItems 
@@ -61,32 +66,35 @@ export default function GalleryGrid() {
             </div>
 
             {/* Masonry Layout */}
-            <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-8 space-y-8">
-                <AnimatePresence>
+            <div className={`columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-8 ${isSafari ? '' : 'space-y-8'}`}>
+                <AnimatePresence mode="sync">
                     {filteredItems.map((item, index) => {
                         const isPriority = index < 2;
                         return (
                         <motion.div
                             key={item.id}
-                            layout
-                            initial={{ opacity: 0, y: 20 }}
+                            layout={!isSafari}
+                            initial={isSafari ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.9 }}
-                            transition={{ duration: 0.4 }}
-                            className={`break-inside-avoid mb-8 ${getSizeClass(item.category)}`}
+                            exit={isSafari ? { opacity: 0, transition: { duration: 0 } } : { opacity: 0, scale: 0.9 }}
+                            transition={{ duration: isSafari ? 0 : 0.4 }}
+                            className={`break-inside-avoid ${isSafari ? 'w-full inline-block pb-8' : 'mb-8'} ${getSizeClass(item.category)}`}
                         >
                             <div 
-                                className="group relative cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 w-full"
+                                className="group relative cursor-pointer transition-all duration-500 w-full block"
                                 onClick={() => setSelectedArtwork(item)}
                             >
-                                <div className={`relative overflow-hidden w-full ${item.layout === "wide" ? "aspect-[16/9] bg-white" : ""}`}>
+                                <div 
+                                    className={`relative overflow-hidden w-full transform-gpu ${item.layout === "wide" ? "aspect-[16/9] bg-white" : ""}`}
+                                    style={isSafari ? { WebkitMaskImage: "-webkit-radial-gradient(white, black)" } : undefined}
+                                >
                                     {/* Images */}
                                     <Image
                                         src={item.image}
                                         alt={item.title}
                                         width={item.layout === "wide" ? 1200 : 800}
                                         height={item.layout === "wide" ? 675 : 1000}
-                                        className={`w-full h-auto ${item.layout === "wide" ? "object-contain p-4 drop-shadow-md" : "object-cover"} transition-transform duration-700 group-hover:scale-110`}
+                                        className={`w-full h-auto transform-gpu will-change-transform ${item.layout === "wide" ? "object-contain p-4" : "object-cover"} transition-transform duration-700 group-hover:scale-110`}
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         priority={isPriority}
                                     />
