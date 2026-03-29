@@ -20,9 +20,11 @@ const backgroundImages = [
 // Composant HeroSection de la page d'accueil
 export default function HeroSection() {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [isSafari, setIsSafari] = useState(false);
     const lenis = useLenis();
 
     useEffect(() => {
+        setIsSafari(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
         const interval = setInterval(() => {
             setCurrentImageIndex(
                 (prevIndex) => (prevIndex + 1) % backgroundImages.length
@@ -72,7 +74,7 @@ export default function HeroSection() {
             <div className="relative z-10 h-full flex flex-col justify-center items-center text-center text-white px-4">
                 {/* Titre SEO Optimisé */}
                 <h1 className="flex flex-col items-center drop-shadow-lg mb-4">
-                    <span className="font-autumn text-6xl md:text-8xl lg:text-9xl">Scarlett Gallery</span>
+                    <span className={`font-autumn text-6xl md:text-8xl lg:text-9xl px-4 ${isSafari ? 'pt-8 pb-2' : 'py-2'} block leading-normal`}>Scarlett Gallery</span>
                     <span className="text-lg md:text-xl lg:text-2xl font-montserrat font-light mt-4 tracking-[0.2em] uppercase text-white/90">
                         Artiste Peintre à Bruxelles
                     </span>
