@@ -24,14 +24,20 @@ export default function HeroSection() {
     const lenis = useLenis();
 
     useEffect(() => {
-        setIsSafari(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
+        const timer = setTimeout(() => {
+            setIsSafari(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
+        }, 0);
+        
         const interval = setInterval(() => {
             setCurrentImageIndex(
                 (prevIndex) => (prevIndex + 1) % backgroundImages.length
             );
         }, 5000);
 
-        return () => clearInterval(interval);
+        return () => {
+            clearTimeout(timer);
+            clearInterval(interval);
+        };
     }, []);
 
     const scrollToAbout = () => {

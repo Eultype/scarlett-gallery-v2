@@ -30,7 +30,10 @@ export default function GalleryGrid() {
     const [isSafari, setIsSafari] = useState(false);
 
     useEffect(() => {
-        setIsSafari(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
+        const timer = setTimeout(() => {
+            setIsSafari(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
+        }, 0);
+        return () => clearTimeout(timer);
     }, []);
 
     const filteredItems = filter === "all" 
