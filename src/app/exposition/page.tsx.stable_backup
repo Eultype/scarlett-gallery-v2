@@ -1,0 +1,1129 @@
+"use client";
+
+import { Suspense, useRef, useState, useEffect, useMemo } from "react";
+import Link from "next/link";
+import * as THREE from "three";
+import { Canvas, useFrame, useThree, useLoader } from "@react-three/fiber";
+import { 
+    MeshReflectorMaterial, 
+    PointerLockControls, 
+    Text,
+    Html
+} from "@react-three/drei";
+import { galleryPageItems } from "@/data/gallery";
+import { motion } from "framer-motion";
+import { MoveUp, MoveDown, MoveLeft, MoveRight } from "lucide-react";
+
+const artworks = galleryPageItems;
+
+const collections = artworks.reduce((acc, item) => {
+    if (!acc[item.category]) acc[item.category] = [];
+    acc[item.category].push(item);
+    return acc;
+}, {} as Record<string, typeof artworks>);
+
+const collectionNames = Object.keys(collections);
+
+const collectionColors: Record<string, string> = {
+    "saisons": "#8C9C8A", 
+    "linogravures": "#D6C5B3", 
+    "minis": "#D8A48F", 
+    "personnalites": "#5C6B73", 
+    "religieux": "#A44A3F", 
+};
+
+const displayNames: Record<string, string> = {
+    "saisons": "Saisons",
+    "linogravures": "Linogravures",
+    "minis": "Les Minis",
+    "personnalites": "Personnalités",
+    "religieux": "Religieux",
+};
+
+// Composant pour l'effet machine à écrire dans la bulle HTML
+function TypewriterText({ text, delay = 0, className = "" }: { text: string, delay?: number, className?: string }) {
+    const letters = Array.from(text);
+    return (
+        <motion.span
+            className={className}
+            initial="hidden"
+            animate="visible"
+            variants={{
+                visible: { transition: { staggerChildren: 0.03, delayChildren: delay } },
+                hidden: {}
+            }}
+        >
+            {letters.map((char, i) => (
+                <motion.span
+                    key={i}
+                    variants={{
+                        visible: { opacity: 1, y: 0 },
+                        hidden: { opacity: 0, y: 5 }
+                    }}
+                    transition={{ duration: 0.1 }}
+                >
+                    {char === " " ? "\u00A0" : char}
+                </motion.span>
+            ))}
+        </motion.span>
+    );
+}
+
+// Modèle pour le Raycaster
+function InteractionController({ onSelect, isMobile }: { onSelect: (data: any) => void, isMobile: boolean }) {
+    const { camera, scene } = useThree();
+    
+    useEffect(() => {
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        const handleTouchStart = (e: TouchEvent) => {
+            if (e.touches.length > 0) {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+            }
+        };
+
+        const handleClick = (e: MouseEvent | TouchEvent) => {
+            // Sur bureau, n'interagit que si la souris est verrouillée
+            if (!document.pointerLockElement && !isMobile) return;
+
+            const raycaster = new THREE.Raycaster();
+            const pointer = new THREE.Vector2(0, 0);
+
+            if (isMobile) {
+                // Ignorer les clics sur l'UI
+                if ((e.target as HTMLElement).closest('.mobile-joystick') || (e.target as HTMLElement).closest('button')) {
+                    return;
+                }
+                
+                let clientX = 0;
+                let clientY = 0;
+                
+                if ('changedTouches' in e && e.changedTouches.length > 0) {
+                    clientX = e.changedTouches[0].clientX;
+                    clientY = e.changedTouches[0].clientY;
+                    
+                    // Si le doigt a beaucoup bougé, c'est un swipe pour regarder, pas un tap
+                    const dist = Math.hypot(clientX - touchStartX, clientY - touchStartY);
+                    if (dist > 15) return;
+                } else if ('clientX' in e) {
+                    clientX = (e as MouseEvent).clientX;
+                    clientY = (e as MouseEvent).clientY;
+                } else {
+                    return;
+                }
+
+                pointer.x = (clientX / window.innerWidth) * 2 - 1;
+                pointer.y = -(clientY / window.innerHeight) * 2 + 1;
+            }
+
+            raycaster.setFromCamera(pointer, camera);
+            const intersects = raycaster.intersectObjects(scene.children, true);
+            
+            for (let hit of intersects) {
+                if (hit.object.userData?.artwork) {
+                    if (document.pointerLockElement) document.exitPointerLock(); 
+                    onSelect(hit.object.userData); 
+                    break;
+                } else if (hit.object.userData?.link) {
+                    if (document.pointerLockElement) document.exitPointerLock();
+                    window.location.href = hit.object.userData.link;
+                    break;
+                }
+            }
+        };
+        
+        window.addEventListener('click', handleClick);
+        window.addEventListener('touchstart', handleTouchStart, { passive: true });
+        window.addEventListener('touchend', handleClick);
+
+        return () => {
+            window.removeEventListener('click', handleClick);
+            window.removeEventListener('touchstart', handleTouchStart);
+            window.removeEventListener('touchend', handleClick);
+        };
+    }, [camera, scene, onSelect, isMobile]);
+    
+    return null;
+}
+
+// Contrôleur de Caméra (Se déplace de manière fluide vers la toile sélectionnée sans bug de rotation)
+function CameraAnimator({ activeData }: { activeData: any }) {
+    const { camera } = useThree();
+
+    useFrame((state, delta) => {
+        if (activeData) {
+            // Lerp doux de la position
+            camera.position.lerp(activeData.targetPosition, 5 * delta);
+            // Slerp doux de la rotation vers la rotation cible exacte pré-calculée
+            camera.quaternion.slerp(activeData.targetQuaternion, 5 * delta);
+        }
+    });
+
+    return null;
+}
+
+function Artwork3D({ 
+    item, 
+    position, 
+    rotation, 
+    isLeftWall,
+    isSelected,
+    onClose,
+    startZ
+}: { 
+    item: any, position: [number, number, number], rotation: [number, number, number], isLeftWall: boolean, isSelected: boolean, onClose: () => void, startZ: number 
+}) {
+    const texture = useLoader(THREE.TextureLoader, item.image);
+    const imageAspect = texture.image.width / texture.image.height;
+    
+    let targetWidth = 2;
+    let targetHeight = 2 / imageAspect;
+    
+    const match = item.dimensions.match(/(\d+(?:[.,]\d+)?)\s*[xX]\s*(\d+(?:[.,]\d+)?)/);
+    if (match) {
+        const d1 = parseFloat(match[1].replace(",", "."));
+        const d2 = parseFloat(match[2].replace(",", "."));
+        const physicalArea = d1 * d2;
+        const targetArea3D = physicalArea * 0.0025;
+        
+        targetHeight = Math.sqrt(targetArea3D / imageAspect);
+        targetWidth = targetHeight * imageAspect;
+        
+        if (targetHeight < 0.8) {
+            const scaleUp = 0.8 / targetHeight;
+            targetHeight *= scaleUp;
+            targetWidth *= scaleUp;
+        }
+    }
+
+    // Positionnement de la caméra
+    const isMobile = typeof window !== 'undefined' ? window.innerWidth < 1280 : false;
+    const globalZ = startZ + position[2];
+    const camOffset = isLeftWall ? (isMobile ? 5 : 3.5) : (isMobile ? -5 : -3.5); 
+    const targetPos = new THREE.Vector3(position[0] + camOffset, position[1], globalZ);
+    
+    // Rotation absolue forcée pour la caméra (90 degrés vers la gauche ou vers la droite)
+    const targetEuler = new THREE.Euler(0, isLeftWall ? Math.PI / 2 : -Math.PI / 2, 0, 'YXZ');
+    const targetQuat = new THREE.Quaternion().setFromEuler(targetEuler);
+
+    const userData = {
+        artwork: item,
+        targetPosition: targetPos,
+        targetQuaternion: targetQuat
+    };
+
+    return (
+        <group position={position} rotation={rotation}>
+            {/* L'image elle-même cliquable */}
+            <mesh position={[0, 0, 0.1]} userData={userData}>
+                <planeGeometry args={[targetWidth, targetHeight]} />
+                <meshBasicMaterial map={texture} transparent />
+            </mesh>
+            
+            <mesh position={[0, -0.05, 0.02]}>
+                <planeGeometry args={[targetWidth + 0.15, targetHeight + 0.15]} />
+                <meshBasicMaterial color="black" opacity={0.2} transparent />
+            </mesh>
+
+            {/* Cartel également cliquable */}
+            <mesh position={[targetWidth/2 + 0.5, -targetHeight/2 + 0.1, 0.02]} userData={userData}>
+                <boxGeometry args={[0.8, 0.35, 0.02]} />
+                <meshStandardMaterial color="#1A1A1A" roughness={0.8} />
+            </mesh>
+
+            <Text
+                position={[targetWidth/2 + 0.15, -targetHeight/2 + 0.18, 0.035]}
+                fontSize={0.055}
+                color="#FFFFFF"
+                anchorX="left"
+                anchorY="middle"
+                maxWidth={0.7}
+            >
+                {item.title}
+            </Text>
+            <Text
+                position={[targetWidth/2 + 0.15, -targetHeight/2 + 0.03, 0.035]}
+                fontSize={0.035}
+                color="#AAAAAA"
+                anchorX="left"
+                anchorY="middle"
+                letterSpacing={0.1}
+                maxWidth={0.7}
+            >
+                {item.dimensions}
+            </Text>
+            
+            {/* Spotlight supprimé pour des raisons de performances (il y en avait 35 en même temps, ce qui faisait chauffer le GPU) */}
+            {/* Bulle HTML Bureau (à gauche) */}
+            {isSelected && (
+                <Html
+                    position={[-targetWidth/2 - 0.4, 0, 0]}
+                    style={{ transform: "translate3d(-100%, -50%, 0)" }}
+                    zIndexRange={[100, 0]}
+                >
+                    <motion.div 
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="w-[360px] bg-black/80 backdrop-blur-md p-8 rounded-2xl border border-white/20 text-white shadow-2xl flex-col hidden xl:flex"
+                    >
+                        <p className="text-xs uppercase tracking-[0.4em] text-[#D8A48F] mb-4 flex">
+                            <TypewriterText text={item.category} delay={0.2} />
+                        </p>
+                        
+                        <h2 className="text-4xl font-cormorant italic mb-6 leading-tight flex flex-wrap">
+                            <TypewriterText text={item.title} delay={0.6} />
+                        </h2>
+                        
+                        <motion.div 
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 1.5, duration: 1 }}
+                            className="space-y-3 text-sm text-gray-300 font-light mb-8"
+                        >
+                            <p className="flex justify-between border-b border-white/10 pb-2">
+                                <span>Médium</span> 
+                                <span className="text-white">{item.dimensions.split(' - ')[0].replace(/originale/i, '').trim()}</span>
+                            </p>
+                            {item.serie && (
+                                <p className="flex justify-between border-b border-white/10 pb-2">
+                                    <span>Série</span> 
+                                    <span className="text-white">{item.serie}</span>
+                                </p>
+                            )}
+                            <p className="flex justify-between border-b border-white/10 pb-2">
+                                <span>Format</span> 
+                                <span className="text-white text-right max-w-[200px] truncate">{item.dimensions.split(' - ')[1] ? item.dimensions.split(' - ')[1].trim() : "Original"}</span>
+                            </p>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 2, duration: 0.5 }}
+                            className="flex flex-col gap-3 mt-auto"
+                        >
+                            <Link 
+                                href={`/gallery/${item.id}`}
+                                className="block w-full text-center bg-white text-black py-4 uppercase text-xs tracking-widest hover:bg-[#A44A3F] hover:text-white transition-colors rounded-sm font-bold"
+                            >
+                                Acquérir l'œuvre
+                            </Link>
+                            <button 
+                                onClick={onClose}
+                                className="block w-full text-center border border-white/30 py-4 uppercase text-xs tracking-widest hover:bg-white/10 transition-colors rounded-sm"
+                            >
+                                Reprendre la marche
+                            </button>
+                        </motion.div>
+                    </motion.div>
+                </Html>
+            )}
+
+            {/* Bulle HTML Mobile (en dessous) */}
+            {isSelected && (
+                <Html
+                    position={[0, -targetHeight/2 - 0.2, 0]}
+                    style={{ transform: "translate3d(-50%, 0, 0)" }}
+                    zIndexRange={[100, 0]}
+                >
+                    <motion.div 
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="w-[340px] sm:w-[500px] md:w-[640px] lg:w-[760px] bg-black/80 backdrop-blur-md p-5 md:p-6 rounded-2xl lg:rounded-3xl border border-white/20 text-white shadow-2xl flex-col flex xl:hidden"
+                    >
+                        <p className="text-[10px] sm:text-xs md:text-sm uppercase tracking-[0.4em] text-[#D8A48F] mb-2 md:mb-3 flex justify-center">
+                            <TypewriterText text={item.category} delay={0.2} />
+                        </p>
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-cormorant italic mb-4 leading-tight flex flex-wrap justify-center text-center">
+                            <TypewriterText text={item.title} delay={0.4} />
+                        </h2>
+                        
+                        <motion.div 
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 1, duration: 1 }}
+                            className="space-y-2 md:space-y-3 text-[10px] sm:text-xs md:text-sm text-gray-300 font-light mb-4 md:mb-6"
+                        >
+                            <p className="flex justify-between border-b border-white/10 pb-1">
+                                <span>Médium</span> 
+                                <span className="text-white">{item.dimensions.split(' - ')[0].replace(/originale/i, '').trim()}</span>
+                            </p>
+                            {item.serie && (
+                                <p className="flex justify-between border-b border-white/10 pb-1">
+                                    <span>Série</span> 
+                                    <span className="text-white">{item.serie}</span>
+                                </p>
+                            )}
+                            <p className="flex justify-between border-b border-white/10 pb-1">
+                                <span>Format</span> 
+                                <span className="text-white text-right max-w-[120px] md:max-w-[250px] lg:max-w-[350px] truncate">{item.dimensions.split(' - ')[1] ? item.dimensions.split(' - ')[1].trim() : "Original"}</span>
+                            </p>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 1.5, duration: 0.5 }}
+                            className="flex flex-col sm:flex-row gap-2 sm:gap-4 mt-auto"
+                        >
+                            <Link 
+                                href={`/gallery/${item.id}`}
+                                className="flex-1 text-center bg-white text-black py-3 uppercase text-[10px] sm:text-xs md:text-sm tracking-widest hover:bg-[#A44A3F] hover:text-white transition-colors rounded-sm font-bold"
+                            >
+                                Acquérir l'œuvre
+                            </Link>
+                            <button 
+                                onClick={onClose}
+                                className="flex-1 text-center border border-white/30 py-3 uppercase text-[10px] sm:text-xs md:text-sm tracking-widest hover:bg-white/10 transition-colors rounded-sm"
+                            >
+                                Reprendre la visite
+                            </button>
+                        </motion.div>
+                    </motion.div>
+                </Html>
+            )}
+        </group>
+    );
+}
+
+function CollectionRoom({ 
+    category, 
+    items, 
+    startZ, 
+    roomLength, 
+    width, 
+    height, 
+    isLast,
+    prevName,
+    selectedArtworkId,
+    onCloseArtwork
+}: { 
+    category: string, items: any[], startZ: number, roomLength: number, width: number, height: number, isLast: boolean, prevName: string, selectedArtworkId: string | null, onCloseArtwork: () => void 
+}) {
+    const wallColor = collectionColors[category] || "#D6C5B3";
+    const displayName = displayNames[category] || category;
+    
+    const spacing = roomLength / (Math.ceil(items.length / 2) + 1);
+
+    return (
+        <group position={[0, 0, startZ]}>
+            <mesh position={[0, height, -roomLength/2]} rotation={[Math.PI / 2, 0, 0]}>
+                <planeGeometry args={[width, roomLength]} />
+                <meshStandardMaterial color="#EAE0D5" roughness={1} />
+            </mesh>
+
+            <mesh position={[-width/2, height/2, -roomLength/2]}>
+                <boxGeometry args={[1, height, roomLength]} />
+                <meshStandardMaterial color={wallColor} roughness={1} />
+            </mesh>
+            
+            <mesh position={[width/2, height/2, -roomLength/2]}>
+                <boxGeometry args={[1, height, roomLength]} />
+                <meshStandardMaterial color={wallColor} roughness={1} />
+            </mesh>
+
+            <group position={[0, height - 2.5, 0]}>
+                <mesh position={[-1.5, 1.25, 0]}>
+                    <cylinderGeometry args={[0.02, 0.02, 2.5]} />
+                    <meshStandardMaterial color="#222" />
+                </mesh>
+                <mesh position={[1.5, 1.25, 0]}>
+                    <cylinderGeometry args={[0.02, 0.02, 2.5]} />
+                    <meshStandardMaterial color="#222" />
+                </mesh>
+                
+                <mesh position={[0, 0, 0]}>
+                    <boxGeometry args={[3.5, 0.8, 0.1]} />
+                    <meshStandardMaterial color="#1A1A1A" roughness={0.5} />
+                </mesh>
+                
+                <Text
+                    position={[0, 0, 0.06]}
+                    fontSize={0.3}
+                    color="#FFFFFF"
+                    anchorX="center"
+                    anchorY="middle"
+                    letterSpacing={0.2}
+                >
+                    {displayName.toUpperCase()}
+                </Text>
+                
+                <Text
+                    position={[0, 0, -0.06]}
+                    rotation={[0, Math.PI, 0]}
+                    fontSize={0.3}
+                    color="#FFFFFF"
+                    anchorX="center"
+                    anchorY="middle"
+                    letterSpacing={0.2}
+                >
+                    {prevName.toUpperCase()}
+                </Text>
+            </group>
+
+            {!isLast && (
+                <group position={[0, 0, -roomLength]}>
+                    <mesh position={[-width/2 + 2, height/2, 0]}>
+                        <boxGeometry args={[width/2 - 2, height, 1]} />
+                        <meshStandardMaterial color={wallColor} roughness={1} />
+                    </mesh>
+                    <mesh position={[width/2 - 2, height/2, 0]}>
+                        <boxGeometry args={[width/2 - 2, height, 1]} />
+                        <meshStandardMaterial color={wallColor} roughness={1} />
+                    </mesh>
+                    <mesh position={[0, height - 1, 0]}>
+                        <boxGeometry args={[8, 2, 1]} />
+                        <meshStandardMaterial color={wallColor} roughness={1} />
+                    </mesh>
+                </group>
+            )}
+
+            {isLast && (
+                <group position={[0, 0, -roomLength]}>
+                    {/* Mur du fond avec ouverture centrale (porte) */}
+                    <mesh position={[-width/4 - 1.5, height/2, 0]}>
+                        <boxGeometry args={[width/2 - 3, height, 1]} />
+                        <meshStandardMaterial color={wallColor} roughness={1} />
+                    </mesh>
+                    <mesh position={[width/4 + 1.5, height/2, 0]}>
+                        <boxGeometry args={[width/2 - 3, height, 1]} />
+                        <meshStandardMaterial color={wallColor} roughness={1} />
+                    </mesh>
+                    {/* Dessus de la porte */}
+                    <mesh position={[0, height - 2, 0]}>
+                        <boxGeometry args={[6, 4, 1]} />
+                        <meshStandardMaterial color={wallColor} roughness={1} />
+                    </mesh>
+
+                    {/* La porte elle-même (cliquable pour sortir) */}
+                    <group position={[0, 2, 0]}>
+                        <mesh position={[0, 0, 0.2]} userData={{ link: "/gallery" }}>
+                            <boxGeometry args={[6, 4, 0.4]} />
+                            <meshStandardMaterial color="#111111" roughness={0.9} />
+                        </mesh>
+                        {/* Poignée de la porte */}
+                        <mesh position={[2.5, 0, 0.45]} userData={{ link: "/gallery" }}>
+                            <cylinderGeometry args={[0.05, 0.05, 0.4]} />
+                            <meshStandardMaterial color="#D8A48F" metalness={0.8} roughness={0.2} />
+                        </mesh>
+                    </group>
+                    
+                    {/* Panneau sur pied à côté de la porte */}
+                    <group position={[-4, 0, 1.5]} rotation={[0, Math.PI / 6, 0]}>
+                        {/* Pied */}
+                        <mesh position={[0, 0.75, 0]}>
+                            <cylinderGeometry args={[0.04, 0.04, 1.5]} />
+                            <meshStandardMaterial color="#222" />
+                        </mesh>
+                        {/* Socle */}
+                        <mesh position={[0, 0.05, 0]}>
+                            <cylinderGeometry args={[0.3, 0.3, 0.1]} />
+                            <meshStandardMaterial color="#222" />
+                        </mesh>
+                        {/* Plateau du panneau incliné */}
+                        <mesh position={[0, 1.5, 0]} rotation={[-Math.PI / 8, 0, 0]}>
+                            <boxGeometry args={[1.5, 1, 0.05]} />
+                            <meshStandardMaterial color="#1A1A1A" />
+                        </mesh>
+                        {/* Textes sur le panneau */}
+                        <group position={[0, 1.5, 0.03]} rotation={[-Math.PI / 8, 0, 0]}>
+                            <Text
+                                position={[0, 0.2, 0]}
+                                fontSize={0.12}
+                                color="#FFFFFF"
+                                anchorX="center"
+                                anchorY="middle"
+                                letterSpacing={0.1}
+                            >
+                                FIN DE LA VISITE
+                            </Text>
+                            <Text
+                                position={[0, -0.1, 0]}
+                                fontSize={0.06}
+                                color="#AAAAAA"
+                                anchorX="center"
+                                anchorY="middle"
+                                maxWidth={1.2}
+                                textAlign="center"
+                            >
+                                Merci d'avoir visité l'exposition.
+                            </Text>
+                            <Text
+                                position={[0, -0.3, 0]}
+                                fontSize={0.05}
+                                color="#D8A48F"
+                                anchorX="center"
+                                anchorY="middle"
+                                letterSpacing={0.05}
+                            >
+                                → CLIQUEZ SUR LA PORTE
+                            </Text>
+                        </group>
+                    </group>
+                </group>
+            )}
+
+            {items.map((item, index) => {
+                const isLeftWall = index % 2 === 0;
+                const stepIndex = Math.floor(index / 2);
+                const z = - (stepIndex + 1) * spacing;
+                const y = 3; 
+                
+                const x = isLeftWall ? -width/2 + 0.6 : width/2 - 0.6;
+                const rotY = isLeftWall ? Math.PI / 2 : -Math.PI / 2;
+
+                return (
+                    <Artwork3D 
+                        key={item.id}
+                        item={item}
+                        position={[x, y, z]}
+                        rotation={[0, rotY, 0]}
+                        isLeftWall={isLeftWall}
+                        isSelected={selectedArtworkId === item.id}
+                        onClose={onCloseArtwork}
+                        startZ={startZ}
+                    />
+                );
+            })}
+        </group>
+    );
+}
+
+function VIPEntrance({ corridorWidth, wallHeight }: { corridorWidth: number, wallHeight: number }) {
+    const createRope = (x: number, startZ: number, endZ: number) => {
+        return new THREE.QuadraticBezierCurve3(
+            new THREE.Vector3(x, 0.95, startZ),
+            new THREE.Vector3(x, 0.6, (startZ + endZ) / 2),
+            new THREE.Vector3(x, 0.95, endZ)
+        );
+    };
+
+    const ropes = useMemo(() => [
+        createRope(-2, 9.2, 6.8),
+        createRope(-2, 6.8, 4.4),
+        createRope(-2, 4.4, 2.0),
+        createRope(2, 9.2, 6.8),
+        createRope(2, 6.8, 4.4),
+        createRope(2, 4.4, 2.0)
+    ], []);
+
+    const postZs = [9.2, 6.8, 4.4, 2.0];
+
+    return (
+        <group>
+            {/* Mur d'entrée avec porte (à z=10) */}
+            <group position={[0, 0, 10]}>
+                <mesh position={[-corridorWidth/4 - 1.5, wallHeight/2, 0]}>
+                    <boxGeometry args={[corridorWidth/2 - 3, wallHeight, 1]} />
+                    <meshStandardMaterial color="#EAE0D5" roughness={1} />
+                </mesh>
+                <mesh position={[corridorWidth/4 + 1.5, wallHeight/2, 0]}>
+                    <boxGeometry args={[corridorWidth/2 - 3, wallHeight, 1]} />
+                    <meshStandardMaterial color="#EAE0D5" roughness={1} />
+                </mesh>
+                <mesh position={[0, wallHeight - 2, 0]}>
+                    <boxGeometry args={[6, 4, 1]} />
+                    <meshStandardMaterial color="#EAE0D5" roughness={1} />
+                </mesh>
+
+                {/* Porte cliquable (fermée derrière le visiteur) pour sortir */}
+                <group position={[0, 2, 0]}>
+                    <mesh position={[0, 0, -0.2]} userData={{ link: "/gallery" }}>
+                        <boxGeometry args={[6, 4, 0.4]} />
+                        <meshStandardMaterial color="#111111" roughness={0.9} />
+                    </mesh>
+                    <mesh position={[-2.5, 0, -0.45]} userData={{ link: "/gallery" }}>
+                        <cylinderGeometry args={[0.05, 0.05, 0.4]} />
+                        <meshStandardMaterial color="#D8A48F" metalness={0.8} roughness={0.2} />
+                    </mesh>
+                </group>
+
+            </group>
+
+            {/* Panneau sur pied d'accueil (à la fin du tapis rouge) */}
+            <group position={[2.2, 0, 1.5]} rotation={[0, -Math.PI / 6, 0]}>
+                {/* Pied */}
+                <mesh position={[0, 0.75, 0]}>
+                    <cylinderGeometry args={[0.04, 0.04, 1.5]} />
+                    <meshStandardMaterial color="#222" />
+                </mesh>
+                {/* Socle */}
+                <mesh position={[0, 0.05, 0]}>
+                    <cylinderGeometry args={[0.3, 0.3, 0.1]} />
+                    <meshStandardMaterial color="#222" />
+                </mesh>
+                {/* Plateau du panneau incliné */}
+                <mesh position={[0, 1.5, 0]} rotation={[-Math.PI / 8, 0, 0]}>
+                    <boxGeometry args={[1.5, 1, 0.05]} />
+                    <meshStandardMaterial color="#1A1A1A" />
+                </mesh>
+                {/* Textes sur le panneau */}
+                <group position={[0, 1.5, 0.03]} rotation={[-Math.PI / 8, 0, 0]}>
+                    <Text
+                        position={[0, 0.2, 0]}
+                        fontSize={0.12}
+                        color="#FFFFFF"
+                        anchorX="center"
+                        anchorY="middle"
+                        letterSpacing={0.1}
+                    >
+                        BIENVENUE
+                    </Text>
+                    <Text
+                        position={[0, -0.1, 0]}
+                        fontSize={0.06}
+                        color="#AAAAAA"
+                        anchorX="center"
+                        anchorY="middle"
+                        maxWidth={1.2}
+                        textAlign="center"
+                    >
+                        Vous entrez dans la galerie immersive.
+                    </Text>
+                    <Text
+                        position={[0, -0.3, 0]}
+                        fontSize={0.04}
+                        color="#D8A48F"
+                        anchorX="center"
+                        anchorY="middle"
+                        letterSpacing={0.05}
+                    >
+                        → CLIQUEZ SUR UNE ŒUVRE POUR AVOIR PLUS DE DÉTAILS
+                    </Text>
+                </group>
+            </group>
+
+            {/* Tapis rouge plus long (de 9.5 à 1.5) */}
+            <mesh position={[0, 0.02, 5.5]} rotation={[-Math.PI / 2, 0, 0]}>
+                <planeGeometry args={[3, 8]} />
+                <meshStandardMaterial color="#8B0000" roughness={0.9} />
+            </mesh>
+
+            {/* Poteaux VIP gauches */}
+            {postZs.map((z, i) => (
+                <group key={`l-${i}`} position={[-2, 0, z]}>
+                    <mesh position={[0, 0.05, 0]}>
+                        <cylinderGeometry args={[0.15, 0.15, 0.1]} />
+                        <meshStandardMaterial color="#D8A48F" metalness={0.8} roughness={0.2} />
+                    </mesh>
+                    <mesh position={[0, 0.5, 0]}>
+                        <cylinderGeometry args={[0.03, 0.03, 1]} />
+                        <meshStandardMaterial color="#D8A48F" metalness={0.8} roughness={0.2} />
+                    </mesh>
+                    <mesh position={[0, 1.05, 0]}>
+                        <sphereGeometry args={[0.08, 16, 16]} />
+                        <meshStandardMaterial color="#D8A48F" metalness={0.8} roughness={0.2} />
+                    </mesh>
+                </group>
+            ))}
+
+            {/* Poteaux VIP droits */}
+            {postZs.map((z, i) => (
+                <group key={`r-${i}`} position={[2, 0, z]}>
+                    <mesh position={[0, 0.05, 0]}>
+                        <cylinderGeometry args={[0.15, 0.15, 0.1]} />
+                        <meshStandardMaterial color="#D8A48F" metalness={0.8} roughness={0.2} />
+                    </mesh>
+                    <mesh position={[0, 0.5, 0]}>
+                        <cylinderGeometry args={[0.03, 0.03, 1]} />
+                        <meshStandardMaterial color="#D8A48F" metalness={0.8} roughness={0.2} />
+                    </mesh>
+                    <mesh position={[0, 1.05, 0]}>
+                        <sphereGeometry args={[0.08, 16, 16]} />
+                        <meshStandardMaterial color="#D8A48F" metalness={0.8} roughness={0.2} />
+                    </mesh>
+                </group>
+            ))}
+
+            {/* Cordes VIP */}
+            {ropes.map((curve, i) => (
+                <mesh key={`rope-${i}`}>
+                    <tubeGeometry args={[curve, 20, 0.03, 8, false]} />
+                    <meshStandardMaterial color="#8B0000" roughness={0.9} />
+                </mesh>
+            ))}
+        </group>
+    );
+}
+
+function MuseumEnsemble({ 
+    selectedArtworkId, 
+    onCloseArtwork 
+}: { 
+    selectedArtworkId: string | null, 
+    onCloseArtwork: () => void 
+}) {
+    const corridorWidth = 14; 
+    const wallHeight = 8;
+    let currentZ = 0;
+
+    return (
+        <group>
+            <VIPEntrance corridorWidth={corridorWidth} wallHeight={wallHeight} />
+
+            {collectionNames.map((category, index) => {
+                const items = collections[category];
+                const roomLength = Math.max(20, (Math.ceil(items.length / 2) + 1) * 6);
+                
+                const prevCategory = index > 0 ? collectionNames[index - 1] : null;
+                const prevName = prevCategory ? displayNames[prevCategory] : "SORTIE / ACCUEIL";
+
+                const room = (
+                    <CollectionRoom
+                        key={category}
+                        category={category}
+                        items={items}
+                        startZ={currentZ}
+                        roomLength={roomLength}
+                        width={corridorWidth}
+                        height={wallHeight}
+                        isLast={index === collectionNames.length - 1}
+                        prevName={prevName}
+                        selectedArtworkId={selectedArtworkId}
+                        onCloseArtwork={onCloseArtwork}
+                    />
+                );
+
+                currentZ -= roomLength; 
+                return room;
+            })}
+            
+            <mesh position={[0, 0, currentZ/2 + 5]} rotation={[-Math.PI / 2, 0, 0]}>
+                <planeGeometry args={[corridorWidth, Math.abs(currentZ) + 20]} />
+                <meshStandardMaterial color="#D9CABC" roughness={0.9} />
+            </mesh>
+        </group>
+    );
+}
+
+const globalMovement = { forward: false, backward: false, left: false, right: false };
+
+function MobileTouchLook() {
+    const { camera } = useThree();
+    useEffect(() => {
+        let lastX = 0;
+        let lastY = 0;
+        let isDragging = false;
+        
+        const onTouchStart = (e: TouchEvent) => {
+            if ((e.target as HTMLElement).closest('.mobile-joystick')) return;
+            isDragging = true;
+            lastX = e.touches[0].clientX;
+            lastY = e.touches[0].clientY;
+        };
+        const onTouchMove = (e: TouchEvent) => {
+            if (!isDragging) return;
+            const dx = e.touches[0].clientX - lastX;
+            const dy = e.touches[0].clientY - lastY;
+            lastX = e.touches[0].clientX;
+            lastY = e.touches[0].clientY;
+            
+            camera.rotation.order = "YXZ";
+            camera.rotation.y -= dx * 0.005;
+            camera.rotation.x -= dy * 0.005;
+            camera.rotation.x = Math.max(-Math.PI/2, Math.min(Math.PI/2, camera.rotation.x));
+        };
+        const onTouchEnd = () => { isDragging = false; };
+        
+        window.addEventListener('touchstart', onTouchStart, { passive: false });
+        window.addEventListener('touchmove', onTouchMove, { passive: false });
+        window.addEventListener('touchend', onTouchEnd);
+        
+        return () => {
+             window.removeEventListener('touchstart', onTouchStart);
+             window.removeEventListener('touchmove', onTouchMove);
+             window.removeEventListener('touchend', onTouchEnd);
+        }
+    }, [camera]);
+    return null;
+}
+
+function PlayerController() {
+    const { camera } = useThree();
+
+    // Pré-calculer les positions Z de tous les murs
+    const { wallZs, exitZ } = useMemo(() => {
+        let z = 0;
+        const walls: number[] = [];
+        collectionNames.forEach((category, index) => {
+            const items = collections[category];
+            const length = Math.max(20, (Math.ceil(items.length / 2) + 1) * 6);
+            z -= length;
+            if (index < collectionNames.length - 1) {
+                walls.push(z);
+            }
+        });
+        return { wallZs: walls, exitZ: z };
+    }, []);
+
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.code === 'KeyW' || e.code === 'ArrowUp') globalMovement.forward = true;
+            if (e.code === 'KeyS' || e.code === 'ArrowDown') globalMovement.backward = true;
+            if (e.code === 'KeyA' || e.code === 'ArrowLeft') globalMovement.left = true;
+            if (e.code === 'KeyD' || e.code === 'ArrowRight') globalMovement.right = true;
+        };
+        const handleKeyUp = (e: KeyboardEvent) => {
+            if (e.code === 'KeyW' || e.code === 'ArrowUp') globalMovement.forward = false;
+            if (e.code === 'KeyS' || e.code === 'ArrowDown') globalMovement.backward = false;
+            if (e.code === 'KeyA' || e.code === 'ArrowLeft') globalMovement.left = false;
+            if (e.code === 'KeyD' || e.code === 'ArrowRight') globalMovement.right = false;
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('keyup', handleKeyUp);
+        
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+            window.removeEventListener('keyup', handleKeyUp);
+        };
+    }, []);
+
+    useFrame((state, delta) => {
+        const speed = 12 * delta; 
+        const frontVector = new THREE.Vector3(0, 0, -1).applyQuaternion(camera.quaternion);
+        frontVector.y = 0; frontVector.normalize();
+        
+        const sideVector = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
+        sideVector.y = 0; sideVector.normalize();
+
+        const moveDir = new THREE.Vector3(0, 0, 0);
+        if (globalMovement.forward) moveDir.addScaledVector(frontVector, speed);
+        if (globalMovement.backward) moveDir.addScaledVector(frontVector, -speed);
+        if (globalMovement.left) moveDir.addScaledVector(sideVector, -speed);
+        if (globalMovement.right) moveDir.addScaledVector(sideVector, speed);
+
+        const newX = camera.position.x + moveDir.x;
+        const newZ = camera.position.z + moveDir.z;
+
+        let validX = newX;
+        let validZ = newZ;
+
+        // Limites générales du couloir
+        validX = THREE.MathUtils.clamp(validX, -5.5, 5.5);
+        if (validZ > 8.5) validZ = 8.5; // Limite arrière du joueur
+        
+        // --- Système de Collisions Physiques ---
+        const isColliding = (x: number, z: number) => {
+            // 1. Cordes VIP (z de 2 à 10, le joueur doit rester sur le tapis)
+            if (z > 1.8 && z < 10) {
+                if (x < -1.8 || x > 1.8) return true;
+            }
+
+            // 2. Murs séparateurs entre les salles
+            for (const wZ of wallZs) {
+                // Si on est dans l'épaisseur du mur
+                if (z > wZ - 0.8 && z < wZ + 0.8) {
+                    // L'ouverture de la porte est entre -2.2 et 2.2
+                    if (x < -2.2 || x > 2.2) return true;
+                }
+            }
+
+            // 3. Mur de fin (sortie)
+            if (z < exitZ + 0.8) {
+                if (x < -2.5 || x > 2.5) return true;
+                if (z < exitZ - 0.2) return true; // Empêcher de traverser la porte
+            }
+
+            return false;
+        };
+
+        // Permettre de glisser contre les murs en testant les axes séparément
+        if (!isColliding(validX, camera.position.z)) {
+            camera.position.x = validX;
+        }
+        if (!isColliding(camera.position.x, validZ)) {
+            camera.position.z = validZ;
+        }
+
+        camera.position.y = 2.5; 
+    });
+
+    return null;
+}
+
+function CameraSetup() {
+    const { camera } = useThree();
+    useEffect(() => {
+        camera.position.set(0, 2.5, 5);
+        camera.rotation.set(0, 0, 0);
+    }, [camera]);
+    return null;
+}
+
+function Loader() {
+  return (
+    <Html center>
+      <div className="flex flex-col items-center">
+        <div className="w-16 h-[1px] bg-white animate-pulse mb-4"></div>
+        <div className="text-white text-[10px] tracking-[0.5em] uppercase font-light text-center w-64">
+            Construction des salles d'exposition...
+        </div>
+      </div>
+    </Html>
+  );
+}
+
+export default function ExpositionPage() {
+    const [startLocked, setStartLocked] = useState(false);
+    const [selectedArtworkData, setSelectedArtworkData] = useState<any | null>(null);
+    const controlsRef = useRef<any>(null);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        setIsMobile(window.matchMedia("(max-width: 1024px)").matches);
+    }, []);
+
+    const handleCloseArtwork = () => {
+        setSelectedArtworkData(null);
+        setStartLocked(true);
+        if (!isMobile) {
+            setTimeout(() => {
+                controlsRef.current?.lock();
+            }, 100);
+        }
+    };
+
+    return (
+        <main className="fixed inset-0 w-screen h-screen bg-[#EAE0D5] overflow-hidden">
+            {/* Écran d'accueil */}
+            {!startLocked && !selectedArtworkData && (
+                <div className="absolute inset-0 z-50 bg-[#EAE0D5]/90 backdrop-blur-md flex flex-col items-center justify-center text-gray-900 p-8">
+                    <h1 className="font-cormorant text-5xl md:text-8xl italic mb-4 text-center tracking-wide text-[#A44A3F]">La galerie de Scarlett</h1>
+                    <p className="text-xs uppercase tracking-[0.5em] text-[#A44A3F]/70 mb-12">5 Salles • 5 Collections</p>
+                    
+                    <div className="flex flex-col items-center space-y-4 max-w-md text-center">
+                        <p className="text-[10px] text-gray-500 mb-4 uppercase tracking-widest">Navigation</p>
+                        <div className="hidden xl:flex gap-6 opacity-80 text-xs text-gray-800">
+                            <span className="flex items-center gap-2"><span className="border border-gray-400 px-2 py-1 rounded">Z Q S D</span> Avancer</span>
+                            <span className="flex items-center gap-2"><span className="border border-gray-400 px-2 py-1 rounded">SOURIS</span> Regarder</span>
+                            <span className="flex items-center gap-2 text-terra font-bold"><span className="border border-terra px-2 py-1 rounded">CLIC</span> Voir la toile</span>
+                        </div>
+                        <div className="flex xl:hidden flex-col sm:flex-row gap-4 sm:gap-6 opacity-80 text-xs text-gray-800 justify-center">
+                            <span className="flex items-center gap-2">
+                                <span className="border border-gray-400 px-2 py-1 rounded flex items-center gap-1 text-gray-600">
+                                    <MoveUp size={12} strokeWidth={2.5} />
+                                    <MoveDown size={12} strokeWidth={2.5} />
+                                    <MoveLeft size={12} strokeWidth={2.5} />
+                                    <MoveRight size={12} strokeWidth={2.5} />
+                                </span> 
+                                Avancer
+                            </span>
+                            <span className="flex items-center gap-2"><span className="border border-gray-400 px-2 py-1 rounded font-bold text-[10px] uppercase">Glisser</span> Regarder</span>
+                            <span className="flex items-center gap-2 text-terra font-bold"><span className="border border-terra px-2 py-1 rounded">CLIC</span> Voir la toile</span>
+                        </div>
+                        <button 
+                            onClick={() => {
+                                setStartLocked(true);
+                                if (!isMobile) {
+                                    setTimeout(() => {
+                                        controlsRef.current?.lock();
+                                    }, 100);
+                                }
+                            }}
+                            className="mt-12 bg-[#A44A3F] text-white px-12 py-4 text-xs uppercase tracking-widest hover:bg-black transition-all duration-300 shadow-xl shadow-[#A44A3F]/20"
+                        >
+                            Reprendre / Débuter
+                        </button>
+                        <Link href="/gallery" className="mt-8 text-[10px] text-gray-500 hover:text-black uppercase tracking-widest transition-colors">
+                            &larr; Retour à l'accueil
+                        </Link>
+                    </div>
+                </div>
+            )}
+
+            {/* Viseur au centre de l'écran pour aider à cliquer */}
+            {startLocked && !selectedArtworkData && !isMobile && (
+                <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-white/80 rounded-full -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none mix-blend-difference"></div>
+            )}
+            
+            {/* Aide textuelle en mode marche (Desktop) */}
+            {startLocked && !selectedArtworkData && !isMobile && (
+                <div className="absolute top-8 left-1/2 -translate-x-1/2 z-50 text-gray-500 text-[10px] uppercase tracking-widest pointer-events-none">
+                    Visez un tableau et cliquez pour le voir • "Échap" pour sortir
+                </div>
+            )}
+
+            {/* Bouton Quitter et Joystick (Mobile) */}
+            {startLocked && !selectedArtworkData && isMobile && (
+                <>
+                    <button 
+                        onClick={() => setStartLocked(false)}
+                        className="absolute top-8 right-8 z-50 bg-black/40 backdrop-blur border border-white/20 text-white px-4 py-2 uppercase text-[10px] tracking-widest rounded-full"
+                    >
+                        Quitter
+                    </button>
+
+                    <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 mobile-joystick pointer-events-auto">
+                        <button 
+                            onTouchStart={() => globalMovement.forward = true} 
+                            onTouchEnd={() => globalMovement.forward = false}
+                            className="w-14 h-14 shrink-0 bg-black/40 backdrop-blur border border-white/20 rounded-full flex items-center justify-center text-white active:bg-[#A44A3F] transition-colors shadow-xl"
+                        ><MoveUp size={24} strokeWidth={1.5} /></button>
+                        <div className="flex gap-2">
+                            <button 
+                                onTouchStart={() => globalMovement.left = true} 
+                                onTouchEnd={() => globalMovement.left = false}
+                                className="w-14 h-14 shrink-0 bg-black/40 backdrop-blur border border-white/20 rounded-full flex items-center justify-center text-white active:bg-[#A44A3F] transition-colors shadow-xl"
+                            ><MoveLeft size={24} strokeWidth={1.5} /></button>
+                            <button 
+                                onTouchStart={() => globalMovement.backward = true} 
+                                onTouchEnd={() => globalMovement.backward = false}
+                                className="w-14 h-14 shrink-0 bg-black/40 backdrop-blur border border-white/20 rounded-full flex items-center justify-center text-white active:bg-[#A44A3F] transition-colors shadow-xl"
+                            ><MoveDown size={24} strokeWidth={1.5} /></button>
+                            <button 
+                                onTouchStart={() => globalMovement.right = true} 
+                                onTouchEnd={() => globalMovement.right = false}
+                                className="w-14 h-14 shrink-0 bg-black/40 backdrop-blur border border-white/20 rounded-full flex items-center justify-center text-white active:bg-[#A44A3F] transition-colors shadow-xl"
+                            ><MoveRight size={24} strokeWidth={1.5} /></button>
+                        </div>
+                        <div className="text-[9px] uppercase tracking-widest text-gray-500 mt-4 bg-white/80 px-3 py-1 rounded">Glissez ailleurs pour regarder</div>
+                    </div>
+                </>
+            )}
+
+            <Canvas 
+                className="w-full h-full touch-none"
+                dpr={[1, 1.5]} 
+                gl={{ powerPreference: "high-performance", antialias: true }}
+            >
+                <fog attach="fog" args={['#F4EEE8', 10, 80]} />
+                <color attach="background" args={['#F4EEE8']} />
+                
+                <ambientLight intensity={1.5} color="#FFECD6" />
+                <directionalLight position={[0, 20, 10]} intensity={1.2} color="#FFFFFF" />
+                
+                <Suspense fallback={<Loader />}>
+                    <CameraSetup />
+                    <MuseumEnsemble 
+                        selectedArtworkId={selectedArtworkData?.artwork?.id || null} 
+                        onCloseArtwork={handleCloseArtwork}
+                    />
+                </Suspense>
+
+                {startLocked && !selectedArtworkData && (
+                    <>
+                        <PlayerController />
+                        {!isMobile && (
+                            <PointerLockControls 
+                                ref={controlsRef}
+                                onUnlock={() => setStartLocked(false)}
+                            />
+                        )}
+                        {isMobile && <MobileTouchLook />}
+                        <InteractionController onSelect={setSelectedArtworkData} isMobile={isMobile} />
+                    </>
+                )}
+
+                {/* Si on regarde une toile, on anime la caméra */}
+                {selectedArtworkData && (
+                    <CameraAnimator activeData={selectedArtworkData} />
+                )}
+            </Canvas>
+        </main>
+    );
+}
