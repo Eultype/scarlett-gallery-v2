@@ -46,7 +46,7 @@ export default function Navbar() {
 
     return (
         <nav
-            className={`fixed top-0 w-full z-50 transition-all duration-500 ${ isOpen ? "bg-transparent py-2" : (!isTransparent ? "bg-[#FDFBF7] backdrop-blur-md shadow-sm py-2" : "bg-transparent py-6") }`}
+            className={`fixed top-0 w-full z-50 transition-all duration-500 ${ isOpen ? "bg-transparent py-2" : (!isTransparent ? "bg-[#FDFBF7] md:backdrop-blur-md shadow-sm py-2" : "bg-transparent py-6") }`}
         >
             <div className="mx-auto px-8 md:px-10 xl:px-20 flex justify-between items-center relative z-50">
                 
