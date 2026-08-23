@@ -59,6 +59,7 @@ export default function RevealTitle({ text, className = "", delay = 0 }: RevealT
           <motion.span 
             variants={wordVariants} 
             className="inline-block origin-bottom"
+            style={{ willChange: "transform, opacity", transform: "translateZ(0)" }}
           >
             {word}
           </motion.span>
