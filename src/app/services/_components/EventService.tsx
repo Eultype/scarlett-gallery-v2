@@ -33,7 +33,7 @@ export default function EventService() {
             </div>
             
             {/* Contenu Texte */}
-            <div className="w-full md:w-1/2 flex flex-col items-start md:items-end text-left md:text-right">
+            <div className="w-full md:w-1/2 flex flex-col items-end self-end text-left md:text-right">
                 
                 <div className="mb-6">
                     <Badge text="Galeries & Événements" variant="solid" />
@@ -57,7 +57,7 @@ export default function EventService() {
                     <ListItem text="Marché de créateur" align="right" />
                 </ul>
                 
-                <Link href="/contact" className="group inline-flex flex-col items-start md:items-end">
+                <Link href="/contact" className="group inline-flex flex-col items-end self-end">
                     <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-gray-900 group-hover:text-terra transition-colors duration-500">
                         Me contacter
                     </span>

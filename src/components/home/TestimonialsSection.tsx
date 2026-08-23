@@ -30,7 +30,7 @@ export default function TestimonialsSection() {
                 <div className="flex flex-col items-center text-center mb-20 max-w-2xl mx-auto">
                     <RevealTitle 
                         text="Ils m'ont fait confiance" 
-                        className="font-cormorant text-5xl md:text-7xl text-gray-900 font-light italic mb-4" 
+                        className="justify-center font-cormorant text-5xl md:text-7xl text-gray-900 font-light italic mb-4" 
                     />
                     <motion.p 
                         initial={{ opacity: 0 }}
@@ -49,22 +49,22 @@ export default function TestimonialsSection() {
                     {/* Navigation flèches */}
                     <button
                         onClick={prevReview}
-                        className="absolute left-0 top-1/2 -translate-y-1/2 p-4 text-gray-300 hover:text-terra transition-colors z-20 hidden md:block"
+                        className="absolute -left-4 md:left-0 top-1/2 -translate-y-1/2 p-2 md:p-4 text-gray-300 hover:text-terra transition-colors z-20 block"
                         aria-label="Précédent"
                     >
-                        <ChevronLeft size={40} strokeWidth={1} />
+                        <ChevronLeft className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1} />
                     </button>
                     
                     <button
                         onClick={nextReview}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 p-4 text-gray-300 hover:text-terra transition-colors z-20 hidden md:block"
+                        className="absolute -right-4 md:right-0 top-1/2 -translate-y-1/2 p-2 md:p-4 text-gray-300 hover:text-terra transition-colors z-20 block"
                         aria-label="Suivant"
                     >
-                        <ChevronRight size={40} strokeWidth={1} />
+                        <ChevronRight className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1} />
                     </button>
 
                     {/* Zone de Contenu */}
-                    <div className="relative w-full max-w-4xl h-[500px] md:h-[400px]">
+                    <div className="relative w-full max-w-4xl h-[600px] md:h-[400px]">
                         <AnimatePresence>
                             <motion.div
                                 key={currentIndex}
@@ -97,7 +97,7 @@ export default function TestimonialsSection() {
                                 {/* Citation */}
                                 <div className="relative w-full mb-12">
                                     <Quote className="absolute -top-6 left-0 md:left-4 w-10 h-10 text-terra/10 fill-current -scale-x-100" />
-                                    <h2 className="font-cormorant text-3xl md:text-4xl leading-tight text-gray-900 italic font-light px-12 md:px-20">
+                                    <h2 className="font-cormorant text-2xl md:text-4xl leading-tight text-gray-900 italic font-light px-8 md:px-20">
                                         {testimonials[currentIndex].text}
                                     </h2>
                                     <Quote className="absolute -bottom-6 right-0 md:right-4 w-10 h-10 text-terra/10 fill-current" />
