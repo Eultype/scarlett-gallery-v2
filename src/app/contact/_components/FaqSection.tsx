@@ -10,7 +10,7 @@ import { FAQ_ITEMS } from "@/data/faq";
 // Composant FaqSection : Liste des questions fréquentes
 export default function FaqSection() {
     return (
-        <section className="mx-auto px-8 md:px-10 xl:px-20 mt-32">
+        <section className="mx-auto px-8 md:px-10 xl:px-20 mt-32 mb-32">
             <div className="text-center mb-12">
                 <h2 className="font-cormorant text-4xl md:text-5xl text-gray-900 italic">Questions Fréquentes</h2>
             </div>

@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 // Page contact
 export default function ContactPage() {
     return (
-        <main className="pt-32 pb-20 bg-[#FDFBF7] min-h-screen">
+        <main className="pt-24 bg-[#FDFBF7]">
             {/* Header */}
             <ContactHeader />
             {/* Section contact : Coordonnées / Formulaire */}

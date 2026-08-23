@@ -1,20 +1,9 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { z } from "zod";
+import { checkRateLimit, escapeHtml } from "@/lib/security";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-
-// Fonction pour échapper les caractères HTML et prévenir l'injection
-function escapeHtml(text: string): string {
-  const map: Record<string, string> = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#039;'
-  };
-  return text.replace(/[&<>"']/g, (char) => map[char]);
-}
 
 // Définition du schéma de validation
 const newsletterSchema = z.object({
@@ -23,6 +12,16 @@ const newsletterSchema = z.object({
 
 export async function POST(req: Request) {
   try {
+    // 1. Anti-Spam : Rate Limiting (Max 5 inscriptions par heure par IP)
+    const ip = req.headers.get("x-forwarded-for") || "unknown_ip";
+    const isAllowed = checkRateLimit(ip, 5, 60 * 60 * 1000); // 5 requêtes / heure
+    
+    if (!isAllowed) {
+      return NextResponse.json({
+        error: "Trop de requêtes. Veuillez réessayer plus tard."
+      }, { status: 429 });
+    }
+
     const body = await req.json();
 
     // Validation des données avec Zod
