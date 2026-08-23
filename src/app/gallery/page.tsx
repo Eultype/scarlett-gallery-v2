@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 // Page galerie
 export default function GalleryPage() {
     return (
-        <main className="pt-32 pb-20 bg-[#FDFBF7] min-h-screen">
+        <main className="pt-24 pb-32 bg-[#FDFBF7]">
             <div className="mx-auto px-4 md:px-10 xl:px-20">
                 {/* Section Header de la galerie */}
                 <GalleryHeader />
