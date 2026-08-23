@@ -117,7 +117,7 @@ export default function ExpositionPage() {
 
             <Canvas 
                 className="w-full h-full touch-none"
-                dpr={[1, 1.5]} 
+                dpr={1} 
                 gl={{ powerPreference: "high-performance", antialias: true }}
             >
                 <fog attach="fog" args={['#F4EEE8', 10, 80]} />

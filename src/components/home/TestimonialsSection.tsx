@@ -76,7 +76,8 @@ export default function TestimonialsSection() {
                             >
                                 {/* Photo Collectionneur */}
                                 {testimonials[currentIndex].image && (
-                                    <div className="relative w-20 h-20 md:w-24 md:h-24 flex-shrink-0 rounded-full overflow-hidden mb-8 shadow-sm">
+                                    <div className="relative w-20 h-20 md:w-24 md:h-24 flex-shrink-0 rounded-full overflow-hidden mb-8 shadow-sm"
+                                        style={{ WebkitMaskImage: "-webkit-radial-gradient(white, black)", transform: "translateZ(0)" }}>
                                         <Image
                                             src={testimonials[currentIndex].image}
                                             alt={testimonials[currentIndex].name}
