@@ -68,7 +68,7 @@ export function Artwork3D({
     const lateralShift = !isMobile ? (targetWidth * 0.25 + 0.3) : 0;
     const globalZ = startZ + position[2] + (isLeftWall ? lateralShift : -lateralShift);
     
-    const targetPos = new THREE.Vector3(position[0] + camOffset, position[1], globalZ);
+    const targetPos = new THREE.Vector3(position[0] + camOffset, position[1] - (isMobile ? 0.6 : 0), globalZ);
     
     // Rotation absolue forcée pour la caméra (90 degrés vers la gauche ou vers la droite)
     const targetEuler = new THREE.Euler(0, isLeftWall ? Math.PI / 2 : -Math.PI / 2, 0, 'YXZ');
