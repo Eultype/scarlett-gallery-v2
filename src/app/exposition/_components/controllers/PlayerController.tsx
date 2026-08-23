@@ -54,11 +54,26 @@ export function PlayerController() {
         const sideVector = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
         sideVector.y = 0; sideVector.normalize();
 
+        let fw = 0;
+        let sd = 0;
+        if (globalMovement.forward) fw += 1;
+        if (globalMovement.backward) fw -= 1;
+        if (globalMovement.right) sd += 1;
+        if (globalMovement.left) sd -= 1;
+
         const moveDir = new THREE.Vector3(0, 0, 0);
-        if (globalMovement.forward) moveDir.addScaledVector(frontVector, speed);
-        if (globalMovement.backward) moveDir.addScaledVector(frontVector, -speed);
-        if (globalMovement.left) moveDir.addScaledVector(sideVector, -speed);
-        if (globalMovement.right) moveDir.addScaledVector(sideVector, speed);
+        if (fw !== 0 || sd !== 0) {
+            // Normaliser le vecteur d'entrée pour empêcher le boost de vitesse en diagonale
+            const length = Math.sqrt(fw * fw + sd * sd);
+            fw /= length;
+            sd /= length;
+            
+            // Réduire la vitesse de déplacement latéral (strafe) car ça donne la nausée en VR/3D
+            sd *= 0.6; 
+            
+            moveDir.addScaledVector(frontVector, fw * speed);
+            moveDir.addScaledVector(sideVector, sd * speed);
+        }
 
         const newX = camera.position.x + moveDir.x;
         const newZ = camera.position.z + moveDir.z;
