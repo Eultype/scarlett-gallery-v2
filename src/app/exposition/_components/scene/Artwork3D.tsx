@@ -26,7 +26,7 @@ export function Artwork3D({
     texture.anisotropy = gl.capabilities.getMaxAnisotropy();
     texture.generateMipmaps = true;
     texture.minFilter = THREE.LinearMipMapLinearFilter;
-    texture.needsUpdate = true;
+    
     const img = texture.image as HTMLImageElement;
     const imageAspect = img.width / img.height;
     
