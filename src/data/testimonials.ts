@@ -22,4 +22,16 @@ export const testimonials: Testimonial[] = [
         image: "/images/testimonials/tane.jpg",
         text: "J’ai commandé une œuvre personnalisée et le résultat est tout simplement exceptionnel ! Emma a su écouter mes attentes et retranscrire parfaitement mes envies sur la toile. Merci pour cette pièce unique !",
     },
+    {
+        id: 4,
+        name: "Sarah",
+        role: "Cliente Vinted",
+        text: "C'est la deuxième fois que je passe commande et je suis une nouvelle fois aux anges ! Le travail de cette artiste est tout simplement sublime, de plus ses œuvres sont toujours emballées avec soin. Je recommande les yeux fermés ! Merci encore pour ce merveilleux travail."
+    },
+    {
+        id: 5,
+        name: "Maud",
+        role: "Cliente Vinted",
+        text: "Les peintures sont magnifiques, emballées avec grand soin. Scarlett est aussi charmante qu'extrêmement aimable. Je ne saurais trop recommander cette artiste exceptionnelle."
+    }
 ];
