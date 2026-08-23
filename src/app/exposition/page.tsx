@@ -22,13 +22,12 @@ export default function ExpositionPage() {
 
     useEffect(() => {
         if (typeof window !== "undefined") {
-            setIsMobile(window.matchMedia("(max-width: 1024px), (pointer: coarse)").matches);
+            setIsMobile(window.matchMedia("(max-width: 1024px)").matches || ("ontouchstart" in window) || navigator.maxTouchPoints > 0);
             
             // Écouter les changements de taille d'écran (optionnel mais recommandé)
-            const mediaQuery = window.matchMedia("(max-width: 1024px), (pointer: coarse)");
-            const handleResize = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-            mediaQuery.addEventListener("change", handleResize);
-            return () => mediaQuery.removeEventListener("change", handleResize);
+            const handleResize = () => setIsMobile(window.innerWidth <= 1024 || ("ontouchstart" in window) || navigator.maxTouchPoints > 0);
+            window.addEventListener("resize", handleResize);
+            return () => window.removeEventListener("resize", handleResize);
         }
     }, []);
 
