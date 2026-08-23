@@ -13,6 +13,7 @@ import SmoothScrolling from "@/components/layout/SmoothScrolling";
 import ImageProtection from "@/components/layout/ImageProtection";
 import InitialLoader from "@/components/ui/InitialLoader";
 import JsonLd from "@/components/seo/JsonLd";
+import CustomCursor from "@/components/ui/CustomCursor";
 
 const montserrat = Montserrat({
     subsets: ["latin"],
@@ -105,9 +106,12 @@ export default function RootLayout({
                 <SmoothScrolling>
                     <InitialLoader />
                     <ImageProtection />
-                    <div id="main-content">
+                    <div id="main-content" className="flex flex-col min-h-screen">
+                        <CustomCursor />
                         <Navbar />
-                        {children}
+                        <div className="flex-grow flex flex-col min-h-[calc(100vh-100px)]">
+                            {children}
+                        </div>
                         <Footer />
                     </div>
                     <SpeedInsights />
