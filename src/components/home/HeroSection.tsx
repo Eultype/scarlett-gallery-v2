@@ -1,15 +1,10 @@
 "use client";
 
-// Import Next
 import Image from "next/image";
-// Import React
-import { useState, useEffect } from "react";
-// Import Lucide Icons
-import { ArrowDown } from "lucide-react";
-// Import Lenis Hook
+import { useState, useEffect, useRef } from "react";
 import { useLenis } from "@studio-freight/react-lenis";
+import { motion, useScroll, useTransform } from "framer-motion";
 
-// Images de fond
 const backgroundImages = [
     "/images/hero/eteHD.webp",
     "/images/hero/automneHD.webp",
@@ -17,27 +12,28 @@ const backgroundImages = [
     "/images/hero/printempsHD.webp",
 ];
 
-// Composant HeroSection de la page d'accueil
 export default function HeroSection() {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [isSafari, setIsSafari] = useState(false);
     const lenis = useLenis();
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    // Parallax effect
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start start", "end start"]
+    });
+    
+    // Background moves down slightly slower than the scroll
+    const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+    // Text fades out and moves up
+    const textY = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+    const textOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsSafari(/^((?!chrome|android).)*safari/i.test(navigator.userAgent));
-        }, 0);
-        
         const interval = setInterval(() => {
-            setCurrentImageIndex(
-                (prevIndex) => (prevIndex + 1) % backgroundImages.length
-            );
+            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % backgroundImages.length);
         }, 5000);
-
-        return () => {
-            clearTimeout(timer);
-            clearInterval(interval);
-        };
+        return () => clearInterval(interval);
     }, []);
 
     const scrollToAbout = () => {
@@ -46,54 +42,84 @@ export default function HeroSection() {
 
     return (
         <section 
-            className="relative h-screen w-full overflow-hidden bg-[#FDFBF7] bg-cover bg-center"
-            style={{ backgroundImage: "url('/images/hero/eteHD.webp')" }}
+            ref={containerRef}
+            className="relative h-screen w-full overflow-hidden bg-black"
         >
-            {/* Images de fond */}
-            <div className="absolute inset-0 z-0">
-                {backgroundImages.map((src, index) => (
-                    <div
-                        key={src}
-                        className={`absolute inset-0 ${
-                            index === currentImageIndex
-                                ? "opacity-100"
-                                : "opacity-0"
-                        } ${
-                            // La transition ne s'applique que si ce n&apos;est PAS la première image au chargement
-                            index === 0 && currentImageIndex === 0 
-                                ? "" 
-                                : "transition-opacity duration-[2500ms] ease-in-out"
-                        }`}
+            {/* Images de fond avec Parallax & Ken Burns */}
+            <motion.div style={{ y }} className="absolute inset-0 z-0 w-full h-[120%] -top-[10%]">
+                {backgroundImages.map((src, index) => {
+                    const isActive = index === currentImageIndex;
+                    return (
+                        <div
+                            key={src}
+                            className={`absolute inset-0 transition-all duration-[2000ms] ease-out ${
+                                isActive ? "opacity-100 scale-100" : "opacity-0 scale-110"
+                            }`}
+                        >
+                            <Image
+                                src={src}
+                                alt="Tableau original Scarlett Gallery"
+                                fill
+                                className="object-cover"
+                                priority={index === 0}
+                            />
+                            {/* Overlay léger pour que le texte blanc reste lisible */}
+                            <div className="absolute inset-0 bg-black/20" />
+                        </div>
+                    );
+                })}
+            </motion.div>
+
+            {/* Titre et indicateur */}
+            <motion.div 
+                style={{ y: textY, opacity: textOpacity }}
+                className="relative z-10 h-full flex flex-col justify-center items-center text-center text-white px-4 pt-10 md:pt-20"
+            >
+                <div className="overflow-hidden pb-4">
+                    <motion.h1 
+                        initial={{ y: 150, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                        className="font-autumn text-6xl md:text-8xl lg:text-9xl px-4 py-2 block leading-normal drop-shadow-lg"
                     >
-                        <Image
-                            src={src}
-                            alt={`Tableau à l&apos;huile original - Saison ${index + 1} - Scarlett Gallery, Artiste Peintre Bruxelles`}
-                            fill
-                            className="object-cover"
-                            priority={index === 0}
-                        />
-                        <div className="absolute inset-0 bg-black/20" />
-                    </div>
-                ))}
-            </div>
-            {/* Titre et indicateur de scroll (bouton) */}
-            <div className="relative z-10 h-full flex flex-col justify-center items-center text-center text-white px-4">
-                {/* Titre SEO Optimisé */}
-                <h1 className="flex flex-col items-center drop-shadow-lg mb-4">
-                    <span className={`font-autumn text-6xl md:text-8xl lg:text-9xl px-4 ${isSafari ? 'pt-8 pb-2' : 'py-2'} block leading-normal`}>Scarlett Gallery</span>
-                    <span className="text-lg md:text-xl lg:text-2xl font-montserrat font-light mt-4 tracking-[0.2em] uppercase text-white/90">
-                        Artiste Peintre à Bruxelles
+                        Scarlett Gallery
+                    </motion.h1>
+                </div>
+                
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1.5, delay: 0.8 }}
+                    className="mt-6 flex items-center gap-4 md:gap-8"
+                >
+                    <div className="w-8 md:w-24 h-[1px] bg-white/40" />
+                    <span className="text-[10px] md:text-sm font-montserrat tracking-[0.4em] uppercase text-white/90">
+                        Artiste Peintre
                     </span>
-                </h1>
-                {/* Indicateur de scroll (bouton) */}
-                <button
+                    <div className="w-8 md:w-24 h-[1px] bg-white/40" />
+                </motion.div>
+            </motion.div>
+
+            {/* Ligne animée de scroll (s'efface au scroll) */}
+            <motion.div style={{ opacity: textOpacity }} className="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 z-20">
+                <motion.button
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1, delay: 1.5 }}
                     onClick={scrollToAbout}
-                    className="absolute bottom-10 animate-bounce cursor-pointer hover:text-terra transition-colors"
+                    className="flex flex-col items-center gap-3 cursor-pointer group"
                     aria-label="Découvrir"
                 >
-                    <ArrowDown size={48} />
-                </button>
-            </div>
+                    <div className="w-[1px] h-8 md:h-12 bg-white/20 relative overflow-hidden">
+                        <motion.div 
+                            animate={{ y: ["-100%", "200%"] }}
+                            transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
+                            className="absolute top-0 left-0 w-full h-1/2 bg-white" 
+                        />
+                    </div>
+                    <span className="text-[9px] uppercase tracking-[0.3em] text-white/50 group-hover:text-white transition-colors">Découvrir</span>
+                </motion.button>
+            </motion.div>
         </section>
     );
 }

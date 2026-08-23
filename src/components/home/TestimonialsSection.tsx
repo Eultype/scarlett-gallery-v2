@@ -1,17 +1,12 @@
 "use client";
 
-// Import Next
 import Image from "next/image";
-// Import React
 import { useState, useEffect } from "react";
-// Import Lucide Icons
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
-// Import Framer Motion
 import { motion, AnimatePresence } from "framer-motion";
-// Import datas
 import { testimonials } from "@/data/testimonials";
+import RevealTitle from "@/components/ui/RevealTitle";
 
-// Composant TestimonialsSection de la page d'accueil
 export default function TestimonialsSection() {
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -29,110 +24,114 @@ export default function TestimonialsSection() {
     }, []);
 
     return (
-        <section className="py-24 md:py-32 bg-[#FDFBF7] relative overflow-hidden w-full">
-            <div className="mx-auto px-0 xl:px-20 text-center relative z-10">
+        <section className="py-16 md:py-20 bg-[#FDFBF7] relative overflow-hidden w-full">
+            <div className="mx-auto px-6 xl:px-20 text-center relative z-10 max-w-6xl">
 
-                {/* Titres */}
-                <div className="text-center mb-16 space-y-4">
-                    {/* Titre */}
-                    <h2 className="font-cormorant text-6xl md:text-7xl text-gray-900 font-light italic">
-                        Ils m&apos;ont fait confiance
-                    </h2>
-                    {/* Sous-titre */}
-                    <p className="text-gray-500 italic">
+                <div className="flex flex-col items-center text-center mb-20 max-w-2xl mx-auto">
+                    <RevealTitle 
+                        text="Ils m'ont fait confiance" 
+                        className="font-cormorant text-5xl md:text-7xl text-gray-900 font-light italic mb-4" 
+                    />
+                    <motion.p 
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.3 }}
+                        className="text-gray-500 font-light text-lg"
+                    >
                         Découvrez ce que disent mes clients
-                    </p>
-                    <div className="w-24 h-1 bg-black mx-auto mt-6"></div>
+                    </motion.p>
+                    <div className="h-[1px] w-24 bg-gray-300 mt-6"></div>
                 </div>
 
-                {/* Avatar et étoiles */}
-                <div className="flex flex-col items-center w-full mb-8">
-                    {/* Avatar */}
-                    <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden mb-6 border-4 border-white shadow-lg">
-                        <Image
-                            src={testimonials[currentIndex].image}
-                            alt={testimonials[currentIndex].name}
-                            fill
-                            sizes="(max-width: 768px) 96px, 128px"
-                            className="object-cover"
-                        />
-                    </div>
-                    {/* Étoiles */}
-                    <div className="flex gap-1">
-                        {[...Array(5)].map((_, i) => (
-                            <Star key={i} className="w-4 h-4 text-terra fill-terra" />
-                        ))}
-                    </div>
-                </div>
-
-                {/* Slider de texte avec flèches */}
-                <div className="relative w-full flex items-center justify-center">
-
-                    {/* Précédent */}
+                <div className="relative w-full flex flex-col items-center">
+                    
+                    {/* Navigation flèches */}
                     <button
                         onClick={prevReview}
-                        className="absolute left-0 p-2 text-terra/30 hover:text-terra transition-colors z-20"
+                        className="absolute left-0 top-1/2 -translate-y-1/2 p-4 text-gray-300 hover:text-terra transition-colors z-20 hidden md:block"
                         aria-label="Précédent"
                     >
-                        <ChevronLeft size={48} strokeWidth={1} />
+                        <ChevronLeft size={40} strokeWidth={1} />
+                    </button>
+                    
+                    <button
+                        onClick={nextReview}
+                        className="absolute right-0 top-1/2 -translate-y-1/2 p-4 text-gray-300 hover:text-terra transition-colors z-20 hidden md:block"
+                        aria-label="Suivant"
+                    >
+                        <ChevronRight size={40} strokeWidth={1} />
                     </button>
 
-                    {/* Texte animé */}
-                    <div className="w-full min-h-[250px] md:min-h-[200px] flex items-center justify-center">
-                        <AnimatePresence mode="popLayout">
+                    {/* Zone de Contenu */}
+                    <div className="relative w-full max-w-4xl h-[500px] md:h-[400px]">
+                        <AnimatePresence>
                             <motion.div
                                 key={currentIndex}
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -10 }}
-                                transition={{ duration: 0.5 }}
-                                className="relative w-full"
+                                initial={{ opacity: 0, scale: 0.98, filter: "blur(4px)" }}
+                                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                                exit={{ opacity: 0, scale: 1.02, filter: "blur(4px)" }}
+                                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                                className="absolute inset-0 flex flex-col items-center justify-center w-full"
                             >
-                                <Quote className="absolute -top-10 left-4 md:left-10 w-10 h-10 text-terra/10 fill-current" />
-                                <h2 className="font-cormorant text-2xl md:text-4xl leading-relaxed text-gray-800 italic font-light px-12 md:px-24">
-                                    &quot;{testimonials[currentIndex].text}&quot;
-                                </h2>
-                                <Quote className="absolute -bottom-10 right-4 md:right-10 w-10 h-10 text-terra/10 fill-current rotate-180" />
+                                {/* Photo Collectionneur */}
+                                {testimonials[currentIndex].image && (
+                                    <div className="relative w-20 h-20 md:w-24 md:h-24 flex-shrink-0 rounded-full overflow-hidden mb-8 shadow-sm">
+                                        <Image
+                                            src={testimonials[currentIndex].image}
+                                            alt={testimonials[currentIndex].name}
+                                            fill
+                                            sizes="96px"
+                                            className="object-cover"
+                                        />
+                                    </div>
+                                )}
+
+                                {/* Petites Étoiles minimalistes */}
+                                <div className="flex gap-1.5 mb-8">
+                                    {[...Array(5)].map((_, i) => (
+                                        <Star key={i} className="w-3 h-3 text-terra fill-terra opacity-80" />
+                                    ))}
+                                </div>
+
+                                {/* Citation */}
+                                <div className="relative w-full mb-12">
+                                    <Quote className="absolute -top-6 left-0 md:left-4 w-10 h-10 text-terra/10 fill-current -scale-x-100" />
+                                    <h2 className="font-cormorant text-3xl md:text-4xl leading-tight text-gray-900 italic font-light px-12 md:px-20">
+                                        {testimonials[currentIndex].text}
+                                    </h2>
+                                    <Quote className="absolute -bottom-6 right-0 md:right-4 w-10 h-10 text-terra/10 fill-current" />
+                                </div>
+
+                                {/* Auteur */}
+                                <div className="space-y-2">
+                                    <p className="text-xs font-bold text-gray-900 uppercase tracking-[0.2em]">
+                                        {testimonials[currentIndex].name}
+                                    </p>
+                                    <p className="text-[10px] text-gray-400 uppercase tracking-[0.3em]">
+                                        {testimonials[currentIndex].role}
+                                    </p>
+                                </div>
                             </motion.div>
                         </AnimatePresence>
                     </div>
 
-                    {/* Suivant */}
-                    <button
-                        onClick={nextReview}
-                        className="absolute right-0 p-2 text-terra/30 hover:text-terra transition-colors z-20"
-                        aria-label="Suivant"
-                    >
-                        <ChevronRight size={48} strokeWidth={1} />
-                    </button>
-                </div>
-
-                {/* Auteur et indicateurs */}
-                <div className="mt-8 space-y-6">
-                    <div className="space-y-1">
-                        {/* Auteur */}
-                        <p className="text-base font-bold text-gray-900 uppercase tracking-widest">
-                            {testimonials[currentIndex].name}
-                        </p>
-                        {/* Rôle */}
-                        <p className="text-xs text-terra font-medium uppercase tracking-wider">
-                            {testimonials[currentIndex].role}
-                        </p>
-                    </div>
-
-                    {/* Indicateurs */}
-                    <div className="flex justify-center gap-3">
+                    {/* Indicateurs (Dots) */}
+                    <div className="flex justify-center gap-4 mt-8 md:mt-12">
                         {testimonials.map((_, index) => (
                             <button
                                 key={index}
                                 onClick={() => setCurrentIndex(index)}
-                                aria-label={`Voir le témoignage de ${testimonials[index].name}`}
-                                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                                    index === currentIndex ? "bg-terra w-6" : "bg-terra/20 hover:bg-terra/40"
+                                aria-label={`Voir le témoignage ${index + 1}`}
+                                className={`w-1.5 h-1.5 rounded-full transition-all duration-500 ${
+                                    index === currentIndex 
+                                        ? "bg-terra scale-150" 
+                                        : "bg-gray-300 hover:bg-gray-400"
                                 }`}
                             />
                         ))}
                     </div>
+
                 </div>
             </div>
         </section>

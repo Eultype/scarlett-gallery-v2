@@ -4,18 +4,18 @@
 import Link from "next/link";
 // Import React
 import { useState, useRef, useEffect } from "react";
-// Import Lucide Icons
-import { ArrowRight, ChevronLeft, ChevronRight, Hand } from "lucide-react";
+import { ArrowRight, MoveLeft, MoveRight, Hand } from "lucide-react";
 // Import Framer Motion
 import { motion, AnimatePresence } from "framer-motion";
 // Import des composants UI
-import Lightbox from "@/components/ui/Lightbox";
 import SafeImage from "@/components/ui/SafeImage";
 // Import des types
 import { Artwork } from "@/types/artwork";
 // Import des datas
 import { homeGalleryItems } from "@/data/artworks";
 import { CONTACT_INFO } from "@/data/contact";
+// Import du Text Reveal
+import RevealTitle from "@/components/ui/RevealTitle";
 
 // Liste des catégories
 const tabs = [
@@ -49,7 +49,6 @@ export default function GalleryPreviewSection() {
     const [activeTab, setActiveTab] = useState("saisons");
     const [startIndex, setStartIndex] = useState(0);
     const [direction, setDirection] = useState(0);
-    const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
     const [hasInteracted, setHasInteracted] = useState(false);
 
     // Référence pour le conteneur de scroll horizontal (Mobile)
@@ -121,30 +120,44 @@ export default function GalleryPreviewSection() {
         <section id="gallery" className="py-20 bg-[#FDFBF7]">
             <div className="mx-auto px-8 md:px-10 xl:px-20">
 
-                {/* Titre */}
-                <div className="text-center mb-12 space-y-4">
-                    <h2 className="font-cormorant text-6xl md:text-7xl text-gray-900 font-light italic">
-                        Gallery of Works
-                    </h2>
-                    <p className="text-gray-500 italic">
+                {/* Titre avec Animation Wow */}
+                <div className="flex flex-col items-center text-center mb-12 space-y-4">
+                    <RevealTitle 
+                        text="Gallery of Works" 
+                        className="font-cormorant text-6xl md:text-7xl text-gray-900 font-light italic justify-center" 
+                    />
+                    <motion.p 
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-10%" }}
+                        transition={{ delay: 0.5, duration: 0.8 }}
+                        className="text-gray-500 italic"
+                    >
                         Explorez une sélection de mes créations récentes
-                    </p>
-                    <div className="w-24 h-1 bg-black mx-auto mt-6"></div>
+                    </motion.p>
+                    <div className="h-[1px] w-24 bg-gray-300 mx-auto mt-6"></div>
                 </div>
 
-                {/* Onglets (Tabs) */}
-                <div className="flex flex-wrap justify-center gap-4 mb-12">
+                {/* Onglets Éditoriaux (Tabs) */}
+                <div className="flex flex-wrap justify-center gap-8 md:gap-12 mb-12 px-4">
                     {tabs.map((tab) => (
                         <button
                             key={tab.id}
                             onClick={() => handleTabChange(tab.id)}
-                            className={`px-6 py-2 rounded-full border transition-all duration-300 ${
-                                activeTab === tab.id
-                                    ? "bg-terra border-terra text-white shadow-md"
-                                    : "bg-white border-gray-300 text-gray-600 hover:border-terra hover:text-terra"
-                            }`}
+                            className="group flex flex-col items-center outline-none"
                         >
-                            {tab.label}
+                            <span className={`text-[10px] font-bold uppercase tracking-[0.3em] transition-colors duration-500 text-center ${
+                                activeTab === tab.id
+                                    ? "text-terra"
+                                    : "text-gray-400 group-hover:text-gray-900"
+                            }`}>
+                                {tab.label}
+                            </span>
+                            <span className={`h-[1px] mt-2 transition-all duration-700 ease-in-out ${
+                                activeTab === tab.id
+                                    ? "w-8 bg-terra"
+                                    : "w-0 bg-gray-300 group-hover:w-4"
+                            }`}></span>
                         </button>
                     ))}
                 </div>
@@ -186,41 +199,46 @@ export default function GalleryPreviewSection() {
                             onTouchStart={() => setHasInteracted(true)}
                         >
                             {allItemsInTab.map((item) => (
-                                <div 
+                                <Link 
                                     key={item.id} 
-                                    className="min-w-[80vw] md:min-w-[40vw] snap-center"
-                                    onClick={() => setSelectedArtwork(item)}
+                                    href={`/gallery/${item.id}`}
+                                    className="min-w-[80vw] md:min-w-[40vw] snap-center group flex flex-col h-full"
                                 >
-                                    <div className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100 h-full flex flex-col">
-                                        <div className={`relative w-full aspect-[4/5] bg-white`}>
+                                    <div className="flex-grow flex flex-col h-full">
+                                        <div className={`relative w-full aspect-[4/5] overflow-hidden bg-transparent`}>
                                             <SafeImage
                                                 src={item.image}
-                                                alt={`Peinture ${item.title} - Œuvre originale par Scarlett Gallery, Artiste Peintre Bruxelles`}
+                                                alt={`Peinture ${item.title} - Scarlett Gallery`}
                                                 fill
-                                                className={`${item.layout === "wide" ? "object-contain p-4 drop-shadow-md" : "object-cover"}`}
+                                                className={`${item.layout === "wide" ? "object-contain p-4" : "object-contain p-2"} transition-transform duration-700 group-hover:scale-105`}
                                                 sizes="(max-width: 768px) 85vw, 45vw"
                                             />
-                                            {item.status === "Vendu" && (
-                                                <div className="absolute top-4 right-4 bg-red-800 text-white text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full shadow">
-                                                    Vendu
-                                                </div>
-                                            )}
+                                            {/* Badge retiré de l'image car il est affiché en bas maintenant */}
                                         </div>
-                                        <div className="p-6 flex-grow flex flex-col justify-between">                                            <div>
-                                                <h3 className="font-cormorant text-2xl text-gray-900 mb-1 font-bold italic">
+                                        <div className="pt-6 flex-grow flex flex-col justify-between">
+                                            <div>
+                                                <h3 className="font-cormorant text-2xl text-gray-900 mb-1 group-hover:text-terra transition-colors font-light italic">
                                                     {item.title}
                                                 </h3>
-                                                <p className="text-sm text-gray-500 mb-3">{item.serie}</p>
+                                                <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-3">{item.serie}</p>
                                             </div>
-                                            <p className="text-xs text-gray-400 border-t pt-3 mt-auto flex justify-between items-center">
-                                                <span>{item.dimensions}</span>
+                                            <p className="text-xs text-gray-500 pt-3 mt-auto flex justify-between items-center border-t border-gray-200">
+                                                <span className="font-light">{item.dimensions}</span>
                                                 {item.status === "Disponible" && (
-                                                    <span className="text-green-700 font-bold uppercase tracking-widest text-[10px]">Disponible</span>
+                                                    <span className="text-[#4e6e58] font-bold uppercase tracking-widest text-[9px] flex items-center gap-2">
+                                                        Disponible
+                                                    </span>
+                                                )}
+                                                {item.status === "Vendu" && (
+                                                    <span className="text-terra font-bold uppercase tracking-widest text-[9px] flex items-center gap-2">
+                                                        <span className="w-1.5 h-1.5 bg-terra rounded-full animate-pulse"></span>
+                                                        Vendu
+                                                    </span>
                                                 )}
                                             </p>
                                         </div>
                                     </div>
-                                </div>
+                                </Link>
                             ))}
                         </div>
                     </div>
@@ -231,15 +249,15 @@ export default function GalleryPreviewSection() {
                         {hasPrev && (
                             <button 
                                 onClick={prevItems}
-                                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 z-10 bg-white p-3 rounded-full shadow-lg text-gray-800 hover:text-terra hover:scale-110 transition-all"
+                                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 z-10 p-2 text-gray-400 hover:text-terra transition-colors group flex items-center"
                                 aria-label="Voir précédents"
                             >
-                                <ChevronLeft size={24} />
+                                <MoveLeft size={36} strokeWidth={1} className="group-hover:-translate-x-2 transition-transform" />
                             </button>
                         )}
 
                         {/* Conteneur animé */}
-                        <div className="min-h-[400px] overflow-hidden">
+                        <div className="min-h-[400px] pb-12 -mb-12 overflow-hidden">
                             <AnimatePresence mode="wait" custom={direction}>
                                 <motion.div
                                     key={startIndex + activeTab}
@@ -255,47 +273,50 @@ export default function GalleryPreviewSection() {
                                     className="grid grid-cols-4 gap-8"
                                 >
                                     {visibleItems.map((item) => (
-                                        <div
+                                        <Link
                                             key={item.id}
-                                            className={`group cursor-pointer ${item.layout === "wide" ? "xl:col-span-2" : ""}`}
-                                            onClick={() => setSelectedArtwork(item)}
+                                            href={`/gallery/${item.id}`}
+                                            className={`group cursor-pointer flex flex-col ${item.layout === "wide" ? "xl:col-span-2" : ""}`}
                                         >
-                                            {/* Carte */}
-                                            <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 h-full flex flex-col">
+                                            {/* Carte Luxe (Sans bordure, sans ombre) */}
+                                            <div className="flex-grow flex flex-col h-full">
 
-                                                <div className={`relative w-full overflow-hidden bg-white ${item.layout === "wide" ? "aspect-[1.69/1]" : "aspect-[4/5]"}`}>
+                                                <div className={`relative w-full overflow-hidden bg-transparent ${item.layout === "wide" ? "aspect-[1.69/1]" : "aspect-[4/5]"}`}>
                                                     <SafeImage
                                                         src={item.image}
-                                                        alt={`Peinture ${item.title} - Œuvre originale par Scarlett Gallery, Artiste Peintre Bruxelles`}
+                                                        alt={item.title}
                                                         fill
-                                                        className={`${item.layout === "wide" ? "object-contain p-4 drop-shadow-xlOk" : "object-cover"} transition-transform duration-700 group-hover:scale-110`}
-                                                        sizes={item.layout === "wide" ? "50vw" : "25vw"}
+                                                        sizes={item.layout === "wide" ? "(max-width: 1280px) 100vw, 50vw" : "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"}
+                                                        className={`w-full h-full transform-gpu will-change-transform ${item.layout === "wide" ? "object-contain p-4" : "object-contain p-2"} transition-transform duration-700 group-hover:scale-105`}
                                                     />
-                                                    {item.status === "Vendu" && (
-                                                        <div className="absolute top-4 right-4 bg-red-800 text-white text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full shadow z-10">
-                                                            Vendu
-                                                        </div>
-                                                    )}
+                                                    {/* Badge retiré de l'image car il est affiché en bas maintenant */}
                                                 </div>
 
-                                                {/* Info */}
-                                                <div className="p-6 flex-grow flex flex-col justify-between">
+                                                <div className="pt-6 flex-grow flex flex-col justify-between">
                                                     <div>
-                                                        <h3 className="font-cormorant text-2xl text-gray-900 mb-1 group-hover:text-terra transition-colors font-bold italic">
+                                                        <h3 className="font-cormorant text-2xl text-gray-900 mb-1 group-hover:text-terra transition-colors font-light italic">
                                                             {item.title}
                                                         </h3>
-                                                        <p className="text-sm text-gray-500 mb-3">{item.serie}</p>
+                                                        <p className="text-[10px] uppercase tracking-widest text-gray-400 mb-3">{item.serie}</p>
                                                     </div>
-                                                    <p className="text-xs text-gray-400 border-t pt-3 mt-auto flex justify-between items-center">
-                                                        <span>{item.dimensions}</span>
+                                                    <p className="text-xs text-gray-500 pt-3 mt-auto flex justify-between items-center border-t border-gray-200">
+                                                        <span className="font-light">{item.dimensions}</span>
                                                         {item.status === "Disponible" && (
-                                                            <span className="text-green-700 font-bold uppercase tracking-widest text-[10px]">Disponible</span>
+                                                            <span className="text-[#4e6e58] font-bold uppercase tracking-widest text-[9px] flex items-center gap-2">
+                                                                Disponible
+                                                            </span>
+                                                        )}
+                                                        {item.status === "Vendu" && (
+                                                            <span className="text-terra font-bold uppercase tracking-widest text-[9px] flex items-center gap-2">
+                                                                <span className="w-1.5 h-1.5 bg-terra rounded-full animate-pulse"></span>
+                                                                Vendu
+                                                            </span>
                                                         )}
                                                     </p>
                                                 </div>
 
                                             </div>
-                                        </div>
+                                        </Link>
                                     ))}
                                 </motion.div>
                             </AnimatePresence>
@@ -305,68 +326,75 @@ export default function GalleryPreviewSection() {
                         {hasNext && (
                             <button 
                                 onClick={nextItems}
-                                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 z-10 bg-white p-3 rounded-full shadow-lg text-gray-800 hover:text-terra hover:scale-110 transition-all"
+                                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-10 p-2 text-gray-400 hover:text-terra transition-colors group flex items-center"
                                 aria-label="Voir suivants"
                             >
-                                <ChevronRight size={24} />
+                                <MoveRight size={36} strokeWidth={1} className="group-hover:translate-x-2 transition-transform" />
                             </button>
                         )}
                     </div>
                 </div>
 
-                {/* Lien vers la galerie complète */}
-                <div className="text-center mt-12 mb-8">
+                {/* Liens vers les galeries (Classique & 3D) */}
+                <div className="flex flex-col md:flex-row justify-center items-center gap-10 md:gap-24 mt-16 mb-12">
+                    {/* Lien Galerie Classique */}
                     <Link
                         href="/gallery"
-                        className="group inline-flex items-center gap-3 text-gray-900 font-bold uppercase tracking-widest text-xs hover:text-terra transition-colors"
+                        className="group inline-flex flex-col items-center text-center"
                     >
-                        <span>Voir toutes les peintures et linogravures</span>
-                        <div className="w-8 h-[1px] bg-gray-300 group-hover:bg-terra group-hover:w-12 transition-all duration-500"></div>
-                        <ArrowRight size={14} className="group-hover:translate-x-2 transition-transform" />
+                        <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-gray-900 group-hover:text-terra transition-colors duration-500">
+                            Voir toute la galerie
+                        </span>
+                        <span className="text-xs text-gray-400 mt-2 font-light italic opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            Grille classique
+                        </span>
+                        <span className="h-[1px] w-12 bg-gray-300 mt-3 group-hover:w-full group-hover:bg-terra transition-all duration-700 ease-in-out"></span>
+                    </Link>
+
+                    {/* Ligne séparatrice sur desktop */}
+                    <div className="hidden md:block w-[1px] h-12 bg-gray-200"></div>
+
+                    {/* Lien Musée 3D */}
+                    <Link
+                        href="/exposition"
+                        className="group inline-flex flex-col items-center text-center"
+                    >
+                        <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-terra group-hover:text-gray-900 transition-colors duration-500">
+                            Entrer dans le musée 3D
+                        </span>
+                        <span className="text-xs text-gray-400 mt-2 font-light italic opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                            Expérience immersive
+                        </span>
+                        <span className="h-[1px] w-12 bg-terra mt-3 group-hover:w-full group-hover:bg-gray-300 transition-all duration-700 ease-in-out"></span>
                     </Link>
                 </div>
 
-                {/* Boutons d&apos;achat et Call to Action */}
-                <div className="flex flex-col md:flex-row flex-wrap justify-center items-center gap-4 mt-8">
+                {/* Liens d'achat et Call to Action */}
+                <div className="flex flex-col md:flex-row flex-wrap justify-center items-center gap-6">
                     <a
                         href={CONTACT_INFO.socials.etsy}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full md:w-auto border border-black px-8 py-4 text-sm uppercase tracking-widest hover:bg-[#F45800] hover:border-[#F45800] hover:text-white transition-all duration-300 text-center"
+                        className="px-10 py-4 border border-gray-900 text-[10px] font-bold uppercase tracking-[0.3em] text-gray-900 hover:bg-[#F45800] hover:border-[#F45800] hover:text-white transition-all duration-500 w-full md:w-auto text-center"
                     >
-                        Achetez mes oeuvres (Etsy)
+                        Achetez sur Etsy
                     </a>
                     <a
                         href={CONTACT_INFO.socials.vinted}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full md:w-auto border border-black px-8 py-4 text-sm uppercase tracking-widest hover:bg-[#007782] hover:border-[#007782] hover:text-white transition-all duration-300 text-center"
+                        className="px-10 py-4 border border-gray-900 text-[10px] font-bold uppercase tracking-[0.3em] text-gray-900 hover:bg-[#007782] hover:border-[#007782] hover:text-white transition-all duration-500 w-full md:w-auto text-center"
                     >
-                        Achetez mes oeuvres (Vinted)
+                        Achetez sur Vinted
                     </a>
                     <Link
                         href="/contact"
-                        className="w-full md:w-auto bg-black text-white px-8 py-4 text-sm uppercase tracking-widest hover:bg-terra transition-all duration-300 text-center"
+                        className="px-10 py-4 border border-gray-900 text-[10px] font-bold uppercase tracking-[0.3em] text-gray-900 hover:bg-terra hover:border-terra hover:text-white transition-all duration-500 w-full md:w-auto text-center"
                     >
-                        Planifiez une oeuvre personnalisée
+                        Commande Personnalisée
                     </Link>
                 </div>
-
             </div>
-
-            {/* Lightbox */}
-            <Lightbox
-                key={selectedArtwork?.id}
-                isOpen={!!selectedArtwork}
-                onClose={() => setSelectedArtwork(null)}
-                imageSrc={selectedArtwork?.image || ""}
-                title={selectedArtwork?.title || ""}
-                dimensions={selectedArtwork?.dimensions || ""}
-                sizes={selectedArtwork?.availableSizes}
-                moreImages={selectedArtwork?.moreImages}
-                status={selectedArtwork?.status}
-            />
-
         </section>
     );
 }
