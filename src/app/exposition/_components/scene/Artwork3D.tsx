@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import * as THREE from "three";
-import { useLoader } from "@react-three/fiber";
+import { useLoader, useThree } from "@react-three/fiber";
 import { Text, Html } from "@react-three/drei";
 import { motion } from "framer-motion";
 import { TypewriterText } from "../ui/ExpositionUI";
@@ -19,7 +19,14 @@ export function Artwork3D({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     item: any, position: [number, number, number], rotation: [number, number, number], isLeftWall: boolean, isSelected: boolean, onClose: () => void, startZ: number 
 }) {
+    const { gl } = useThree();
     const texture = useLoader(THREE.TextureLoader, item.image + "?v=2") as THREE.Texture;
+    
+    // Optimisation de la netteté à distance (Anisotropie)
+    texture.anisotropy = gl.capabilities.getMaxAnisotropy();
+    texture.generateMipmaps = true;
+    texture.minFilter = THREE.LinearMipMapLinearFilter;
+    texture.needsUpdate = true;
     const img = texture.image as HTMLImageElement;
     const imageAspect = img.width / img.height;
     
