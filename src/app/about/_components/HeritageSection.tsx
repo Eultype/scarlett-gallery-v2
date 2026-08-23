@@ -1,74 +1,85 @@
 "use client";
 
-// Import Next
 import Image from "next/image";
-// Import Framer Motion
-import { motion, useTransform, MotionValue } from "framer-motion";
+import { motion, useTransform, MotionValue, useScroll } from "framer-motion";
+import RevealTitle from "@/components/ui/RevealTitle";
+import Badge from "@/components/ui/Badge";
 
-// Interface
 interface HeritageSectionProps {
     scrollYProgress: MotionValue<number>;
 }
 
-// Composant HeritageSection de la page about
-export default function HeritageSection({ scrollYProgress }: HeritageSectionProps) {
-    const yText = useTransform(scrollYProgress, [0, 1], [0, -300]);
-    const yImg = useTransform(scrollYProgress, [0, 1], [0, 150]);
+import { useRef } from "react";
 
-    // On utilise un état ou une valeur fixe pour désactiver l'animation sur mobile si besoin
-    // Mais le plus simple est de gérer le style conditionnellement
+export default function HeritageSection({ scrollYProgress }: HeritageSectionProps) {
+    const sectionRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress: sectionScroll } = useScroll({
+        target: sectionRef,
+        offset: ["start end", "end start"]
+    });
+    
+    const yText = useTransform(scrollYProgress, [0, 1], [0, -200]);
+    const imageY = useTransform(sectionScroll, [0, 1], ["-10%", "10%"]);
 
     return (
-        <section className="relative py-20 md:py-40">
-            {/* Texte de fond 'Héritage' */}
+        <section ref={sectionRef} className="relative py-20 md:py-32 bg-[#FDFBF7]">
+            
+            {/* Texte de fond 'Héritage' (Typographie Géante) */}
             <motion.div
                 style={{ y: yText }}
-                className="absolute top-20 md:top-20 lg:top-5 xl:top-5 right-16 md:right-35 lg:right-40 xl:right-60 opacity-[0.07] md:opacity-[0.03] select-none pointer-events-none whitespace-nowrap"
+                className="absolute top-0 left-1/2 -translate-x-1/2 md:left-10 md:translate-x-0 lg:left-24 opacity-[0.03] select-none pointer-events-none whitespace-nowrap z-0"
             >
-                <span className="font-autumn text-[10vw]">Heritage</span>
+                <span className="font-cormorant italic text-[15vw] leading-none text-gray-900 tracking-tight">Héritage</span>
             </motion.div>
 
-            <div className="mx-auto px-4 md:px-10 xl:px-20 relative">
-                <div className="mx-auto">
-                    <div className="flex flex-col md:flex-row items-center gap-16 mb-10">
-                        <div className="w-full md:w-3/5 space-y-8">
-                            {/* Badge */}
-                            <div className="inline-block bg-terra text-white px-4 py-1 text-[10px] font-bold uppercase tracking-[0.3em] rounded">
-                                L&apos;Héritage
-                            </div>
-
-                            {/* Titre */}
-                            <h2 className="font-cormorant text-5xl lg:text-7xl text-gray-900 font-light italic">Un héritage précieux</h2>
-
-                            {/* Sous-titre */}
-                            <p className="text-2xl text-terra italic">Le murmure de l&apos;atelier</p>
-
-                            {/* Description */}
-                            <p className="text-xl text-gray-600 leading-relaxed text-justify">
-                                &quot;Ma passion n&apos;est pas née dans une école d&apos;art, mais dans le petit atelier
-                                de ma tatie Lily. C&apos;est elle qui m&apos;a appris que la peinture
-                                ne se regarde pas avec les yeux, mais avec le cœur.&quot;
-                            </p>
+            <div className="mx-auto px-6 md:px-12 xl:px-24 max-w-7xl relative z-10">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-16 md:gap-24">
+                    
+                    {/* Contenu Texte (Maintenant à gauche) */}
+                    <div className="w-full md:w-1/2 flex flex-col items-start">
+                        
+                        <div className="mb-6">
+                            <Badge text="Les Origines" variant="solid" />
                         </div>
 
-                        {/* Image de l&apos;artiste et sa tante */}
-                        <div className="w-full md:w-2/5 mt-10 md:mt-0">
+                        {/* Titre avec Animation */}
+                        <RevealTitle 
+                            text="Un héritage précieux" 
+                            className="font-cormorant text-5xl lg:text-7xl text-gray-900 font-light italic mb-4" 
+                        />
+
+                        {/* Ligne Signature */}
+                        <div className="h-[1px] w-24 bg-gray-300 mt-2 mb-6"></div>
+
+                        {/* Sous-titre */}
+                        <p className="text-xl md:text-2xl text-terra italic mb-8">Le murmure de l'atelier</p>
+
+                        {/* Description */}
+                        <p className="text-gray-500 font-light leading-relaxed text-lg max-w-lg">
+                            "Ma passion n'est pas née dans une école d'art, mais dans le petit atelier
+                            de ma tatie Lily. C'est elle qui m'a appris que la peinture
+                            ne se regarde pas avec les yeux, mais avec le cœur. Le murmure de son atelier
+                            résonne encore dans chacune de mes toiles."
+                        </p>
+                    </div>
+
+                    {/* Image de l'artiste et sa tante */}
+                    <div className="w-full md:w-5/12">
+                        <div className="relative aspect-[3/4] overflow-hidden">
                             <motion.div
-                                style={{ y: typeof window !== 'undefined' && window.innerWidth < 768 ? 0 : yImg }}
-                                className="aspect-[3/4] rounded-lg relative shadow-2xl md:rotate-3 md:hover:rotate-0 transition-transform duration-700"
+                                style={{ y: typeof window !== 'undefined' && window.innerWidth < 768 ? 0 : imageY }}
+                                className="absolute -top-[10%] left-0 w-full h-[120%]"
                             >
                                 <Image
                                     src="/images/about/emma-line.webp"
-                                    alt="L'atelier"
+                                    alt="Emma et sa tante Lily dans l'atelier"
                                     fill
                                     sizes="(max-width: 768px) 100vw, 40vw"
-                                    className="object-cover rounded-lg border-[4px] border-white"
+                                    className="object-cover"
                                 />
                             </motion.div>
                         </div>
                     </div>
-
-                    {/* Fin de la section Héritage */}
                 </div>
             </div>
         </section>
