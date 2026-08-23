@@ -35,9 +35,9 @@ export function TypewriterText({ text, delay = 0, className = "" }: { text: stri
 export function Loader() {
   return (
     <Html center>
-      <div className="flex flex-col items-center">
-        <div className="w-16 h-[1px] bg-white animate-pulse mb-4"></div>
-        <div className="text-white text-[10px] tracking-[0.5em] uppercase font-light text-center w-64">
+      <div className="flex flex-col items-center -translate-y-24 md:translate-y-0">
+        <div className="w-16 h-[2px] bg-[#A44A3F] animate-pulse mb-4"></div>
+        <div className="text-[#A44A3F] text-xs font-bold tracking-[0.5em] uppercase text-center w-64 shadow-black/10 drop-shadow-sm">
             Construction des salles d'exposition...
         </div>
       </div>

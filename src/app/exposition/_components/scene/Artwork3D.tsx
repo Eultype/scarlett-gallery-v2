@@ -19,7 +19,7 @@ export function Artwork3D({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     item: any, position: [number, number, number], rotation: [number, number, number], isLeftWall: boolean, isSelected: boolean, onClose: () => void, startZ: number 
 }) {
-    const texture = useLoader(THREE.TextureLoader, item.image) as THREE.Texture;
+    const texture = useLoader(THREE.TextureLoader, item.image + "?v=2") as THREE.Texture;
     const img = texture.image as HTMLImageElement;
     const imageAspect = img.width / img.height;
     
