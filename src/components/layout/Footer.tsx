@@ -1,44 +1,51 @@
-// Import Next
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-// Import de React Icons
-import { FaInstagram, FaFacebookF, FaTiktok, FaEtsy } from "react-icons/fa";
+import { usePathname } from "next/navigation";
+import { FaInstagram, FaTiktok, FaEtsy } from "react-icons/fa";
 import { BiSend } from "react-icons/bi";
-// Import des datas
 import { CONTACT_INFO } from "@/data/contact";
 import { NAV_LINKS } from "@/data/nav";
 
-// Composant du Footer
 export default function Footer() {
     const currentYear = new Date().getFullYear();
+    const pathname = usePathname();
+
+    // Cacher le footer sur la page d'exposition immersive
+    if (pathname === "/exposition") {
+        return null;
+    }
+
+    const isArtworkPage = pathname?.startsWith("/gallery/") && pathname !== "/gallery";
+    if (isArtworkPage) return null;
 
     return (
-        <footer className="bg-black text-white py-16">
-            <div className="container mx-auto px-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-12 mb-16">
-                    {/* Colonne 1 : Logo  / Description */}
-                    <div className="space-y-6">
-                        {/* Logo */}
+        <footer className="bg-terra text-[#FDFBF7] py-16">
+            <div className="mx-auto px-6 md:px-12 xl:px-24 max-w-7xl">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-12 xl:gap-24 mb-16">
+                    {/* Colonne 1 : Logo / Description */}
+                    <div className="space-y-6 md:col-span-4">
                         <Link href="/" className="block w-48">
                             <div className="relative w-full" style={{ aspectRatio: "200 / 60" }}>
                                 <Image
                                     src="/images/logos/logo2(blanc).png"
-                                    alt="Logo Scarlett Gallery - Emma De Noni, Artiste Peintre Bruxelles"
+                                    alt="Logo Scarlett Gallery - Emma De Noni"
                                     fill
                                     className="object-contain"
                                     sizes="200px"
                                 />
                             </div>
                         </Link>
-                        {/* Description */}
-                        <p className="text-gray-400 text-sm leading-relaxed">
+                        <p className="text-[#FDFBF7]/80 text-sm leading-relaxed">
                             Artiste peintre basée à Bruxelles, créant des œuvres uniques qui éveillent les émotions.
                         </p>
                     </div>
+
                     {/* Colonne 2 : Navigation */}
-                    <div>
+                    <div className="md:col-span-3">
                         <h3 className="font-cormorant italic tracking-wider text-2xl font-light mb-6">Navigation</h3>
-                        <ul className="space-y-3 text-gray-400">
+                        <ul className="space-y-3 text-[#FDFBF7]/80">
                             {NAV_LINKS.map((link) => (
                                 <li key={link.href}>
                                     <FooterLink href={link.href} label={link.label} />
@@ -46,93 +53,45 @@ export default function Footer() {
                             ))}
                         </ul>
                     </div>
-                    {/* Colonne 3 : Services */}
-                    <div>
-                        <h3 className="font-cormorant italic tracking-wider text-2xl font-light mb-6">Services</h3>
-                        <ul className="space-y-3 text-gray-400">
-                            <li><FooterLink href="/contact" label="Commandes sur mesure" /></li>
-                            <li><FooterLink href="/contact" label="Expositions" /></li>
-                            <li><FooterLink href="/contact" label="Consultation artistique" /></li>
-                        </ul>
-                    </div>
-                    {/* Colonne 4 : Réseaux sociaux et newsletter */}
-                    <div>
-                        {/* Réseaux sociaux */}
+
+                    {/* Colonne 3 : Réseaux sociaux et newsletter */}
+                    <div className="md:col-span-5">
                         <h3 className="font-cormorant italic tracking-wider text-2xl font-light mb-6">Réseaux sociaux</h3>
                         <div className="flex space-x-6 mb-8">
-                            <SocialLink
-                                href={CONTACT_INFO.socials.instagram}
-                                label="Instagram"
-                                icon={<FaInstagram size={24} />}
-                            />
-                            <SocialLink
-                                href={CONTACT_INFO.socials.facebook}
-                                label="Facebook"
-                                icon={<FaFacebookF size={22} />}
-                            />
-                            <SocialLink
-                                href={CONTACT_INFO.socials.tiktok}
-                                label="TikTok"
-                                icon={<FaTiktok size={22} />}
-                            />
-                            <SocialLink
-                                href={CONTACT_INFO.socials.etsy}
-                                label="Etsy"
-                                icon={<FaEtsy size={22} />}
-                            />
+                            <SocialLink href={CONTACT_INFO.socials.instagram} label="Instagram" icon={<FaInstagram size={24} />} />
+                            <SocialLink href={CONTACT_INFO.socials.tiktok} label="TikTok" icon={<FaTiktok size={22} />} />
+                            <SocialLink href={CONTACT_INFO.socials.etsy} label="Etsy" icon={<FaEtsy size={22} />} />
                         </div>
-                        {/* Newsletter */}
+
                         <h3 className="font-medium text-lg mb-4">Newsletter</h3>
-                        <form className="flex">
+                        <form className="flex shadow-sm max-w-sm">
                             <input
                                 type="email"
                                 placeholder="Votre email"
-                                className="flex-1 bg-white text-black px-4 py-2 rounded-l-sm focus:outline-none"
+                                className="flex-1 min-w-0 bg-white text-black px-4 py-2 rounded-l-sm focus:outline-none"
                             />
                             <button
                                 type="submit"
-                                className="bg-gray-800 px-4 py-2 rounded-r-sm hover:bg-terra transition-colors"
+                                className="bg-black px-4 py-2 rounded-r-sm hover:opacity-80 transition-opacity"
                                 aria-label="S'inscrire"
                             >
-                                <BiSend size={20} />
+                                <BiSend size={20} className="text-white" />
                             </button>
                         </form>
                     </div>
                 </div>
+
                 {/* Droits */}
-                <div className="border-t border-gray-800 pt-8 flex flex-col xl:flex-row justify-between items-center text-[10px] md:text-xs uppercase tracking-widest text-gray-500 gap-6">
-                    {/* Gauche : Copyright */}
+                <div className="border-t border-[#FDFBF7]/20 pt-8 flex flex-col xl:flex-row justify-between items-center text-[10px] md:text-xs uppercase tracking-widest text-[#FDFBF7]/60 gap-6">
                     <p className="text-center xl:text-left">
                         &copy; {currentYear} DE NONI Emma - Artiste Peintre.
                     </p>
-
-                    {/* Milieu : Liens Légaux */}
                     <div className="flex space-x-6">
-                        <Link
-                            href="/politique"
-                            className="hover:text-white transition-colors"
-                        >
-                            Confidentialité
-                        </Link>
-                        <Link
-                            href="/mentions"
-                            className="hover:text-white transition-colors"
-                        >
-                            Mentions Légales
-                        </Link>
+                        <Link href="/politique" className="hover:text-white transition-colors">Confidentialité</Link>
+                        <Link href="/mentions" className="hover:text-white transition-colors">Mentions Légales</Link>
                     </div>
-
-                    {/* Droite : Signature Développeur */}
                     <p className="text-center xl:text-right opacity-70">
-                        Design & Développement par{" "}
-                        <a 
-                            href="https://github.com/Eultype" 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="hover:text-terra transition-colors font-bold"
-                        >
-                            Samuël Darry
-                        </a>
+                        Design & Développement par <a href="https://github.com/Eultype" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors font-bold">Samuël Darry</a>
                     </p>
                 </div>
             </div>
@@ -142,32 +101,15 @@ export default function Footer() {
 
 function FooterLink({ href, label }: { href: string; label: string }) {
     return (
-        <Link
-            href={href}
-            className="hover:text-white transition-colors block"
-        >
+        <Link href={href} className="hover:text-white transition-colors block">
             {label}
         </Link>
     );
 }
 
-function SocialLink({
-                        href,
-                        icon,
-                        label,
-                    }: {
-    href: string;
-    icon: React.ReactNode;
-    label: string;
-}) {
+function SocialLink({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) {
     return (
-        <a
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={label}
-            className="text-gray-400 hover:text-white transition-colors"
-        >
+        <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="text-[#FDFBF7]/80 hover:text-white transition-colors">
             {icon}
         </a>
     );

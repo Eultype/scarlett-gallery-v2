@@ -13,7 +13,7 @@ export default function MobileNavLink({ href, label, onClick }: MobileNavLinkPro
         <Link
             href={href}
             onClick={onClick}
-            className="text-4xl font-cormorant italic text-gray-900 hover:text-terra transition-colors"
+            className="text-5xl md:text-7xl font-cormorant italic text-gray-900 hover:text-terra transition-colors relative block"
         >
             {label}
         </Link>

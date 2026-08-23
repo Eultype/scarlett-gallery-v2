@@ -4,8 +4,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-// Import React
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 // Import des datas
 import { CONTACT_INFO } from "@/data/contact";
 import { NAV_LINKS } from "@/data/nav";
@@ -19,7 +19,6 @@ export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const pathname = usePathname();
 
-    // La Navbar est transparente (texte blanc) UNIQUEMENT sur la home quand on n'a pas scrollé
     const isHome = pathname === "/";
     const isTransparent = isHome && !scrolled;
 
@@ -40,6 +39,10 @@ export default function Navbar() {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
+
+    // Masquer la navbar sur les pages d'œuvres individuelles ou l'exposition immersive
+    const isArtworkPage = pathname?.startsWith("/gallery/") && pathname !== "/gallery";
+    if (isArtworkPage || pathname === "/exposition") return null;
 
     return (
         <nav
@@ -132,33 +135,63 @@ export default function Navbar() {
                 </button>
             </div>
 
-            {/* Menu Mobile (Overlay) - Sorti du conteneur principal pour éviter les conflits de positionnement */}
-            <div
-                className={`fixed inset-0 bg-[#FDFBF7] z-40 flex flex-col items-center justify-center space-y-8 transition-transform duration-500 ease-in-out xl:hidden ${
-                    isOpen ? "translate-x-0" : "translate-x-full"
-                }`}
-                style={{ top: 0, height: '100vh' }} // Force full viewport height
-            >
-                {NAV_LINKS.map((link) => (
-                    <MobileNavLink 
-                        key={link.href} 
-                        href={link.href} 
-                        label={link.label} 
-                        onClick={() => setIsOpen(false)} 
-                    />
-                ))}
-                
-                <div className="pt-8">
-                    <a
-                        href={CONTACT_INFO.socials.etsy}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-lg font-bold border border-black px-10 py-4 uppercase tracking-widest hover:bg-terra hover:text-white hover:border-terra transition-colors"
+            {/* Menu Mobile (Overlay) - Refonte Premium avec animations en cascade */}
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0, transition: { duration: 0.3, ease: "easeInOut", delay: 0.1 } }}
+                        transition={{ duration: 0.4, ease: "easeOut" }}
+                        className="fixed inset-0 bg-[#FDFBF7] z-40 flex flex-col items-center justify-center xl:hidden"
+                        style={{ height: '100vh', top: 0 }}
                     >
-                        Shop Online
-                    </a>
-                </div>
-            </div>
+                        {/* Container pour les liens */}
+                        <div className="flex flex-col items-center gap-6 mt-10">
+                            {NAV_LINKS.map((link, i) => (
+                                <motion.div
+                                    key={link.href}
+                                    initial={{ opacity: 0, y: 40 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: 10, transition: { duration: 0.2, delay: 0 } }}
+                                    transition={{ duration: 0.6, delay: 0.1 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                                    className="overflow-hidden"
+                                >
+                                    <MobileNavLink 
+                                        href={link.href} 
+                                        label={link.label} 
+                                        onClick={() => setIsOpen(false)} 
+                                    />
+                                </motion.div>
+                            ))}
+                        </div>
+                        
+                        {/* Footer du menu (Socials / Shop) */}
+                        <motion.div 
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0, transition: { duration: 0.2, delay: 0 } }}
+                            transition={{ duration: 0.5, delay: 0.5 }}
+                            className="absolute bottom-12 w-full flex flex-col items-center gap-8"
+                        >
+                            <a
+                                href={CONTACT_INFO.socials.etsy}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-sm font-bold border border-black px-12 py-4 uppercase tracking-[0.3em] hover:bg-terra hover:text-white hover:border-terra transition-colors"
+                            >
+                                Shop Online
+                            </a>
+                            
+                            <div className="flex gap-6 text-[10px] uppercase tracking-widest text-gray-500">
+                                <a href={CONTACT_INFO.socials.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-terra transition-colors">Instagram</a>
+                                <a href={CONTACT_INFO.socials.tiktok} target="_blank" rel="noopener noreferrer" className="hover:text-terra transition-colors">TikTok</a>
+                                <a href={`mailto:${CONTACT_INFO.email}`} className="hover:text-terra transition-colors">Contact</a>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </nav>
     );
 }
