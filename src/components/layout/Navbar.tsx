@@ -46,11 +46,7 @@ export default function Navbar() {
 
     return (
         <nav
-            className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-                !isTransparent
-                    ? "bg-[#FDFBF7] backdrop-blur-md shadow-sm py-2" // Version compacte (scroll ou autre page)
-                    : "bg-transparent py-6" // Version aérée (Home top)
-            }`}
+            className={`fixed top-0 w-full z-50 transition-all duration-500 ${ isOpen ? "bg-transparent py-2" : (!isTransparent ? "bg-[#FDFBF7] backdrop-blur-md shadow-sm py-2" : "bg-transparent py-6") }`}
         >
             <div className="mx-auto px-8 md:px-10 xl:px-20 flex justify-between items-center relative z-50">
                 
@@ -144,7 +140,7 @@ export default function Navbar() {
                         exit={{ opacity: 0, transition: { duration: 0.3, ease: "easeInOut", delay: 0.1 } }}
                         transition={{ duration: 0.4, ease: "easeOut" }}
                         className="fixed inset-0 bg-[#FDFBF7] z-40 flex flex-col items-center justify-center xl:hidden"
-                        style={{ height: '100vh', top: 0 }}
+                        style={{ height: "100dvh", top: 0, willChange: "opacity" }}
                     >
                         {/* Container pour les liens */}
                         <div className="flex flex-col items-center gap-6 mt-10">
@@ -155,7 +151,7 @@ export default function Navbar() {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: 10, transition: { duration: 0.2, delay: 0 } }}
                                     transition={{ duration: 0.6, delay: 0.1 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                                    className="overflow-hidden"
+                                    className="overflow-hidden" style={{ willChange: "transform, opacity" }}
                                 >
                                     <MobileNavLink 
                                         href={link.href} 
