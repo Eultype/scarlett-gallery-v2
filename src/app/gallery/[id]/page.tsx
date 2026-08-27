@@ -17,6 +17,13 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 import ArtworkJsonLd from "@/components/seo/ArtworkJsonLd";
 
+
+export function generateStaticParams() {
+    return galleryPageItems.map((item) => ({
+        id: item.id,
+    }));
+}
+
 export default async function ArtworkPage({ params }: { params: Promise<{ id: string }> }) {
     const resolvedParams = await params;
     const artwork = galleryPageItems.find((item) => item.id === resolvedParams.id);
