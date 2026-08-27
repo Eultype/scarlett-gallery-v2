@@ -25,9 +25,17 @@ Ce projet intègre une expérience de navigation web classique ainsi qu'une expo
 ```text
 src/
  ├── app/
- │    ├── exposition/   # Application WebGL (Galerie 3D)
- │    ├── gallery/      # Catalogue classique (SSG)
- │    └── layout.tsx    # Configuration globale et metadata SEO
+ │    ├── about/        # Page de présentation de l'artiste
+ │    ├── api/          # Routes API Next.js (si applicables)
+ │    ├── contact/      # Page de contact et formulaires
+ │    ├── exposition/   # Application WebGL (Galerie 3D interactive)
+ │    ├── gallery/      # Catalogue complet des œuvres avec pages dynamiques
+ │    ├── mentions/     # Mentions légales
+ │    ├── politique/    # Politique de confidentialité
+ │    ├── services/     # Prestations (commandes sur mesure, etc.)
+ │    ├── layout.tsx    # Configuration globale de l'UI
+ │    ├── page.tsx      # Page d'accueil principale
+ │    └── sitemap.ts    # Génération dynamique du plan du site pour le SEO
  ├── components/
  │    ├── layout/       # Éléments d'interface (Navbar, Footer)
  │    └── ui/           # Composants réutilisables (Lightbox, Loaders)
