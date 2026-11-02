@@ -29,7 +29,7 @@ export default function AboutSection() {
                         
                         
                         <p className="text-xl text-terra italic font-medium mb-8">
-                            Emma De Noni, Peintre à Bruxelles
+                            Emma De Noni, Artiste Peintre à Bruxelles
                         </p>
                         
                         <div className="prose prose-lg text-gray-600 leading-relaxed mb-12 space-y-4 text-justify lg:text-left">
