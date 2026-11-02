@@ -6,12 +6,29 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     const resolvedParams = await params;
     const artwork = galleryPageItems.find((item) => item.id === resolvedParams.id);
     if (!artwork) return { title: "Œuvre introuvable" };
+
+    const mediumLabel = artwork.category === "linogravures" ? "Linogravure originale" : "Peinture à l'huile";
+    const seoDescription = artwork.description
+        ? `${artwork.title} (${artwork.dimensions}) par Emma De Noni : ${artwork.description}`
+        : `Découvrez ${artwork.title}, ${mediumLabel.toLowerCase()} par Emma De Noni à Bruxelles. ${artwork.dimensions}.`;
+
     return {
-        title: `${artwork.title} | Scarlett Gallery`,
-        description: `Découvrez ${artwork.title}, une peinture originale par Emma De Noni. ${artwork.dimensions}.`,
+        title: `${artwork.title} — ${mediumLabel} par Emma De Noni`,
+        description: seoDescription,
+        alternates: {
+            canonical: `/gallery/${artwork.id}`,
+        },
         openGraph: {
-            images: [artwork.image],
-        }
+            title: `${artwork.title} — ${mediumLabel} | Scarlett Gallery`,
+            description: seoDescription,
+            url: `https://www.scarlettgallery.com/gallery/${artwork.id}`,
+            images: [
+                {
+                    url: artwork.image,
+                    alt: `${artwork.title} — ${artwork.dimensions} par Emma De Noni`,
+                },
+            ],
+        },
     };
 }
 

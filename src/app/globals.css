@@ -37,13 +37,17 @@ img {
   user-select: none;
 }
 
-/* Protection contre le flash avant le loader */
-.js-loading #main-content {
-  opacity: 0;
-  visibility: hidden;
+/* Gestion de l'overlay du loader initial sans jamais masquer #main-content pour le SEO */
+#initial-loader-overlay {
+  display: none;
 }
 
-.js-loading body {
+.js-show-loader #initial-loader-overlay {
+  display: flex;
+}
+
+.js-show-loader body {
   overflow: hidden;
 }
+
 

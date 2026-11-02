@@ -5,44 +5,60 @@ interface ArtworkJsonLdProps {
 }
 
 export default function ArtworkJsonLd({ artwork }: ArtworkJsonLdProps) {
-  // L'URL de la page de l'œuvre
   const artworkUrl = `https://www.scarlettgallery.com/gallery/${artwork.id}`;
   
-  // Création d'une description SEO par défaut si l'œuvre n'en a pas
   const seoDescription = artwork.description || 
-    `Découvrez ${artwork.title}, une peinture originale par Emma De Noni. ${artwork.dimensions}. Faisant partie de la ${artwork.serie}.`;
+    `Découvrez ${artwork.title}, une œuvre originale par Emma De Noni (${artwork.dimensions}). Faisant partie de la ${artwork.serie}.`;
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": ["VisualArtwork", "Product"], // Combinaison de VisualArtwork et Product pour un impact max
-    "name": artwork.title,
-    "image": `https://www.scarlettgallery.com${artwork.image}`,
-    "description": seoDescription,
-    "creator": {
-      "@type": "Person",
-      "name": "Emma De Noni",
-      "sameAs": "https://www.scarlettgallery.com/#person"
-    },
-    "artMedium": artwork.category === "linogravures" ? "Linocut" : "Oil on canvas",
-    "artform": artwork.category === "linogravures" ? "Print" : "Painting",
-    "width": artwork.dimensions, // Idéalement, à extraire sous forme de valeur numérique
-    // Propriétés produit
-    "brand": {
-      "@type": "Brand",
-      "name": "Scarlett Gallery"
-    },
-    "offers": {
-      "@type": "Offer",
-      "url": artworkUrl,
-      "availability": artwork.status === "Vendu" ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
-      "priceCurrency": "EUR",
-      // Si tu as un prix défini dans tes types à l'avenir, tu peux le lier ici. 
-      // Sinon Google saura au moins si c'est dispo ou non.
-      "seller": {
-        "@type": "Organization",
-        "name": "Scarlett Gallery"
+    "@graph": [
+      {
+        "@type": "VisualArtwork",
+        "@id": `${artworkUrl}#artwork`,
+        "name": artwork.title,
+        "url": artworkUrl,
+        "image": `https://www.scarlettgallery.com${artwork.image}`,
+        "description": seoDescription,
+        "creator": {
+          "@type": "Person",
+          "@id": "https://www.scarlettgallery.com/#person",
+          "name": "Emma De Noni"
+        },
+        "artMedium": artwork.category === "linogravures" ? "Linogravure" : "Huile sur toile",
+        "artform": artwork.category === "linogravures" ? "Estampe / Linogravure" : "Peinture",
+        "artworkSurface": artwork.category === "linogravures" ? "Papier d'art" : "Toile",
+        "size": artwork.dimensions,
+        "isPartOf": {
+          "@type": "CreativeWorkSeries",
+          "name": artwork.serie
+        },
+        "inLanguage": "fr-BE"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Accueil",
+            "item": "https://www.scarlettgallery.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Galerie",
+            "item": "https://www.scarlettgallery.com/gallery"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": artwork.title,
+            "item": artworkUrl
+          }
+        ]
       }
-    }
+    ]
   };
 
   return (

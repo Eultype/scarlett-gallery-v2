@@ -2,100 +2,103 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 export default function InitialLoader() {
-    // On initialise à false par défaut si on est côté serveur
-    const [isLoading, setIsLoading] = useState(false);
+    const [isFadingOut, setIsFadingOut] = useState(false);
+    const [isRemoved, setIsRemoved] = useState(false);
 
     useEffect(() => {
-        // Vérifier si l'utilisateur a déjà vu l'intro dans cette session
+        const isBot = /bot|googlebot|crawler|spider|robot|crawling|lighthouse/i.test(navigator.userAgent);
         const hasVisited = sessionStorage.getItem("hasVisitedScarlett");
 
-        if (!hasVisited) {
-            // On utilise setTimeout pour éviter l'avertissement de setState synchrone
-            const initTimer = setTimeout(() => {
-                setIsLoading(true);
-                // Bloquer le scroll
-                document.body.style.overflow = "hidden";
-            }, 0);
-
-            // Durée de l'animation (ex: 2 secondes)
-            const timer = setTimeout(() => {
-                setIsLoading(false);
-                sessionStorage.setItem("hasVisitedScarlett", "true");
-                document.body.style.overflow = "auto";
-                document.documentElement.classList.remove('js-loading');
-            }, 3000);
-
-            return () => {
-                clearTimeout(initTimer);
-                clearTimeout(timer);
-                document.body.style.overflow = "auto";
-            };
+        if (hasVisited || isBot) {
+            document.documentElement.classList.remove("js-show-loader");
+            document.body.style.overflow = "auto";
+            setIsRemoved(true);
+            return;
         }
+
+        // Déclencher le fondu de sortie après 2.2s
+        const fadeTimer = setTimeout(() => {
+            setIsFadingOut(true);
+            sessionStorage.setItem("hasVisitedScarlett", "true");
+            document.body.style.overflow = "auto";
+        }, 2200);
+
+        // Retirer complètement l'overlay après la fin de la transition (0.8s)
+        const removeTimer = setTimeout(() => {
+            document.documentElement.classList.remove("js-show-loader");
+            setIsRemoved(true);
+        }, 3000);
+
+        return () => {
+            clearTimeout(fadeTimer);
+            clearTimeout(removeTimer);
+            document.body.style.overflow = "auto";
+        };
     }, []);
 
+    if (isRemoved) return null;
+
     return (
-        <AnimatePresence>
-            {isLoading && (
+        <div
+            id="initial-loader-overlay"
+            aria-hidden="true"
+            className={`fixed inset-0 z-[9999] flex-col items-center justify-center bg-[#FDFBF7] transition-opacity duration-700 ease-in-out ${
+                isFadingOut ? "opacity-0 pointer-events-none" : "opacity-100"
+            }`}
+        >
+            <div className="flex flex-col items-center gap-6">
+                
+                {/* Logo Animation */}
                 <motion.div
-                    key="initial-loader"
-                    initial={{ opacity: 1 }}
-                    exit={{ opacity: 0, transition: { duration: 0.8, ease: "easeInOut" } }}
-                    className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#FDFBF7]"
+                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                    animate={{ 
+                        opacity: 1, 
+                        scale: 1, 
+                        y: 0,
+                        transition: { duration: 0.9, ease: "easeOut", delay: 0.2 }
+                    }}
+                    className="relative w-64 h-32 md:w-80 md:h-40"
                 >
-                    <div className="flex flex-col items-center gap-6">
-                        
-                        {/* Logo Animation */}
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                            animate={{ 
-                                opacity: 1, 
-                                scale: 1, 
-                                y: 0,
-                                transition: { duration: 1, ease: "easeOut", delay: 0.5 }
-                            }}
-                            className="relative w-64 h-32 md:w-80 md:h-40"
-                        >
-                            <Image
-                                src="/images/logos/img.png"
-                                alt="Scarlett Gallery"
-                                fill
-                                className="object-contain"
-                                priority
-                            />
-                        </motion.div>
-
-                        {/* Ligne de séparation qui s'étire */}
-                        <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ 
-                                width: "100px",
-                                transition: { duration: 0.8, ease: "easeInOut", delay: 1.2 }
-                            }}
-                            className="h-[1px] bg-terra/50"
-                        />
-
-                        {/* Signature / Nom de l&apos;artiste */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ 
-                                opacity: 1,
-                                transition: { duration: 1, delay: 1.8 }
-                            }}
-                            className="text-center px-4"
-                        >
-                            <p className="font-autumn text-2xl md:text-3xl text-gray-800 tracking-wide leading-relaxed py-2 overflow-visible">
-                                Emma De Noni
-                            </p>
-                            <p className="font-cormorant text-sm uppercase tracking-[0.3em] text-terra mt-2">
-                                Artiste Peintre
-                            </p>
-                        </motion.div>
-                    </div>
+                    <Image
+                        src="/images/logos/img.png"
+                        alt="Scarlett Gallery"
+                        fill
+                        className="object-contain"
+                        priority
+                    />
                 </motion.div>
-            )}
-        </AnimatePresence>
+
+                {/* Ligne de séparation qui s'étire */}
+                <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ 
+                        width: "100px",
+                        transition: { duration: 0.7, ease: "easeInOut", delay: 0.8 }
+                    }}
+                    className="h-[1px] bg-terra/50"
+                />
+
+                {/* Signature / Nom de l'artiste */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ 
+                        opacity: 1,
+                        transition: { duration: 0.8, delay: 1.2 }
+                    }}
+                    className="text-center px-4"
+                >
+                    <p className="font-autumn text-2xl md:text-3xl text-gray-800 tracking-wide leading-relaxed py-2 overflow-visible">
+                        Emma De Noni
+                    </p>
+                    <p className="font-cormorant text-sm uppercase tracking-[0.3em] text-terra mt-2">
+                        Artiste Peintre
+                    </p>
+                </motion.div>
+            </div>
+        </div>
     );
 }
+

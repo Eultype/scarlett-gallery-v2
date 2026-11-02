@@ -37,43 +37,42 @@ const autumnChant = localFont({
 
 export const metadata: Metadata = {
     title: {
-        default: "Scarlett Gallery | Artiste Peintre à Bruxelles",
+        default: "Scarlett Gallery | Emma De Noni — Artiste Peintre à Bruxelles",
         template: "%s | Scarlett Gallery",
     },
-    description: "Explorez l&apos;univers d&apos;Emma De Noni, artiste peintre à Bruxelles. Portraits à l&apos;huile, linogravures et œuvres originales empreintes de lumière et d'émotions.",
+    description: "Explorez l'univers d'Emma De Noni, artiste peintre à Bruxelles. Portraits à l'huile sur mesure, linogravures originales et œuvres contemporaines empreintes de lumière.",
     keywords: [
         "Emma De Noni", 
         "Scarlett Gallery", 
         "Artiste peintre Bruxelles", 
-        "Peinture à l&apos;huile Belgique", 
-        "Portraits sur mesure", 
+        "Peinture à l'huile Belgique", 
+        "Portraits sur mesure Bruxelles", 
         "Linogravure originale", 
         "Art contemporain Bruxelles", 
-        "Achat tableau original", 
-        "Galerie d&apos;art en ligne"
+        "Achat tableau original Belgique", 
+        "Galerie d'art en ligne"
     ],
     metadataBase: new URL("https://www.scarlettgallery.com"),
     openGraph: {
-        title: "Scarlett Gallery | Emma De Noni",
-        description: "Découvrez une collection d&apos;œuvres originales à l&apos;huile et profitez de services sur mesure.",
-        url: "https://scarlettgallery.com",
+        title: "Scarlett Gallery | Emma De Noni — Artiste Peintre à Bruxelles",
+        description: "Découvrez une collection d'œuvres originales à l'huile, linogravures et portraits sur mesure à Bruxelles.",
+        url: "https://www.scarlettgallery.com",
         siteName: "Scarlett Gallery",
         images: [
             {
                 url: "/images/about/Scarlett_peint.webp",
                 width: 1200,
                 height: 630,
-                alt: "L'atelier d&apos;Emma De Noni",
+                alt: "L'atelier d'Emma De Noni — Scarlett Gallery à Bruxelles",
             },
         ],
-        locale: "fr_FR",
+        locale: "fr_BE",
         type: "website",
-
     },
     twitter: {
         card: "summary_large_image",
         title: "Scarlett Gallery | Emma De Noni",
-        description: "Artiste peintre à Bruxelles. Portraits et linogravures.",
+        description: "Artiste peintre à Bruxelles. Portraits à l'huile sur mesure et linogravures originales.",
         images: ["/images/about/Scarlett_peint.webp"],
     },
     robots: {
@@ -93,13 +92,15 @@ export default function RootLayout({
                 className={`${montserrat.variable} ${cormorant.variable} ${autumnChant.variable} antialiased font-sans`}
             >
                 <JsonLd />
-                {/* Script critique bloquant pour éviter le flash de contenu avant le loader */}
+                {/* Script critique pour afficher l'overlay du loader dès la première frame sans cacher #main-content aux moteurs de recherche */}
                 <script 
                     dangerouslySetInnerHTML={{
                         __html: `
-                            if (!sessionStorage.getItem("hasVisitedScarlett")) {
-                                document.documentElement.classList.add('js-loading');
-                            }
+                            try {
+                                if (!sessionStorage.getItem("hasVisitedScarlett") && !/bot|googlebot|crawler|spider|robot|crawling|lighthouse/i.test(navigator.userAgent)) {
+                                    document.documentElement.classList.add('js-show-loader');
+                                }
+                            } catch (e) {}
                         `
                     }}
                 />

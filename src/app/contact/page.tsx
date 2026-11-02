@@ -5,12 +5,13 @@ import ContactHeader from "./_components/ContactHeader";
 import ContactInfo from "./_components/ContactInfo";
 import ContactForm from "@/components/ui/ContactForm";
 import FaqSection from "./_components/FaqSection";
+import { FAQ_ITEMS } from "@/data/faq";
 
 // Metadata de la page Contact
 export const metadata: Metadata = {
-    title: "Contact",
-    description: "Une question, une commande ou un projet de collaboration ? Contactez Emma De Noni directement via ce formulaire.",
-    keywords: ["Contact artiste peintre", "Achat tableau Bruxelles", "Commande peinture sur mesure", "Emma De Noni contact"],
+    title: "Contact & Commandes — Atelier à Bruxelles",
+    description: "Une question, un achat d'œuvre, une commande de portrait sur mesure ou un projet d'exposition ? Contactez l'artiste peintre Emma De Noni à Bruxelles.",
+    keywords: ["Contact artiste peintre Bruxelles", "Achat tableau Bruxelles", "Commande peinture sur mesure Belgique", "Emma De Noni contact"],
     alternates: {
         canonical: "/contact",
     },
@@ -18,8 +19,25 @@ export const metadata: Metadata = {
 
 // Page contact
 export default function ContactPage() {
+    const faqJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": FAQ_ITEMS.map((item) => ({
+            "@type": "Question",
+            "name": item.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": item.answer,
+            },
+        })),
+    };
+
     return (
         <main className="pt-24 bg-[#FDFBF7]">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+            />
             {/* Header */}
             <ContactHeader />
             {/* Section contact : Coordonnées / Formulaire */}
