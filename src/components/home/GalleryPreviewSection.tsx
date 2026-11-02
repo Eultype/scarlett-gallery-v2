@@ -208,7 +208,7 @@ export default function GalleryPreviewSection() {
                                         <div className={`relative w-full aspect-[4/5] overflow-hidden bg-transparent`}>
                                             <SafeImage
                                                 src={item.image}
-                                                alt={`Peinture ${item.title} - Scarlett Gallery`}
+                                                alt={`${item.title} — ${item.dimensions} par Emma De Noni (Scarlett Gallery)`}
                                                 fill
                                                 className={`${item.layout === "wide" ? "object-contain p-4" : "object-contain p-2"} transition-transform duration-700 group-hover:scale-105`}
                                                 sizes="(max-width: 768px) 85vw, 45vw"
@@ -284,7 +284,7 @@ export default function GalleryPreviewSection() {
                                                 <div className={`relative w-full overflow-hidden bg-transparent ${item.layout === "wide" ? "aspect-[1.69/1]" : "aspect-[4/5]"}`}>
                                                     <SafeImage
                                                         src={item.image}
-                                                        alt={item.title}
+                                                        alt={`${item.title} — ${item.dimensions} par Emma De Noni (Scarlett Gallery)`}
                                                         fill
                                                         sizes={item.layout === "wide" ? "(max-width: 1280px) 100vw, 50vw" : "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"}
                                                         className={`w-full h-full transform-gpu will-change-transform ${item.layout === "wide" ? "object-contain p-4" : "object-contain p-2"} transition-transform duration-700 group-hover:scale-105`}

@@ -81,7 +81,7 @@ export default function GalleryGrid() {
                                         {/* Images */}
                                         <Image
                                             src={item.image}
-                                            alt={item.title}
+                                            alt={`${item.title} — ${item.dimensions} par Emma De Noni, artiste peintre à Bruxelles`}
                                             width={item.layout === "wide" ? 1200 : 800}
                                             height={item.layout === "wide" ? 675 : 1000}
                                             className={`w-full h-auto transform-gpu will-change-transform ${item.layout === "wide" ? "object-contain p-4" : "object-cover"} transition-transform duration-700 group-hover:scale-110`}

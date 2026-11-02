@@ -65,7 +65,7 @@ export default function AtelierSection({ scrollYProgress }: AtelierSectionProps)
                             <motion.div style={{ y: imageY }} className="absolute -top-[10%] left-0 w-full h-[120%]">
                                 <Image 
                                     src="/images/about/atelier_3.jpeg"
-                                    alt="Le Refuge" 
+                                    alt="Atelier de peinture à l'huile d'Emma De Noni à Bruxelles — Le Refuge" 
                                     fill 
                                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                                 />
@@ -89,7 +89,7 @@ export default function AtelierSection({ scrollYProgress }: AtelierSectionProps)
                             <motion.div style={{ y: imageY }} className="absolute -top-[10%] left-0 w-full h-[120%]">
                                 <Image 
                                     src="/images/about/atelier_2.webp"
-                                    alt="L'Effervescence" 
+                                    alt="Création de tableaux et linogravures dans l'atelier Scarlett Gallery — L'Effervescence" 
                                     fill 
                                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                                 />
@@ -112,7 +112,7 @@ export default function AtelierSection({ scrollYProgress }: AtelierSectionProps)
                             <motion.div style={{ y: imageY }} className="absolute -top-[10%] left-0 w-full h-[120%]">
                                 <Image 
                                     src="/images/about/IMG_8149.webp"
-                                    alt="L'Ouverture" 
+                                    alt="Espace d'exposition et chevalet d'Emma De Noni à Bruxelles — L'Ouverture" 
                                     fill 
                                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                                 />

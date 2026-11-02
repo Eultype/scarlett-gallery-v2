@@ -6,10 +6,22 @@ import { useLenis } from "@studio-freight/react-lenis";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const backgroundImages = [
-    "/images/hero/eteHD.webp",
-    "/images/hero/automneHD.webp",
-    "/images/hero/hiverHD.webp",
-    "/images/hero/printempsHD.webp",
+    {
+        src: "/images/hero/eteHD.webp",
+        alt: "Blindsummer — Peinture à l'huile sur toile originale par Emma De Noni (Série Saisons)",
+    },
+    {
+        src: "/images/hero/automneHD.webp",
+        alt: "Blindfall — Peinture à l'huile sur toile originale par Emma De Noni (Série Saisons)",
+    },
+    {
+        src: "/images/hero/hiverHD.webp",
+        alt: "Blindwinter — Peinture à l'huile sur toile originale par Emma De Noni (Série Saisons)",
+    },
+    {
+        src: "/images/hero/printempsHD.webp",
+        alt: "Blindspring — Peinture à l'huile sur toile originale par Emma De Noni (Série Saisons)",
+    },
 ];
 
 export default function HeroSection() {
@@ -47,18 +59,18 @@ export default function HeroSection() {
         >
             {/* Images de fond avec Parallax & Ken Burns */}
             <motion.div style={{ y }} className="absolute inset-0 z-0 w-full h-[120%] -top-[10%]">
-                {backgroundImages.map((src, index) => {
+                {backgroundImages.map((image, index) => {
                     const isActive = index === currentImageIndex;
                     return (
                         <div
-                            key={src}
+                            key={image.src}
                             className={`absolute inset-0 transition-all duration-[2000ms] ease-out ${
                                 isActive ? "opacity-100 scale-100" : "opacity-0 scale-110"
                             }`}
                         >
                             <Image
-                                src={src}
-                                alt="Tableau original Scarlett Gallery"
+                                src={image.src}
+                                alt={image.alt}
                                 fill
                                 className="object-cover"
                                 priority={index === 0}

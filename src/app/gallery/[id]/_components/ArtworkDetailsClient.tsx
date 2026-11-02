@@ -97,7 +97,7 @@ export default function ArtworkDetailsClient({ artwork }: Props) {
                                 ) : (
                                     <Image 
                                         src={currentImage} 
-                                        alt={artwork.title}
+                                        alt={`${artwork.title} — ${artwork.dimensions} par Emma De Noni (Scarlett Gallery)`}
                                         fill
                                         className="w-full h-full object-contain p-4 md:p-8 xl:p-16"
                                         priority
@@ -137,7 +137,7 @@ export default function ArtworkDetailsClient({ artwork }: Props) {
                                 >
                                     <Image 
                                         src={currentImage} 
-                                        alt={artwork.title}
+                                        alt={`${artwork.title} — détail de l'œuvre par Emma De Noni`}
                                         fill
                                         className="w-full h-full object-contain p-4 md:p-8 xl:p-16"
                                         sizes="(max-width: 1280px) 100vw, 50vw"
@@ -157,7 +157,7 @@ export default function ArtworkDetailsClient({ artwork }: Props) {
 
                     {/* Bouton Pinterest Absolu sur l'image */}
                     <a 
-                        href={`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(`https://scarlett-gallery.com/gallery/${artwork.id}`)}&media=${encodeURIComponent(`https://scarlett-gallery.com${currentImage}`)}&description=${encodeURIComponent(`${artwork.title} - ${artwork.dimensions}`)}`}
+                        href={`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(`https://www.scarlettgallery.com/gallery/${artwork.id}`)}&media=${encodeURIComponent(`https://www.scarlettgallery.com${currentImage}`)}&description=${encodeURIComponent(`${artwork.title} — ${artwork.dimensions} par Emma De Noni`)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="absolute top-4 right-4 md:top-6 md:right-6 z-50 group inline-flex items-center justify-center w-10 h-10 md:w-11 md:h-11 bg-white/60 hover:bg-[#E60023] text-gray-900 hover:text-white backdrop-blur-md rounded-full transition-colors border border-gray-900 hover:border-[#E60023]"
@@ -311,7 +311,7 @@ export default function ArtworkDetailsClient({ artwork }: Props) {
                                         ) : (
                                             <Image 
                                                 src={img} 
-                                                alt={`${artwork.title} vue ${idx + 1}`} 
+                                                alt={`${artwork.title} — ${artwork.dimensions} par Emma De Noni (vue ${idx + 1})`} 
                                                 fill 
                                                 className="object-contain group-hover:scale-105 transition-transform duration-700" 
                                             />
